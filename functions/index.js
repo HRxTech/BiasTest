@@ -1,12 +1,12 @@
+const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 
+/**
+ * Submit 4 arrays, r1Times, r2Times, r3Times, r4Times
+ * each array contains the response time in miliseconds for each response
+ * return the IAT score.
+ */
 exports.submitTest = functions.https.onRequest((req, res) => {
     console.log('body: ' + JSON.stringify(req.body));
     console.log('starting');
@@ -31,8 +31,15 @@ exports.submitTest = functions.https.onRequest((req, res) => {
     let r3Sum = r3Times.reduce(add, 0);
     let r4Sum = r4Times.reduce(add, 0);
 
-    // TODO: save score to database
-
     let iat = ((r3Sum / r3Times.length + r4Sum / r4Times.length) / 2) - ((r1Sum / r1Times.length + r2Sum / r2Times.length) / 2);
+    admin.initializeApp(functions.config().firebase);
+    var db = admin.firestore();
+
+    var addDoc = db.collection('BiasTest').add({
+        score: iat
+    }).then(ref => {
+        console.log('Added document with ID: ', ref.id);
+    });
+
     return res.json({ score: iat });
 });
