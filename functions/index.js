@@ -34,5 +34,5 @@ exports.submitTest = functions.https.onRequest((req, res) => {
     // TODO: save score to database
 
     let iat = ((r3Sum / r3Times.length + r4Sum / r4Times.length) / 2) - ((r1Sum / r1Times.length + r2Sum / r2Times.length) / 2);
-    return res.json({ iat: iat });
+    return res.json({ score: iat });
 });
