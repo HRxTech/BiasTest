@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Form extends Component {
     constructor(props){
@@ -16,6 +17,7 @@ class Form extends Component {
         // Bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleGetAPI = this.handleGetAPI.bind(this);
     }
 
     handleChange(e) {
@@ -37,6 +39,15 @@ class Form extends Component {
         }
 
         // SEND RESULTS TO API
+    }
+
+    // RETRIEVE API
+    handleGetAPI(){
+        axios.get('https://cdn.contentful.com/spaces/4xbeshmjlgqs/entries?access_token=3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07')
+             .then((response) => {
+                 console.log(response.data.items)
+             })
+             .catch(console.error);
     }
 
     render() {
@@ -97,6 +108,7 @@ class Form extends Component {
                     </label>
                     <input type = 'submit' />
                 </form>
+                <button onClick = {this.handleGetAPI}>Get API</button>
                 <a href='#'>Skip to results &rsaquo;</a>
             </div>
         );
