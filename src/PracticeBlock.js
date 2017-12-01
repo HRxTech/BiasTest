@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
-import PracticeBlock from './PracticeBlock.js';
+import axios from 'axios';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <PracticeBlock />
+      <div className="PracticeBlock">
+        <h1>Practice Block</h1>
+
       </div>
     );
   }
