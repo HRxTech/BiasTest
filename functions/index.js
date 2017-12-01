@@ -48,6 +48,41 @@ exports.submitTest = functions.https.onRequest((req, res) => {
         return res.json({
             score: iat,
             refId: ref.id
-        }); 
+        });
     });
 });
+
+/**
+ * update user info given the ref id
+ * race, gender, age, and email
+ */
+exports.updateTest = functions.https.onRequest((req, res) => {
+    console.log('starting');
+
+    // TODO: error checking
+
+    if (req.method !== 'POST') {
+        return res.status(403).send('POST only');
+    }
+
+    let refId = req.body.refId;
+    let race = req.body.race;
+    let gender = req.body.gender;
+    let age = req.body.age;
+    let email = req.body.email;
+
+    admin.initializeApp(functions.config().firebase);
+    var db = admin.firestore();
+
+    var testRef = db.collection('BiasTest').doc(refId);
+
+    // Set the user info
+    return testRef.update({
+        race: race,
+        gender: gender,
+        age: age,
+        email: email
+    }).then(ref => {
+        res.status(200).end();
+    })
+})
