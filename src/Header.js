@@ -6,16 +6,17 @@ import axios from 'axios';
 class Header extends Component {
     constructor(props){
         super(props);
+        //Set Initial State
         this.state = {logo:'', icon:''}
     }
     componentWillMount(){
-
+        //Get the HRx Logo API from Contentful 
         axios.get('https://images.contentful.com/4xbeshmjlgqs/6D9jqlo0CIukmyS6CAM4Uk/12584fff1ec639b2e92ff904c7f0126a/37685_HRx_logo_.svg')
         .then((response) => {
             console.log(response);
            this.setState({logo:response.data}); 
         });
-    
+        //Get the Info Icon from contentful 
         axios.get('https://images.contentful.com/4xbeshmjlgqs/31ZiBpxq9OqwEyEIyy4OW2/7117ba82feb446563b17f9000ca711ba/question.svg')
         .then((response) => {
             console.log(response);
@@ -24,11 +25,10 @@ class Header extends Component {
     }
 
   render() {
-      const {logo,icon} = this.state;
         return(
             <div>
-            <img src={logo} className="logo" alt="logo" />
-            <img src={icon} className="icon" alt="question" />
+            <img src={this.state.logo} className="logo" alt="logo" />
+            <img src={this.state.icon} className="icon" alt="question" />
             </div>
         );
   }
