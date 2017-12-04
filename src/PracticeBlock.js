@@ -21,7 +21,6 @@ class App extends Component {
     axios.get(`${API_BASE_URL}/spaces/${API_SPACE_ID}/entries?access_token=${API_TOKEN}&content_type=practiceBlock`)
           .then((response) => {
 
-              console.log(response);
               // Get Current Practice Block Data
               var currentPracticeBlock = response.data.items[this.state.currentPracticeBlockIndex];
 
@@ -44,7 +43,6 @@ class App extends Component {
 
     axios.get(`${API_BASE_URL}/spaces/${API_SPACE_ID}/entries?access_token=${API_TOKEN}&content_type=practiceBlock&fields.leftCategory.sys.id=${leftCategoryID}`)
          .then((response) => {
-          console.log(response);
           
             this.setState({ 
               leftCategoryName : response.data.includes.Entry[1].fields.categoryName,
