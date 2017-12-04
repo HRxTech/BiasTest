@@ -11,7 +11,7 @@ class App extends Component {
     }
   }
 
-  // Get Current Test Block Data
+  // Function to get Current Test Block Data
   componentWillMount(){
     // Request all Practice Block Entries
     axios.get('https://cdn.contentful.com/spaces/4xbeshmjlgqs/entries?access_token=3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07&content_type=practiceBlock')
@@ -25,34 +25,23 @@ class App extends Component {
                 currentPracticeBlockTitle : currentPracticeBlock.fields.practiceBlockTitle
               });
 
-              // Get Target Entry (Category) ID
-              var leftCategory = currentPracticeBlock.fields.leftCategory.sys.id;
+              // Send Current Practice Block Data to callback function
+              this.handleCategories(currentPracticeBlock);
 
-              this.getCategoryNames(leftCategory);
             })
           .catch(console.error);
   }
 
-  // Get Practice Block Categories
-  getCategoryNames(leftCategory){
-    // Retrieve all items linked to the current entry
-    axios.get(`https://cdn.contentful.com/spaces/4xbeshmjlgqs/entries?access_token=3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07&include=1&content_type=practiceBlock&fields.leftCategory.sys.id=${leftCategory}`)
-    .then((response) => {
-      var leftCategoryName = response.data.includes.Entry[1].fields.categoryName;
-      var rightCategoryName = response.data.includes.Entry[0].fields.categoryName;
-      
+  // Function to get Category Data
+  handleCategories(currentPracticeBlock){
+    console.log(currentPracticeBlock);
 
-      this.setState({ 
-        leftCategoryName : leftCategoryName, 
-        rightCategoryName : rightCategoryName,
-        questionCounter : 0
-       });
-    })
+    const leftCategoryID = currentPracticeBlock.fields.leftCategory.sys.id;
+
+    console.log(leftCategoryID);
   }
 
   render() {
-
-    var i = this.state.questionCounter;
 
     return (
       <div className="PracticeBlock">
