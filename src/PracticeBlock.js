@@ -20,8 +20,10 @@ class App extends Component {
               // Get Current Practice Block Data
               var currentPracticeBlock = response.data.items[this.state.currentPracticeBlockIndex];
 
-              // Get Practice Block Title
-              this.setState({ currentPracticeBlockTitle : currentPracticeBlock.fields.practiceBlockTitle});
+              // Get Practice Block Title and set it in the state
+              this.setState({ 
+                currentPracticeBlockTitle : currentPracticeBlock.fields.practiceBlockTitle
+              });
 
               // Get Target Entry (Category) ID
               var leftCategory = currentPracticeBlock.fields.leftCategory.sys.id;
