@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PracticeBlock from './PracticeBlock.js';
 import Intro from './Intro.js';
 import Header from './Header';
 import Footer from './Footer';
@@ -8,10 +9,10 @@ import Form from './Form.js';
 class App extends Component {
   render() {
     return (
-     
       <div className="App">
         <Header />
-       <Intro/>
+        <Intro />
+        <PracticeBlock />
         <Form />
         <Footer />
       </div>
