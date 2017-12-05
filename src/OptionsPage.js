@@ -15,6 +15,11 @@ class OptionsPage extends Component {
 
     handleClick(e){
       console.log(e.target.value);
+      if(e.target.value === 'practice'){
+        
+      }else{
+        
+      }
     }
 
   render() {
@@ -22,7 +27,7 @@ class OptionsPage extends Component {
     return (
       <div className="OptionsPage">
       <h1>Would you like a practice?</h1>
-      
+
       <div>
         <button 
           onClick={this.handleClick}
