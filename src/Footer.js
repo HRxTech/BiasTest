@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './font-awesome-4.7.0';
 
 class Footer extends Component {
   render() {
@@ -8,15 +7,15 @@ class Footer extends Component {
       <div>
       <p>SHARE THIS TEST</p>
 
-      <a href="#">
+      <a>
         <FontAwesome  name='linkedin-square' />
       </a>
 
-      <a href="#">
+      <a>
         <FontAwesome  name='facebook-square' />
       </a>
 
-      <a href="#">
+      <a>
         <FontAwesome  name='twitter-square' />
       </a>
 

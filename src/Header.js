@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+var contentful = require('contentful');
 
-
+var client = contentful.createClient({
+    space: '4xbeshmjlgqs',
+    accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
+  })
 
 class Header extends Component {
     constructor(props){
         super(props);
-        //Set Initial State
-        this.state = {logo:'', icon:''}
+        
     }
-    componentWillMount(){
-        //Get the HRx Logo API from Contentful 
-        axios.get('https://images.contentful.com/4xbeshmjlgqs/6D9jqlo0CIukmyS6CAM4Uk/12584fff1ec639b2e92ff904c7f0126a/37685_HRx_logo_.svg')
-        .then((response) => {
-            console.log(response);
-           this.setState({logo:response.data}); 
-        });
-        //Get the Info Icon from contentful 
-        axios.get('https://images.contentful.com/4xbeshmjlgqs/31ZiBpxq9OqwEyEIyy4OW2/7117ba82feb446563b17f9000ca711ba/question.svg')
-        .then((response) => {
-            console.log(response);
-           this.setState({icon:response.data}); 
-        });
+    
+    componentWillMount(){  
+        this.setState({ isLoading : true });
+        client.getAsset('6D9jqlo0CIukmyS6CAM4Uk')
+        .then((asset) => {
+            console.log(asset)
+            this.setState({ isLoading : false })
+        })
+        .catch(console.error);
+
     }
 
   render() {
+      if(this.state.isLoading){
         return(
             <div>
-            <img src={this.state.logo} className="logo" alt="logo" />
-            <img src={this.state.icon} className="icon" alt="question" />
+            <img src={fields.file.url} alt={fields.title} />
             </div>
         );
+    }
   }
 }
 
