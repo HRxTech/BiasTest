@@ -14,6 +14,8 @@ class App extends Component {
     this.state = {
       currentBlockTitle : ''
     }
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   // Function to handle first HTTP request
@@ -40,10 +42,22 @@ class App extends Component {
                leftCategoryName : leftCategoryName,
                rightCategoryName : rightCategoryName,
                categoryItemsArray : totalCategoryItemsArray,
+               currentQuestionIndex: 0,
                isLoading: false
             })            
           })
           .catch(console.error);
+  }
+
+  // Function to handle Click
+  handleClick(){
+
+    var currentQIndex = this.state.currentQuestionIndex;
+    
+    if(currentQIndex < this.state.categoryItemsArray.length -1 ) {
+      currentQIndex++;
+      this.setState({ currentQuestionIndex: currentQIndex });
+    }
   }
 
   render() {
@@ -53,16 +67,17 @@ class App extends Component {
       )
     }
     var categoryItems = this.state.categoryItemsArray;
+    var index = this.state.currentQuestionIndex;
 
     return (
       <div className="PracticeBlock">
         <h1>Practice Block</h1>
         <h2>{this.state.currentBlockTitle}</h2>
 
-        {categoryItems[0].fields.word}
+        {categoryItems[index].fields.word}
         
-        <h3>{this.state.leftCategoryName}</h3>
-        <h3>{this.state.rightCategoryName}</h3>
+        <h3 onClick={this.handleClick}>{this.state.leftCategoryName}</h3>
+        <h3 onClick={this.handleClick}>{this.state.rightCategoryName}</h3>
 
       </div>
     );
