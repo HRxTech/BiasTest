@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful'
 
+// TODO: DRY - repeated code.
 var client = createClient({
   space: '4xbeshmjlgqs',
   accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
