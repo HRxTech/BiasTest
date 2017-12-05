@@ -12,9 +12,7 @@ class Header extends Component {
         super(props);
         this.state = {
             logoImg: '', // http://via.placeholder.com/150x150
-            logoImgAlt: '',
-            iconImg:'',
-            iconImgAlt:''
+            logoImgAlt: ''
         }
     }
 
@@ -32,11 +30,11 @@ class Header extends Component {
         var FontAwesome = require('react-fontawesome');
         return (
             <div className="Header">
-                <img src={this.state.logoImg} alt={this.state.logoImgAlt} style={{'width':50, 'padding-right':200, 'padding-top':15}} />
+                <img src={this.state.logoImg} alt={this.state.logoImgAlt} style={{'width':50, 'paddingRight':200, 'paddingTop':15}} />
                 <a href="#">
                     <FontAwesome name='question-circle' 
                                  size='2x' 
-                                 style={{'color':"#BFC5D2", 'padding-top':15}}
+                                 style={{'color':"#BFC5D2", 'paddingTop':15}}
                                  alt='More Info'
                     />
                 </a>
