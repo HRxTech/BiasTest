@@ -26,21 +26,20 @@ class Header extends Component {
                 this.setState({ logoImgAlt: asset.fields.title })
             })
             .catch(console.error);
-
-            client.getAsset('31ZiBpxq9OqwEyEIyy4OW2')
-            .then((asset) => {
-                console.log(asset)
-                this.setState({ iconImg: asset.fields.file.url })
-                this.setState({ IconImgAlt: asset.fields.title })
-            })
-            .catch(console.error);
     }
 
     render() {
+        var FontAwesome = require('react-fontawesome');
         return (
             <div className="Header">
                 <img src={this.state.logoImg} alt={this.state.logoImgAlt} style={{'width':50, 'padding-right':200, 'padding-top':15}} />
-                <img src={this.state.iconImg} alt={this.state.iconImgAlt} style={{'width':25, 'color':"#BFC5D2", 'padding-top':15}}/>
+                <a href="#">
+                    <FontAwesome name='question-circle' 
+                                 size='2x' 
+                                 style={{'color':"#BFC5D2", 'padding-top':15}}
+                                 alt='More Info'
+                    />
+                </a>
             </div>
         );
     }
