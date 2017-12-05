@@ -14,8 +14,6 @@ class App extends Component {
     this.state = {
       currentBlockTitle : ''
     }
-
-    this.handleClick = this.handleClick.bind(this);
   }
 
   // Function to handle first HTTP request
@@ -49,15 +47,24 @@ class App extends Component {
           .catch(console.error);
   }
 
-  // Function to handle Click
-  handleClick(){
+  componentDidMount(){
+    // Function to handle key press
+    document.addEventListener('keydown', (event) => {
+      const key = event.key;
 
-    var currentQIndex = this.state.currentQuestionIndex;
-    
-    if(currentQIndex < this.state.categoryItemsArray.length -1 ) {
-      currentQIndex++;
-      this.setState({ currentQuestionIndex: currentQIndex });
-    }
+      var currentQIndex = this.state.currentQuestionIndex;
+      
+      if(currentQIndex < this.state.categoryItemsArray.length -1 ) {
+        currentQIndex++;
+        this.setState({ currentQuestionIndex: currentQIndex });
+      }
+
+      if( key === 'ArrowRight'){
+        console.log('Male');
+      }else if( key === 'ArrowLeft'){
+        console.log('Female');
+      }
+    })
   }
 
   render() {
@@ -76,8 +83,8 @@ class App extends Component {
 
         {categoryItems[index].fields.word}
         
-        <h3 onClick={this.handleClick}>{this.state.leftCategoryName}</h3>
-        <h3 onClick={this.handleClick}>{this.state.rightCategoryName}</h3>
+        <h3>{this.state.leftCategoryName}</h3>
+        <h3>{this.state.rightCategoryName}</h3>
 
       </div>
     );
