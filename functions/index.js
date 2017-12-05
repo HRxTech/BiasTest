@@ -22,6 +22,9 @@ exports.submitTest = functions.https.onRequest((req, res) => {
     let r3Times = req.body.r3Times;
     let r4Times = req.body.r4Times;
 
+    let ipAddress = req.ip;
+    let testId = req.body.testId;
+
     function add(a, b) {
         return a + b;
     }
@@ -35,11 +38,51 @@ exports.submitTest = functions.https.onRequest((req, res) => {
     admin.initializeApp(functions.config().firebase);
     var db = admin.firestore();
 
-    var addDoc = db.collection('BiasTest').add({
-        score: iat
+    return db.collection('BiasTest').add({
+        testId: testId,
+        score: iat,
+        ipAddress: ipAddress,
+        createdAt: Date.now()
     }).then(ref => {
         console.log('Added document with ID: ', ref.id);
+        return res.json({
+            score: iat,
+            refId: ref.id
+        });
     });
-
-    return res.json({ score: iat });
 });
+
+/**
+ * update user info given the ref id
+ * race, gender, age, and email
+ */
+exports.updateTest = functions.https.onRequest((req, res) => {
+    console.log('starting');
+
+    // TODO: error checking
+
+    if (req.method !== 'POST') {
+        return res.status(403).send('POST only');
+    }
+
+    let refId = req.body.refId;
+    let race = req.body.race;
+    let gender = req.body.gender;
+    let age = req.body.age;
+    let email = req.body.email;
+
+    admin.initializeApp(functions.config().firebase);
+    var db = admin.firestore();
+
+    var testRef = db.collection('BiasTest').doc(refId);
+
+    // Set the user info
+    return testRef.update({
+        race: race,
+        gender: gender,
+        age: age,
+        email: email
+    }).then(ref => {
+        res.status(200).end();
+    })
+})
