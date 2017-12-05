@@ -7,7 +7,7 @@ var client = createClient({
   accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
 });
 
-class App extends Component {
+class PracticeBlock extends Component {
   constructor(props) {
     super(props);
 
@@ -91,4 +91,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default PracticeBlock;

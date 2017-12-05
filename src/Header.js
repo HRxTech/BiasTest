@@ -28,7 +28,7 @@ class Header extends Component {
 
     render() {
         return (
-            <div>
+            <div className="Header">
                 <img src={this.state.logoImg} alt={this.state.logoImgAlt} />
             </div>
         );

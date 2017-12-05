@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { createClient } from 'contentful'
+import { Link } from 'react-router-dom'
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -34,6 +35,12 @@ class Intro extends Component {
         life NGO sustainable then thought partnership. Mobilize disrupt save the world; indicators, catalyze, empower communities big data B-corp.
         Relief, social return on investment theory of change expose the truth best practices or rubric our work.
         </p>
+
+        <ul>
+          <li><Link to='/'>Intro</Link></li>
+          <li><Link to='/form'>Form</Link></li>
+          <li><Link to='/practice'>Practice Block</Link></li>
+        </ul>
       </div>
     );
   }
