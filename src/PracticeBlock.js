@@ -1,66 +1,69 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
-const API_BASE_URL = 'https://cdn.contentful.com';
-const API_SPACE_ID = '4xbeshmjlgqs';
-const API_TOKEN = '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
+var contentful = require('contentful');
+
+var client = contentful.createClient({
+  space: '4xbeshmjlgqs',
+  accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
+});
 
 class App extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      currentPracticeBlockIndex : 0,
-      currentPracticeBlockTitle : ''
+      currentBlockTitle : ''
     }
   }
 
-  // Function to get Current Test Block Data
+  // Function to handle first HTTP request
   componentWillMount(){
-    // Request all Practice Block Entries
-    axios.get(`${API_BASE_URL}/spaces/${API_SPACE_ID}/entries?access_token=${API_TOKEN}&content_type=practiceBlock`)
+    this.setState({ isLoading : true });
+    // Retrieve all entries of Practice Block content type
+    client.getEntries({ 'content_type' : 'practiceBlock', include: 5 })
           .then((response) => {
 
-              // Get Current Practice Block Data
-              var currentPracticeBlock = response.data.items[this.state.currentPracticeBlockIndex];
+            const currentBlockData = response.items[0].fields;
+            const currentBlockTitle = currentBlockData.practiceBlockTitle;
+            
+            const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
+            const leftCategoryItemsArray = currentBlockData.leftCategory.fields.categoryItems;
 
-              // Get Practice Block Title and set it in the state
-              this.setState({ 
-                currentPracticeBlockTitle : currentPracticeBlock.fields.practiceBlockTitle
-              });
+            const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
+            const rightCategoryItemsArray = currentBlockData.rightCategory.fields.categoryItems;            
 
-              // Send Current Practice Block Data to callback function
-              this.handleCategories(currentPracticeBlock);
+            const totalCategoryItemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
 
-            })
+            // Set Current Block Title and Category Names in state
+            this.setState({
+               currentBlockTitle : currentBlockTitle,
+               leftCategoryName : leftCategoryName,
+               rightCategoryName : rightCategoryName,
+               categoryItemsArray : totalCategoryItemsArray,
+               isLoading: false
+            })            
+          })
           .catch(console.error);
   }
 
-  // Function to get Category Data
-  handleCategories(currentPracticeBlock){
-
-    const leftCategoryID = currentPracticeBlock.fields.leftCategory.sys.id;
-
-    axios.get(`${API_BASE_URL}/spaces/${API_SPACE_ID}/entries?access_token=${API_TOKEN}&content_type=practiceBlock&fields.leftCategory.sys.id=${leftCategoryID}`)
-         .then((response) => {
-          
-            this.setState({ 
-              leftCategoryName : response.data.includes.Entry[1].fields.categoryName,
-              rightCategoryName : response.data.includes.Entry[0].fields.categoryName
-             }); 
-         });
-  }
-
   render() {
+    if(this.state.isLoading){
+      return (
+        <div className = 'loader'>Loading</div>
+      )
+    }
+    var categoryItems = this.state.categoryItemsArray;
 
     return (
       <div className="PracticeBlock">
         <h1>Practice Block</h1>
-        <p>{this.state.currentPracticeBlockTitle}</p>
+        <h2>{this.state.currentBlockTitle}</h2>
 
-        <h2>{this.state.leftCategoryName}</h2>
-        <h2>{this.state.rightCategoryName}</h2>
+        {categoryItems[0].fields.word}
         
+        <h3>{this.state.leftCategoryName}</h3>
+        <h3>{this.state.rightCategoryName}</h3>
+
       </div>
     );
   }
