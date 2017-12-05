@@ -2,7 +2,28 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+var contentful = require('contentful');
+
+var client = contentful.createClient({
+  space: '4xbeshmjlgqs',
+  accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
+});
+
 class Intro extends Component {
+
+  componentWillMount(){
+
+    client.getEntries()
+    .then(function (entries) {
+      // log the title for all the entries that have it
+      entries.items.forEach(function (entry) {
+        if(entry.fields.biasTest) {
+          console.log(entry.fields.biasTest)
+        }
+      })
+    })
+  }
+
   render() {
     return (
       <div className="Intro">
