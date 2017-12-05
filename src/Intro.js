@@ -11,20 +11,29 @@ var client = createClient({
 
 class Intro extends Component {
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+        chosenTest: '',
+        testData: []
+    }
+  }
 
-    client.getEntries()
-      .then(function (entries) {
-        // log the title for all the entries that have it
-        entries.items.forEach(function (entry) {
-          if (entry.fields.biasTest) {
-            console.log(entry.fields.biasTest)
-          }
-        })
-      })
+  componentWillMount() {
+    var testNames = this.state.testNames;
+    client.getEntries({
+      content_type: 'biasTest'
+    })
+    .then((response) => {
+      this.setState({ testData : response.items });
+    });
+       
   }
 
   render() {
+
+    var testData = this.state.testData;
+
     return (
       <div className="Intro">
         <h1 className="Intro-title">Welcome to HRx Bias Test</h1>
@@ -35,6 +44,15 @@ class Intro extends Component {
         life NGO sustainable then thought partnership. Mobilize disrupt save the world; indicators, catalyze, empower communities big data B-corp.
         Relief, social return on investment theory of change expose the truth best practices or rubric our work.
         </p>
+
+        <h2>Choose a test: </h2>
+
+        {testData.map((testItem) => {
+          return (
+          <li key={testItem.fields.testTitle}>{testItem.fields.testTitle}</li>
+          )
+        })  
+        }
 
         <ul>
           <li><Link to='/'>Intro</Link></li>

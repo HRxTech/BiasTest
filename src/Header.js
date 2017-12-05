@@ -19,7 +19,7 @@ class Header extends Component {
     componentWillMount() {
         client.getAsset('6D9jqlo0CIukmyS6CAM4Uk')
             .then((asset) => {
-                console.log(asset)
+                // console.log(asset)
                 this.setState({ logoImg: asset.fields.file.url })
                 this.setState({ logoImgAlt: asset.fields.title })
             })
