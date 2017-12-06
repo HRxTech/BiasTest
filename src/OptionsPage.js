@@ -4,6 +4,8 @@ class OptionsPage extends Component {
     constructor(props){
         super(props);
 
+        // console.log(chosenTest);
+
         // // Set Initial State
         this.state = { 
             Option:''

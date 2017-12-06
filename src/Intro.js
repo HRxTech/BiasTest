@@ -11,10 +11,13 @@ var client = createClient({
 
 class Intro extends Component {
 
+  
+
   constructor(props) {
     super(props);
     this.state = {
         chosenTest: '',
+        testItem: '',
         testData: []
     }
   }
@@ -27,6 +30,7 @@ class Intro extends Component {
     .then((response) => {
       this.setState({ testData : response.items });
     });
+    
        
   }
 
@@ -49,7 +53,9 @@ class Intro extends Component {
 
         {testData.map((testItem) => {
           return (
-          <li key={testItem.fields.testTitle}>{testItem.fields.testTitle}</li>
+          <li 
+           key={testItem.fields.testTitle}>
+           <Link to='/option' >{testItem.fields.testTitle}</Link></li>
           )
         })  
         }
