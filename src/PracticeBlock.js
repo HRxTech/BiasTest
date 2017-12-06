@@ -72,8 +72,6 @@ class PracticeBlock extends Component {
           currentItem: itemsArray[this.state.currentItemIndex],
           isLoading: false
         })
-
-        console.log(this.state);
       })
       .catch(console.error);
   }
@@ -84,20 +82,28 @@ class PracticeBlock extends Component {
     // Listen to keypress...
     document.addEventListener('keydown', (event) => {
       const key = event.key;
-      var currentItemIndex = this.state.currentItemIndex;
 
+      // Check if correct answer
+      if (key === 'ArrowRight') {
+        var userAnswer = 'Male';
+      } else if (key === 'ArrowLeft') {
+        var userAnswer = 'Female'
+      }
+
+      if(userAnswer === this.state.currentItem.correctCategory){
+        console.log('correct');
+      }else{
+        console.log('incorrect');
+      }
+
+      // Increment index so next category item is shown
+      var currentItemIndex = this.state.currentItemIndex;
       if (currentItemIndex < this.state.categoryItemsShuffled.length - 1) {
         currentItemIndex++;
         this.setState({ 
           currentItemIndex: currentItemIndex,
           currentItem: this.state.categoryItemsShuffled[currentItemIndex]
         });
-      }
-
-      if (key === 'ArrowRight') {
-        console.log('Male');
-      } else if (key === 'ArrowLeft') {
-        console.log('Female');
       }
     })
   }
