@@ -90,7 +90,7 @@ class PracticeBlock extends Component {
 
       // Only do stuff if the test is not over...
       var currentItemIndex = this.state.currentItemIndex;
-      if (currentItemIndex < this.state.categoryItemsShuffled.length - 1) {
+      if (currentItemIndex < this.state.categoryItemsShuffled.length) {
         
         // 1. Check what user answered
         if (key === 'ArrowRight') {
@@ -112,7 +112,9 @@ class PracticeBlock extends Component {
             answerIsCorrect: false
           })
         }
-      }        
+      }  
+      
+      console.log(this.state.currentItem);
     })
   }
 
@@ -125,14 +127,16 @@ class PracticeBlock extends Component {
       )
     }
 
-    console.log(this.state.currentItemIndex);
-
     return (
       <div className="PracticeBlock">
         <h1>Practice Block</h1>
         <h2>{this.state.currentBlockTitle}</h2>
 
+        {this.state.currentItemIndex < this.state.categoryItemsShuffled.length?
         <p>{this.state.currentItem.categoryItem}</p>
+        :
+        <p>Test is finished.</p>
+        }
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
           <h3>{this.state.leftCategoryName}</h3>
@@ -143,10 +147,7 @@ class PracticeBlock extends Component {
           !this.state.answerIsCorrect &&
             <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
          }
-                
-        {this.state.currentItemIndex === this.state.categoryItemsShuffled.length - 1 &&
-          <p>Test is finished.</p>}
-
+         
       </div>
     );
   }
