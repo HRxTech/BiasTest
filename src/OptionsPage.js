@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Intro from './Intro';
+
 
 class OptionsPage extends Component {
     constructor(props){

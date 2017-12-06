@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import { createClient } from 'contentful'
-import { Link } from 'react-router-dom'
+import { createClient } from 'contentful';
+import { Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import OptionsPage from './OptionsPage';
+
+
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -26,12 +30,12 @@ class Intro extends Component {
     var testNames = this.state.testNames;
     client.getEntries({
       content_type: 'biasTest'
+      
     })
     .then((response) => {
       this.setState({ testData : response.items });
+  
     });
-    
-       
   }
 
   render() {
@@ -55,10 +59,17 @@ class Intro extends Component {
           return (
           <li 
            key={testItem.fields.testTitle}>
-           <Link to='/option' >{testItem.fields.testTitle}</Link></li>
+           <Link to='/option' ><button>{testItem.fields.testTitle}</button></Link></li>
           )
         })  
         }
+        <Route path='/option'
+               render={(routeProps) => (
+                   <OptionsPage {...routeProps}
+                   chosenTest = {this.state.testItem.fields.testTitle}
+                    />
+               )}
+        />
 
         <ul>
           <li><Link to='/'>Intro</Link></li>
