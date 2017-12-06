@@ -50,6 +50,8 @@ class PracticeBlock extends Component {
   }
 
   render() {
+
+    console.log(this.props.data);
     return (
       <div className="PracticeBlock">
         <h1>Practice Block</h1>
@@ -70,7 +72,6 @@ class PracticeBlock extends Component {
           !this.state.answerIsCorrect &&
             <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
          }
-
       </div>
     );
   }
