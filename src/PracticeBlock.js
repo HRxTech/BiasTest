@@ -17,8 +17,9 @@ class PracticeBlock extends Component {
       rightCategoryName: '',
       currentItemIndex: 0,
       isLoading: false,
-      answerIsCorrect: null
+      isFirstScreen: true
     }
+
   }
 
   // Function to handle first HTTP request
@@ -84,6 +85,9 @@ class PracticeBlock extends Component {
     document.addEventListener('keydown', (event) => {
       const key = event.key;
 
+      // Change state of first screen
+      this.setState({ isFirstScreen: false })
+
       // Only do stuff if the test is not over...
       var currentItemIndex = this.state.currentItemIndex;
       if (currentItemIndex < this.state.categoryItemsShuffled.length - 1) {
@@ -113,11 +117,15 @@ class PracticeBlock extends Component {
   }
 
   render() {
+
+    // Loader..
     if (this.state.isLoading) {
       return (
         <div className='loader'>Loading</div>
       )
     }
+
+    console.log(this.state.currentItemIndex);
 
     return (
       <div className="PracticeBlock">
@@ -131,11 +139,14 @@ class PracticeBlock extends Component {
           <h3>{this.state.rightCategoryName}</h3>
         </div>
 
-        {!this.state.answerIsCorrect &&
-          <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>}         
-        
-         {this.state.currentItemIndex === this.state.categoryItemsShuffled.length - 1 &&
+        {!this.state.isFirstScreen &&
+          !this.state.answerIsCorrect &&
+            <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
+         }
+                
+        {this.state.currentItemIndex === this.state.categoryItemsShuffled.length - 1 &&
           <p>Test is finished.</p>}
+
       </div>
     );
   }
