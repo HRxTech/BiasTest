@@ -16,7 +16,8 @@ class PracticeBlock extends Component {
       leftCategoryName: '',
       rightCategoryName: '',
       currentItemIndex: 0,
-      isLoading: false
+      isLoading: false,
+      answerIsCorrect: null
     }
   }
 
@@ -83,32 +84,33 @@ class PracticeBlock extends Component {
     document.addEventListener('keydown', (event) => {
       const key = event.key;
 
-      // Check if correct answer
-      if (key === 'ArrowRight') {
-        var userAnswer = 'Male';
-      } else if (key === 'ArrowLeft') {
-        var userAnswer = 'Female'
-      }
-
-      if(userAnswer === this.state.currentItem.correctCategory){
-        console.log('correct');
-      }else{
-        console.log('incorrect');
-      }
-
-      // Increment index so next category item is shown
+      // Only do stuff if the test is not over...
       var currentItemIndex = this.state.currentItemIndex;
       if (currentItemIndex < this.state.categoryItemsShuffled.length - 1) {
-        currentItemIndex++;
-        this.setState({ 
-          currentItemIndex: currentItemIndex,
-          currentItem: this.state.categoryItemsShuffled[currentItemIndex]
-        });
-      }
+        
+        // 1. Check what user answered
+        if (key === 'ArrowRight') {
+          var userAnswer = 'Male';
+        } else if (key === 'ArrowLeft') {
+          var userAnswer = 'Female'
+        }
+
+        // 2. Check if user answer is correct, and only increment index if answer is correct
+        if(userAnswer === this.state.currentItem.correctCategory){
+          currentItemIndex++;
+          this.setState({
+            answerIsCorrect: true,
+            currentItemIndex: currentItemIndex,
+            currentItem: this.state.categoryItemsShuffled[currentItemIndex]
+          })
+        }else{
+          this.setState({
+            answerIsCorrect: false
+          })
+        }
+      }        
     })
   }
-
-
 
   render() {
     if (this.state.isLoading) {
@@ -116,8 +118,6 @@ class PracticeBlock extends Component {
         <div className='loader'>Loading</div>
       )
     }
-    var categoryItems = this.state.categoryItemsArray;
-    var index = this.state.currentQuestionIndex;
 
     return (
       <div className="PracticeBlock">
@@ -126,9 +126,16 @@ class PracticeBlock extends Component {
 
         <p>{this.state.currentItem.categoryItem}</p>
 
-        <h3>{this.state.leftCategoryName}</h3>
-        <h3>{this.state.rightCategoryName}</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
+          <h3>{this.state.leftCategoryName}</h3>
+          <h3>{this.state.rightCategoryName}</h3>
+        </div>
 
+        {!this.state.answerIsCorrect &&
+          <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>}         
+        
+         {this.state.currentItemIndex === this.state.categoryItemsShuffled.length - 1 &&
+          <p>Test is finished.</p>}
       </div>
     );
   }
