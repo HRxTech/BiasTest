@@ -12,7 +12,11 @@ class PracticeBlock extends Component {
     super(props);
 
     this.state = {
-      currentBlockTitle: ''
+      currentBlockTitle: '',
+      leftCategoryName: '',
+      rightCategoryName: '',
+      currentItemIndex: 0,
+      isLoading: false
     }
   }
 
@@ -27,36 +31,67 @@ class PracticeBlock extends Component {
         const currentBlockTitle = currentBlockData.practiceBlockTitle;
 
         const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-        const leftCategoryItemsArray = currentBlockData.leftCategory.fields.categoryItems;
+        const leftCategoryItems = currentBlockData.leftCategory.fields.categoryItems;
 
         const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-        const rightCategoryItemsArray = currentBlockData.rightCategory.fields.categoryItems;
+        const rightCategoryItems = currentBlockData.rightCategory.fields.categoryItems;
 
-        const totalCategoryItemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
+        // Combine left category items with right category items
+        var itemsArray = [];
+        
+        leftCategoryItems.map((leftCategoryItem) => {
+          itemsArray.push( {
+            correctCategory : leftCategoryName,
+            categoryItem : leftCategoryItem.fields.word
+          })
+        })
+
+        rightCategoryItems.map((rightCategoryItem) => {
+          itemsArray.push( {
+            correctCategory : rightCategoryName,
+            categoryItem : rightCategoryItem.fields.word
+          })
+        })
+
+        // Function to shuffle array
+        function shuffleArray(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+              let j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+
+        shuffleArray(itemsArray);
 
         // Set Current Block Title and Category Names in state
         this.setState({
           currentBlockTitle: currentBlockTitle,
           leftCategoryName: leftCategoryName,
           rightCategoryName: rightCategoryName,
-          categoryItemsArray: totalCategoryItemsArray,
-          currentQuestionIndex: 0,
+          categoryItemsShuffled: itemsArray,
+          currentItem: itemsArray[this.state.currentItemIndex],
           isLoading: false
         })
+
+        console.log(this.state);
       })
       .catch(console.error);
   }
 
+  // Function to handle key press
   componentDidMount() {
-    // Function to handle key press
+
+    // Listen to keypress...
     document.addEventListener('keydown', (event) => {
       const key = event.key;
+      var currentItemIndex = this.state.currentItemIndex;
 
-      var currentQIndex = this.state.currentQuestionIndex;
-
-      if (currentQIndex < this.state.categoryItemsArray.length - 1) {
-        currentQIndex++;
-        this.setState({ currentQuestionIndex: currentQIndex });
+      if (currentItemIndex < this.state.categoryItemsShuffled.length - 1) {
+        currentItemIndex++;
+        this.setState({ 
+          currentItemIndex: currentItemIndex,
+          currentItem: this.state.categoryItemsShuffled[currentItemIndex]
+        });
       }
 
       if (key === 'ArrowRight') {
@@ -66,6 +101,8 @@ class PracticeBlock extends Component {
       }
     })
   }
+
+
 
   render() {
     if (this.state.isLoading) {
@@ -81,7 +118,7 @@ class PracticeBlock extends Component {
         <h1>Practice Block</h1>
         <h2>{this.state.currentBlockTitle}</h2>
 
-        {categoryItems[index].fields.word}
+        <p>{this.state.currentItem.categoryItem}</p>
 
         <h3>{this.state.leftCategoryName}</h3>
         <h3>{this.state.rightCategoryName}</h3>
