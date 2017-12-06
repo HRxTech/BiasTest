@@ -1,90 +1,75 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful'
 
-// TODO: DRY - repeated code.
-var client = createClient({
-  space: '4xbeshmjlgqs',
-  accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
-});
-
 class PracticeBlock extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentBlockTitle: ''
+      currentItemIndex: 0,
+      isFirstScreen: true
     }
   }
 
-  // Function to handle first HTTP request
-  componentWillMount() {
-    this.setState({ isLoading: true });
-    // Retrieve all entries of Practice Block content type
-    client.getEntries({ 'content_type': 'practiceBlock', include: 5 })
-      .then((response) => {
-
-        const currentBlockData = response.items[0].fields;
-        const currentBlockTitle = currentBlockData.practiceBlockTitle;
-
-        const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-        const leftCategoryItemsArray = currentBlockData.leftCategory.fields.categoryItems;
-
-        const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-        const rightCategoryItemsArray = currentBlockData.rightCategory.fields.categoryItems;
-
-        const totalCategoryItemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
-
-        // Set Current Block Title and Category Names in state
-        this.setState({
-          currentBlockTitle: currentBlockTitle,
-          leftCategoryName: leftCategoryName,
-          rightCategoryName: rightCategoryName,
-          categoryItemsArray: totalCategoryItemsArray,
-          currentQuestionIndex: 0,
-          isLoading: false
-        })
-      })
-      .catch(console.error);
-  }
-
+  // Function to handle key press
   componentDidMount() {
-    // Function to handle key press
+
+    // Listen to keypress...
     document.addEventListener('keydown', (event) => {
       const key = event.key;
 
-      var currentQIndex = this.state.currentQuestionIndex;
+      // Change state of first screen
+      this.setState({ isFirstScreen: false })
 
-      if (currentQIndex < this.state.categoryItemsArray.length - 1) {
-        currentQIndex++;
-        this.setState({ currentQuestionIndex: currentQIndex });
-      }
+      // Only do stuff if the test is not over...
+      var currentItemIndex = this.state.currentItemIndex;
+      if (currentItemIndex < this.props.categoryItemsShuffled.length) {
+        
+        // 1. Check what user answered
+        if (key === 'ArrowRight') {
+          var userAnswer = this.props.rightCategoryName;
+        } else if (key === 'ArrowLeft') {
+          var userAnswer = this.props.leftCategoryName;
+        }
 
-      if (key === 'ArrowRight') {
-        console.log('Male');
-      } else if (key === 'ArrowLeft') {
-        console.log('Female');
-      }
+        // 2. Check user answer against correct category, and only increment index if answer is correct
+        if(userAnswer === this.props.categoryItemsShuffled[currentItemIndex].correctCategory){
+          currentItemIndex++;
+          this.setState({
+            answerIsCorrect: true,
+            currentItemIndex: currentItemIndex,
+            currentItem: this.props.categoryItemsShuffled[currentItemIndex]
+          })
+        }else{
+          this.setState({
+            answerIsCorrect: false
+          })
+        }
+      }  
     })
   }
 
   render() {
-    if (this.state.isLoading) {
-      return (
-        <div className='loader'>Loading</div>
-      )
-    }
-    var categoryItems = this.state.categoryItemsArray;
-    var index = this.state.currentQuestionIndex;
-
     return (
       <div className="PracticeBlock">
         <h1>Practice Block</h1>
-        <h2>{this.state.currentBlockTitle}</h2>
+        <h2>{this.props.currentBlockTitle}</h2>
 
-        {categoryItems[index].fields.word}
+        {this.state.currentItemIndex < this.props.categoryItemsShuffled.length ?
+        <p>{this.props.categoryItemsShuffled[this.state.currentItemIndex].categoryItem}</p>
+        :
+        <p>Test is finished.</p>
+        }
 
-        <h3>{this.state.leftCategoryName}</h3>
-        <h3>{this.state.rightCategoryName}</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
+          <h3>{this.props.leftCategoryName}</h3>
+          <h3>{this.props.rightCategoryName}</h3>
+        </div>
+
+        {!this.state.isFirstScreen &&
+          !this.state.answerIsCorrect &&
+            <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
+         }
 
       </div>
     );
