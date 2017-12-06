@@ -7,11 +7,37 @@ var client = createClient({
   accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
 });
 
+// IF THIS BLOCK WAS REUSED AS TEST BLOCK, WILL RECEIVE FOLLOWING DATA AS PROPS...
+const testType = 'Practice';
+// const testData =  Previous sacreen make API and retrieve all data
+const currentBlockIndex = 0;
+
+// Function to shuffle array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Function to merge arrays and store correct answer
+function mergeArraysAndAnswers(array, newArray, correctCategory){
+  array.map((oneItem) => {
+    newArray.push( {
+      correctCategory : correctCategory,
+      categoryItem : oneItem.fields.word
+    })
+  })
+}
+
+// START OF COMPONENT ------------------------------------------------------------------
 class PracticeBlock extends Component {
   constructor(props) {
     super(props);
 
+    // Set initial state
     this.state = {
+      currentBlockIndex: 1,// this.props.currentBlockIndex;
       currentBlockTitle: '',
       leftCategoryName: '',
       rightCategoryName: '',
@@ -26,43 +52,26 @@ class PracticeBlock extends Component {
   componentWillMount() {
     this.setState({ isLoading: true });
     // Retrieve all entries of Practice Block content type
+    // If previous screen makes API request, then store props in own state before retrieving it
     client.getEntries({ 'content_type': 'practiceBlock', include: 5 })
       .then((response) => {
 
-        const currentBlockData = response.items[0].fields;
+        const currentBlockData = response.items[this.state.currentBlockIndex].fields;
         const currentBlockTitle = currentBlockData.practiceBlockTitle;
 
         const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
         const leftCategoryItems = currentBlockData.leftCategory.fields.categoryItems;
-
+        
         const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
         const rightCategoryItems = currentBlockData.rightCategory.fields.categoryItems;
 
-        // Combine left category items with right category items
         var itemsArray = [];
-        
-        leftCategoryItems.map((leftCategoryItem) => {
-          itemsArray.push( {
-            correctCategory : leftCategoryName,
-            categoryItem : leftCategoryItem.fields.word
-          })
-        })
 
-        rightCategoryItems.map((rightCategoryItem) => {
-          itemsArray.push( {
-            correctCategory : rightCategoryName,
-            categoryItem : rightCategoryItem.fields.word
-          })
-        })
-
-        // Function to shuffle array
-        function shuffleArray(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-              let j = Math.floor(Math.random() * (i + 1));
-              [array[i], array[j]] = [array[j], array[i]];
-          }
-        }
-
+        // Merge category items into single array along with their correct answers
+        mergeArraysAndAnswers(leftCategoryItems, itemsArray, leftCategoryName);
+        mergeArraysAndAnswers(rightCategoryItems, itemsArray, rightCategoryName);
+                
+        // Shuffle Array
         shuffleArray(itemsArray);
 
         // Set Current Block Title and Category Names in state
@@ -94,12 +103,12 @@ class PracticeBlock extends Component {
         
         // 1. Check what user answered
         if (key === 'ArrowRight') {
-          var userAnswer = 'Male';
+          var userAnswer = this.state.rightCategoryName;
         } else if (key === 'ArrowLeft') {
-          var userAnswer = 'Female'
+          var userAnswer = this.state.leftCategoryName;
         }
 
-        // 2. Check if user answer is correct, and only increment index if answer is correct
+        // 2. Check user answer against correct category, and only increment index if answer is correct
         if(userAnswer === this.state.currentItem.correctCategory){
           currentItemIndex++;
           this.setState({
@@ -113,8 +122,6 @@ class PracticeBlock extends Component {
           })
         }
       }  
-      
-      console.log(this.state.currentItem);
     })
   }
 
@@ -147,7 +154,7 @@ class PracticeBlock extends Component {
           !this.state.answerIsCorrect &&
             <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
          }
-         
+
       </div>
     );
   }
