@@ -7,6 +7,16 @@ var client = createClient({
     accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
   });
 
+// Function to create array of category words and their correct categories
+function getCategoryWordsAndAnswers(array, newArray, correctCategory){
+    array.map((oneItem) => {
+        newArray.push( {
+          correctCategory : correctCategory,
+          categoryItem : oneItem.fields.word
+        })
+      })
+}
+
 class PracticeLandingPage extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +24,10 @@ class PracticeLandingPage extends Component {
         // Set initial state
         this.state = {
           currentBlockIndex: 0,// this.props.currentBlockIndex;
+          leftCategoryName: '',
+          leftCategoryItems: [],
+          rightCategoryName: '',
+          rightCategoryItems: []
         }
     }
 
@@ -27,18 +41,25 @@ class PracticeLandingPage extends Component {
             const currentBlockTitle = currentBlockData.practiceBlockTitle;
 
             const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-            const leftCategoryItems = currentBlockData.leftCategory.fields.categoryItems;
+            const leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
+            var leftCategoryItemsArray = [];
             
             const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-            const rightCategoryItems = currentBlockData.rightCategory.fields.categoryItems;
+            const rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
+            var rightCategoryItemsArray = [];
+            
 
-        // Set Current Block Title and Category Names in state
+            getCategoryWordsAndAnswers(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);
+            getCategoryWordsAndAnswers(rightCategoryItemsData, rightCategoryItemsArray, rightCategoryName);
+            
+
+        // Set Current Block Title, Category Names and Category Items in state
         this.setState({
           currentBlockTitle: currentBlockTitle,
           leftCategoryName: leftCategoryName,
-          leftCategoryItems: leftCategoryItems,
+          leftCategoryItems: leftCategoryItemsArray,
           rightCategoryName: rightCategoryName,
-          rightCategoryItems: rightCategoryItems,
+          rightCategoryItems: rightCategoryItemsArray,
         })
       })
       .catch(console.error);
@@ -48,15 +69,30 @@ class PracticeLandingPage extends Component {
   render() {
     return (
       <div>
-      <h1>Bias Test - Gender/Career</h1>
-      <h2>{this.state.currentBlockTitle}</h2>
-      <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p> 
+        <h1>Bias Test - Gender/Career</h1>
+        <h2>{this.state.currentBlockTitle}</h2>
+        <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p> 
 
-      {this.state.leftCategoryName}
-      {this.state.leftCategoryItems}
-
-      {this.state.rightCategoryName}
-      {this.state.rightCategoryItems}
+        <table>
+            <tbody>
+            <tr>
+                <td>{this.state.leftCategoryName}</td>
+                {this.state.leftCategoryItems.map((leftItem) => {
+                    return (
+                        <td key={leftItem.categoryItem}>{leftItem.categoryItem}</td>
+                    )
+                })}
+            </tr>
+            <tr>
+                <td>{this.state.rightCategoryName}</td>
+                {this.state.rightCategoryItems.map((rightItem) => {
+                    return (
+                        <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
+                    )
+                })}
+            </tr>
+            </tbody>
+        </table>
       </div>
       
     )
