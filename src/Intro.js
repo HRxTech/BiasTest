@@ -17,6 +17,19 @@ class Intro extends Component {
         chosenTest: '',
         testData: []
     }
+
+    this.onClickPass = this.onClickPass.bind(this);
+  }
+
+  onClickPass(e) {
+    e.preventDefault();
+    this.props.history.push({
+      pathname: '/pass',
+      state: {
+        id: 7,
+        color: 'green'
+      }
+    })
   }
 
   componentWillMount() {
@@ -59,6 +72,7 @@ class Intro extends Component {
           <li><Link to='/form'>Form</Link></li>
           <li><Link to='/practice'>Practice Block</Link></li>
           <li><Link to='/option'>Options Page</Link></li>
+          <li><button onClick={this.onClickPass}>Pass</button></li>
         </ul>
       </div>
     );

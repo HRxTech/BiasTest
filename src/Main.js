@@ -3,6 +3,7 @@ import Intro from './Intro';
 import Form from './Form';
 import PracticeLandingPage from './PracticeLandingPage';
 import OptionsPage from './OptionsPage';
+import PassValues from './PassValues';
 import { Switch, Route } from 'react-router-dom'
 
 class Main extends Component {
@@ -15,6 +16,7 @@ class Main extends Component {
                     <Route path='/form' component={Form} />
                     <Route path='/practice' component={PracticeLandingPage} />
                     <Route path='/option' component={OptionsPage} />
+                    <Route path='/pass' component={PassValues} />
                 </Switch>
             </div>
         );
