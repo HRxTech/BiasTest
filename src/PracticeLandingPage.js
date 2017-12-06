@@ -47,7 +47,7 @@ class PracticeLandingPage extends Component {
   componentWillMount() {
         this.setState({ isLoading: true });
         // Retrieve all entries of Practice Block content type
-        client.getEntries({ 'content_type': 'testBlock', include: 5 })
+        client.getEntries({ 'content_type': 'practiceBlock', include: 5 })
                 .then((response) => {
 
                     const currentBlockData = response.items[this.state.currentBlockIndex].fields;
