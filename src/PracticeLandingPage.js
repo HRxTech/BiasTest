@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import PracticeBlock from './PracticeBlock';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -33,7 +34,7 @@ class PracticeLandingPage extends Component {
     
         // Set initial state
         this.state = {
-          currentBlockIndex: 0,
+          currentBlockIndex: 1,
           currentBlockTitle: '',// this.props.currentBlockIndex;
           leftCategoryName: '',
           leftCategoryItems: [],
@@ -90,8 +91,9 @@ class PracticeLandingPage extends Component {
             <h1>Loading...</h1>
         )
     }
-    
+
     return (
+     <BrowserRouter>        
       <div>
         <h1>Bias Test - Gender/Career</h1>
         <h2>{this.state.currentBlockTitle}</h2>
@@ -122,17 +124,20 @@ class PracticeLandingPage extends Component {
             </tbody>
         </table>
 
-        <button>Start Practice Test</button>
 
-        <PracticeBlock 
-            currentBlockIndex = {this.state.currentBlockIndex}
-            currentBlockTitle = {this.state.currentBlockTitle}
-            leftCategoryName = {this.state.leftCategoryName}
-            rightCategoryName = {this.state.rightCategoryName}
-            categoryItemsShuffled = {this.state.categoryItemsShuffled}
-        />
+            <Link to = '/practice-block'><button>Start Practice Test</button></Link>
+            <Route path='/practice-block' component={PracticeBlock} />
+            
+            {/*<PracticeBlock 
+                currentBlockIndex = {this.state.currentBlockIndex}
+                currentBlockTitle = {this.state.currentBlockTitle}
+                leftCategoryName = {this.state.leftCategoryName}
+                rightCategoryName = {this.state.rightCategoryName}
+                categoryItemsShuffled = {this.state.categoryItemsShuffled}
+            />*/}
 
       </div>
+      </BrowserRouter>
       
     )
   }
