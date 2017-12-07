@@ -2,17 +2,6 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 
-
-// FOR PRACTICE BLOCK: Function to create array of category names and their correct categories
-function createCategoryWordsAndAnswersArray(array, newArray, correctCategory){
-    array.forEach((oneItem) => {
-        newArray.push( {
-          correctCategory : correctCategory,
-          categoryItem : oneItem.fields.word
-        })
-      })
-}
-
 // FOR TEST BLOCK: Function to extract categories from array and put correct answers
 // function createTestCategoryWordsAndAnswersArray(array, newArray){
 //     array.forEach((oneObject) => {
@@ -27,24 +16,17 @@ function createCategoryWordsAndAnswersArray(array, newArray, correctCategory){
 // }
 
 // FOR TEST BLOCK: Function to extract 3 categories from array and put correct answers
-function createTestCategoryWordsAndAnswersArray(array, newArray){
-    array.forEach((oneObject) => {
-        for(let i = 0; i < 3; i++){
-            newArray.push({
-                correctCategory : oneObject.fields.categoryName,
-                categoryItem : oneObject.fields.categoryItems[i].fields.word
-            })
-        }
-    })
-} 
+// function createTestCategoryWordsAndAnswersArray(array, newArray){
+//     array.forEach((oneObject) => {
+//         for(let i = 0; i < 3; i++){
+//             newArray.push({
+//                 correctCategory : oneObject.fields.categoryName,
+//                 categoryItem : oneObject.fields.categoryItems[i].fields.word
+//             })
+//         }
+//     })
+// } 
 
-// Function to shuffle array
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-  }
-}
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
@@ -197,7 +179,6 @@ class TestLanding extends Component {
                 <h1>Loading...</h1>
             )
         }
-        console.log(this.state.isDoingTest);
 
         if (this.state.isDoingTest) {
             return (
