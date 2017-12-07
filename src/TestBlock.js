@@ -108,8 +108,10 @@ class TestBlock extends Component {
         }
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
-          <button onClick = {() => this.handleClick('ArrowLeft')}>{this.state.leftCategoryName}</button>
-          <button onClick = {() => this.handleClick('ArrowRight')}>{this.state.rightCategoryName}</button>
+          {this.state.leftCategoryName}
+          <button onClick = {() => this.handleClick('ArrowLeft')}>&#8249;</button>
+          {this.state.rightCategoryName}
+          <button onClick = {() => this.handleClick('ArrowRight')}>	&#8250;</button>
         </div>
 
         {!this.state.isFirstScreen &&
