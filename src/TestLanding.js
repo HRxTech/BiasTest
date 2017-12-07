@@ -76,7 +76,6 @@ class TestLanding extends Component {
             accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
         });
         
-        console.log(this.state.testId);
         client.getEntries(
             {
                 content_type: 'biasTest',
@@ -181,7 +180,6 @@ class TestLanding extends Component {
         }
 
         if (this.state.isDoingTest) {
-            console.log('doing test');
             return (
                 <TestBlock blockData={this.state} />
             )
