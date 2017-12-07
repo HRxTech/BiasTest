@@ -54,7 +54,7 @@ class OptionsPage extends Component {
           </button>
 
           <button style={buttonStyle}
-            onClick={() => this.handleClick('test')}>
+            onClick={() => this.handleClick('real')}>
             Take Test
           <FontAwesome name='arrow-circle-o-right' />
           </button>
