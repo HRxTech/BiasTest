@@ -11,7 +11,7 @@ var client = createClient({
 
 // Function to create array of category words and their correct categories
 function createCategoryWordsAndAnswersArray(array, newArray, correctCategory){
-    array.map((oneItem) => {
+    array.forEach((oneItem) => {
         newArray.push( {
           correctCategory : correctCategory,
           categoryItem : oneItem.fields.word

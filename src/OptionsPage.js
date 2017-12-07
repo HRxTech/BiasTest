@@ -13,9 +13,9 @@ class OptionsPage extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e){
-      console.log(e.target.value);
-      if(e.target.value === 'practice'){
+    handleClick(testType){
+      console.log(testType);
+      if(testType === 'practice'){
         
       }else{
         
@@ -30,16 +30,16 @@ class OptionsPage extends Component {
 
       <div>
         <button 
-          onClick={this.handleClick}
-          value='practice'>Practice 
+          onClick={() => this.handleClick('practice')}>
+          Practice 
           <FontAwesome name='arrow-circle-o-right' />
         </button>
       </div>
 
       <div>
         <button 
-          onClick={this.handleClick}
-          value='test'>Start Test 
+          onClick={() => this.handleClick('test')}>
+          Start Test 
           <FontAwesome name='arrow-circle-o-right' />
         </button>
       </div>

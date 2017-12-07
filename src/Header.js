@@ -31,7 +31,7 @@ class Header extends Component {
         return (
             <div className="Header">
                 <img src={this.state.logoImg} alt={this.state.logoImgAlt} style={{'width':50, 'paddingRight':200, 'paddingTop':15}} />
-                <a href="#">
+                <a href="">
                     <FontAwesome name='question-circle' 
                                  size='2x' 
                                  style={{'color':"#BFC5D2", 'paddingTop':15}}

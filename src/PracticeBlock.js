@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { createClient } from 'contentful'
 
 class PracticeBlock extends Component {
   constructor(props) {
@@ -26,10 +25,11 @@ class PracticeBlock extends Component {
       if (currentItemIndex < this.props.categoryItemsShuffled.length) {
         
         // 1. Check what user answered
+        var userAnswer = '';
         if (key === 'ArrowRight') {
-          var userAnswer = this.props.rightCategoryName;
+          userAnswer = this.props.rightCategoryName;
         } else if (key === 'ArrowLeft') {
-          var userAnswer = this.props.leftCategoryName;
+          userAnswer = this.props.leftCategoryName;
         }
 
         // 2. Check user answer against correct category, and only increment index if answer is correct

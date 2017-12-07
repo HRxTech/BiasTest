@@ -20,7 +20,7 @@ class Intro extends Component {
   }
 
   componentWillMount() {
-    var testNames = this.state.testNames;
+    // var testNames = this.state.testNames;
     client.getEntries({
       content_type: 'biasTest'
     })
