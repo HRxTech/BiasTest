@@ -17,8 +17,6 @@ class TestBlock extends Component {
       startTime: Date.now(),
     }
 
-    console.log(this.state.startTime);
-
     this.handleAnswer = this.handleAnswer.bind(this);
 
   }
@@ -26,7 +24,7 @@ class TestBlock extends Component {
   // Function to handle key press
   componentDidMount() { 
 
-    console.log(Date.now());
+    // var startTime = Date.now();
 
     // Listen to keypress...
     document.addEventListener('keydown', (event) => {
@@ -42,12 +40,18 @@ class TestBlock extends Component {
   // Function to handle click
   handleAnswer(key){
 
+    if( this.state.answerIsCorrect ){
       this.setState({
         responseTimes: this.state.responseTimes.concat(Date.now() - this.state.startTime),
         startTime: Date.now()
       })
+    }else{
+      this.setState({
+        responseTimes: this.state.responseTimes.concat(Date.now() - this.state.startTime),
+      })
+    }
     
-    // console.log(this.state.responseTimes);
+    console.log(this.state.responseTimes);
 
     // Change state of first screen and erase error message
     this.setState({ isFirstScreen: false, invalidKey: false })
