@@ -36,7 +36,7 @@ class OptionsPage extends Component {
   handleClick(testType) {
     console.log(testType);
     if (testType === 'practice') {
-      
+
     } else {
 
     }
@@ -61,7 +61,7 @@ class OptionsPage extends Component {
 
           <button style={buttonStyle}
             onClick={() => this.handleClick('test')}>
-            Start Test
+            Take Test
           <FontAwesome name='arrow-circle-o-right' />
           </button>
 
