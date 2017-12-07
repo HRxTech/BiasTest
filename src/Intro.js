@@ -14,9 +14,10 @@ class Intro extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        chosenTest: '',
-        testData: []
+      chosenTest: '',
+      testData: []
     }
+    this.onClickTest = this.onClickTest.bind(this);
   }
 
   componentWillMount() {
@@ -24,10 +25,20 @@ class Intro extends Component {
     client.getEntries({
       content_type: 'biasTest'
     })
-    .then((response) => {
-      this.setState({ testData : response.items });
-    });
-       
+      .then((response) => {
+        this.setState({ testData: response.items });
+        console.log(this.state.testData);
+      });
+
+  }
+
+  onClickTest(testItem) {
+    let testName = testItem.fields.testTitle
+      .toLowerCase()
+      .replace(/[^\w ]+/g, '')
+      .replace(/ +/g, '-');
+
+    this.props.history.push(`/begin-test/${testName}/${testItem.sys.id}`);
   }
 
   render() {
@@ -49,17 +60,16 @@ class Intro extends Component {
 
         {testData.map((testItem) => {
           return (
-          <li key={testItem.fields.testTitle}>{testItem.fields.testTitle}</li>
+            <li onClick={() => this.onClickTest(testItem)} key={testItem.fields.testTitle}>{testItem.fields.testTitle}</li>
           )
-        })  
+        })
         }
 
         <ul>
           <li><Link to='/'>Intro</Link></li>
           <li><Link to='/form'>Form</Link></li>
           <li><Link to='/landing'>Landing Page</Link></li>
-          <li><Link to='/test'>Test Page</Link></li>          
-          <li><Link to='/option'>Options Page</Link></li>
+          <li><Link to='/test'>Test Page</Link></li>
         </ul>
       </div>
     );
