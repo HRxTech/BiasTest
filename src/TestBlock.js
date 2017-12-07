@@ -4,6 +4,7 @@ class TestBlock extends Component {
   constructor(props) {
     super(props);
 
+      console.log(this.props);
     this.state = {
       currentBlockIndex: this.props.blockData.currentBlockIndex,      
       currentBlockTitle: this.props.blockData.currentBlockTitle,
@@ -95,7 +96,9 @@ class TestBlock extends Component {
   render() {
     return (
       <div className="TestBlock">
-        <h1>Practice Block</h1>
+        {this.state.isPractice?
+        <h1>Practice Test</h1> :
+        <h1>Bias Test</h1>}
         <h2>{this.state.currentBlockTitle}</h2>
 
         {this.state.currentItemIndex < this.state.categoryItemsShuffled.length ?

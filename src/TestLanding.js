@@ -43,9 +43,8 @@ class TestLanding extends Component {
             rightCategoryItems: [],
             isPractice: (this.props.match.params.stage === 'practice'),
             testId: this.props.match.params.testId,
-            isDoingTest: false
+            isDoingTest: true
         }
-
         this.onClickPass = this.onClickPass.bind(this);
         this.displayCategoriesItems = this.displayCategoriesItems.bind(this);
     }
@@ -77,6 +76,7 @@ class TestLanding extends Component {
             accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
         });
         
+        console.log(this.state.testId);
         client.getEntries(
             {
                 content_type: 'biasTest',
@@ -181,6 +181,7 @@ class TestLanding extends Component {
         }
 
         if (this.state.isDoingTest) {
+            console.log('doing test');
             return (
                 <TestBlock blockData={this.state} />
             )
@@ -201,17 +202,11 @@ class TestLanding extends Component {
                         </tr>
                         <tr>
                             <td>{this.state.leftCategoryName}</td>
-                            <td>
                             {this.displayCategoriesItems(this.state.leftCategoryItems)}
-                            </td>
                         </tr>
                         <tr>
                             <td>{this.state.rightCategoryName}</td>
-                            {this.state.rightCategoryItems.map((rightItem) => {
-                                return (
-                                    <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
-                                )
-                            })}
+                            {this.displayCategoriesItems(this.state.rightCategoryItems)}
                         </tr>
                     </tbody>
                 </table>
