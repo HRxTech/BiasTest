@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import Intro from './Intro';
+
 
 class OptionsPage extends Component {
     constructor(props){
         super(props);
+
+        // console.log(chosenTest);
 
         // // Set Initial State
         this.state = { 

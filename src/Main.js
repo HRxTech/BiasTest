@@ -6,6 +6,7 @@ import OptionsPage from './OptionsPage';
 import { Switch, Route } from 'react-router-dom'
 
 class Main extends Component {
+    
     render() {
         return (
             <div className="Main">
@@ -15,7 +16,9 @@ class Main extends Component {
                     <Route path='/form' component={Form} />
                     <Route path='/practice' component={PracticeLandingPage} />
                     <Route path='/option' component={OptionsPage} />
-                </Switch>
+                    
+                    </Switch>
+
             </div>
         );
     }
