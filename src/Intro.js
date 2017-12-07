@@ -71,7 +71,6 @@ class Intro extends Component {
 
         <ul>
           <li><Link to='/form'>Form</Link></li>
-          <li><Link to='/test'>Test Page</Link></li>
         </ul>
       </div>
     );

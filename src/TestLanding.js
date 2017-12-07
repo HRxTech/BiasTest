@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
+import TestBlock from './TestBlock';
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
@@ -15,7 +16,8 @@ class TestLanding extends Component {
             rightCategoryName: '',
             rightCategoryItems: [],
             isPractice: (this.props.match.params.stage === 'practice'),
-            testId: this.props.match.params.testId
+            testId: this.props.match.params.testId,
+            isDoingTest: false
         }
 
         this.onClickPass = this.onClickPass.bind(this);
@@ -121,12 +123,8 @@ class TestLanding extends Component {
     }
 
     // Click handler to route TestLanding to TestBlock
-    onClickPass(e) {
-        e.preventDefault();
-        this.props.history.push({
-            pathname: '/test',
-            state: this.state
-        })
+    onClickPass() {
+        this.setState({isDoingTest: true});
     }
 
     render() {
@@ -135,6 +133,12 @@ class TestLanding extends Component {
         if (this.state.isLoading) {
             return (
                 <h1>Loading...</h1>
+            )
+        }
+
+        if (this.state.isDoingTest) {
+            return (
+                <TestBlock blockData={this.state} />
             )
         }
 
