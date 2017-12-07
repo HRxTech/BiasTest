@@ -8,13 +8,14 @@ class TestLanding extends Component {
 
         // Set initial state
         this.state = {
-            currentBlockIndex: 1,
+            currentBlockIndex: 0,
             currentBlockTitle: '',// this.props.currentBlockIndex;
             leftCategoryName: '',
             leftCategoryItems: [],
             rightCategoryName: '',
             rightCategoryItems: [],
-            isPractice: true
+            isPractice: (this.props.match.params.stage === 'practice'),
+            testId: this.props.match.params.testId
         }
 
         this.onClickPass = this.onClickPass.bind(this);
@@ -46,19 +47,56 @@ class TestLanding extends Component {
             space: '4xbeshmjlgqs',
             accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
         });
-        client.getEntries({ 'content_type': 'practiceBlock', include: 5 })
+        
+        client.getEntries(
+            {
+                content_type: 'biasTest',
+                'sys.id': this.state.testId,
+                include: 5
+              })
             .then((response) => {
 
-                const currentBlockData = response.items[this.state.currentBlockIndex].fields;
-                const currentBlockTitle = currentBlockData.practiceBlockTitle;
+                let testItem = response.items[0].fields;
 
-                const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-                const leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
-                var leftCategoryItemsArray = [];
+                let currentBlockData;
+                let currentBlockTitle;
+                let leftCategoryName = '';
+                let rightCategoryName = '';
+                let leftCategoryItemsData;
+                let leftCategoryItemsArray = [];
+                let rightCategoryItemsData;
+                let rightCategoryItemsArray = []
+                if(this.state.isPractice) {
+                    currentBlockData = testItem.practiceBlocks[this.state.currentBlockIndex].fields;
+                    currentBlockTitle = currentBlockData.practiceBlockTitle;
+                    leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
+                    rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
+                    
+                    leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
+                    rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
+                } else {
+                    if(this.state.currentBlockIndex === 0) {
+                        currentBlockData = testItem.incompatibleBlock.fields;
+                    } else {
+                        currentBlockData = testItem.compatibleBlock.fields;
+                    }
+                    currentBlockTitle = currentBlockData.testBlockTitle;
 
-                const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-                const rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
-                var rightCategoryItemsArray = [];
+                    leftCategoryName = currentBlockData.leftCategories
+                    .map(function(cat){
+                        return cat.fields.categoryName;
+                    }).join(" / ");
+
+                    rightCategoryName = currentBlockData.rightCategories
+                    .map(function(cat){
+                        return cat.fields.categoryName;
+                    }).join(" / ");
+
+                    leftCategoryItemsData = [];
+                    rightCategoryItemsData = [];
+                    currentBlockData.leftCategories.forEach((cat)=> { leftCategoryItemsData = leftCategoryItemsData.concat(cat.fields.categoryItems) });
+                    currentBlockData.rightCategories.forEach((cat)=> { rightCategoryItemsData = rightCategoryItemsData.concat(cat.fields.categoryItems) });
+                }
 
                 // Get array of category words and their correct categories
                 this.createCategoryWordsAndAnswersArray(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);

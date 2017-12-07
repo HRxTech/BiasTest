@@ -6,12 +6,11 @@ class OptionsPage extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.match.params);
-
     // // Set Initial State
     this.state = {
       Option: '',
       testId: this.props.match.params.testId,
+      testName: this.props.match.params.testName,
       helpText: ''
     }
 
@@ -34,12 +33,7 @@ class OptionsPage extends Component {
   }
 
   handleClick(testType) {
-    console.log(testType);
-    if (testType === 'practice') {
-
-    } else {
-
-    }
+    this.props.history.push(`/test/${this.state.testName}/${testType}/${this.state.testId}`)
   }
 
   render() {

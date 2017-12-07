@@ -37,7 +37,7 @@ class Intro extends Component {
       .replace(/[^\w ]+/g, '')
       .replace(/ +/g, '-');
 
-    this.props.history.push(`/begin-test/${testName}/${testItem.sys.id}`);
+    this.props.history.push(`/test/${testName}/start/${testItem.sys.id}`);
   }
 
   render() {
@@ -71,7 +71,6 @@ class Intro extends Component {
 
         <ul>
           <li><Link to='/form'>Form</Link></li>
-          <li><Link to='/landing'>Landing Page</Link></li>
           <li><Link to='/test'>Test Page</Link></li>
         </ul>
       </div>
