@@ -4,6 +4,7 @@ import Form from './Form';
 import PracticeBlock from './PracticeBlock';
 import OptionsPage from './OptionsPage';
 import { Switch, Route } from 'react-router-dom'
+import PracticeLandingPage from './PracticeLandingPage';
 
 class Main extends Component {
     render() {
@@ -15,6 +16,7 @@ class Main extends Component {
                     <Route path='/form' component={Form} />
                     <Route path='/practice' component={PracticeBlock} />
                     <Route path='/option' component={OptionsPage} />
+                    <Route path='/landingpage' component={PracticeLandingPage} />
                 </Switch>
             </div>
         );

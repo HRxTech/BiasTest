@@ -27,7 +27,6 @@ class OptionsPage extends Component {
     return (
       <div className="OptionsPage">
       <h1>Would you like a practice?</h1>
-
       <div>
         <button 
           onClick={this.handleClick}
