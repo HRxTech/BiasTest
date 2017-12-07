@@ -27,7 +27,6 @@ class Intro extends Component {
     })
       .then((response) => {
         this.setState({ testData: response.items });
-        console.log(this.state.testData);
       });
 
   }
@@ -59,8 +58,13 @@ class Intro extends Component {
         <h2>Choose a test: </h2>
 
         {testData.map((testItem) => {
+          let style = {
+            'color': 'blue',
+            'textDecoration': 'underline',
+            cursor: 'pointer'
+          }
           return (
-            <li onClick={() => this.onClickTest(testItem)} key={testItem.fields.testTitle}>{testItem.fields.testTitle}</li>
+            <li style={style} onClick={() => this.onClickTest(testItem)} key={testItem.sys.id}>{testItem.fields.testTitle}</li>
           )
         })
         }
