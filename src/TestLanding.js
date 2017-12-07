@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
+import TestBlock from './TestBlock';
 
-// TODO: DRY - repeated code.
-var client = createClient({
-    space: '4xbeshmjlgqs',
-    accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
-  });
 
 // FOR PRACTICE BLOCK: Function to create array of category names and their correct categories
 function createCategoryWordsAndAnswersArray(array, newArray, correctCategory){
@@ -54,81 +50,128 @@ function shuffleArray(array) {
 class TestLanding extends Component {
     constructor(props) {
         super(props);
-    
+
         // Set initial state
         this.state = {
-          currentBlockIndex: 0,
-          currentBlockTitle: '',// this.props.currentBlockIndex;
-          leftCategoryName: '',
-          leftCategoryItems: [],
-          rightCategoryName: '',
-          rightCategoryItems: [],
-          isPractice: true
+            currentBlockIndex: 0,
+            currentBlockTitle: '',// this.props.currentBlockIndex;
+            leftCategoryName: '',
+            leftCategoryItems: [],
+            rightCategoryName: '',
+            rightCategoryItems: [],
+            isPractice: (this.props.match.params.stage === 'practice'),
+            testId: this.props.match.params.testId,
+            isDoingTest: false
         }
 
         this.onClickPass = this.onClickPass.bind(this);
         this.displayCategoriesItems = this.displayCategoriesItems.bind(this);
     }
 
+    // Function to shuffle array
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Function to create array of category words and their correct categories
+    createCategoryWordsAndAnswersArray(array, newArray, correctCategory) {
+        array.forEach((oneItem) => {
+            newArray.push({
+                correctCategory: correctCategory,
+                categoryItem: oneItem.fields.word
+            })
+        })
+    }
+
     // Function to handle first HTTP request
-  componentWillMount() {
+    componentWillMount() {
         this.setState({ isLoading: true });
         // Retrieve all entries of Practice Block content type
-        client.getEntries({ 'content_type': 'practiceBlock', include: 5 })
-                .then((response) => {
+        var client = createClient({
+            space: '4xbeshmjlgqs',
+            accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
+        });
+        
+        client.getEntries(
+            {
+                content_type: 'biasTest',
+                'sys.id': this.state.testId,
+                include: 5
+              })
+            .then((response) => {
 
-                    const currentBlockData = response.items[this.state.currentBlockIndex].fields;
-                    const currentBlockTitle = currentBlockData.practiceBlockTitle;
+                let testItem = response.items[0].fields;
 
-                    var leftCategoryItemsArray = [];
-                    var rightCategoryItemsArray = [];
+                let currentBlockData;
+                let currentBlockTitle;
+                let leftCategoryName = '';
+                let rightCategoryName = '';
+                let leftCategoryItemsData;
+                let leftCategoryItemsArray = [];
+                let rightCategoryItemsData;
+                let rightCategoryItemsArray = []
+
+                if(this.state.isPractice) {
+                    currentBlockData = testItem.practiceBlocks[this.state.currentBlockIndex].fields;
+                    currentBlockTitle = currentBlockData.practiceBlockTitle;
+                    leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
+                    rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
                     
-                    // If test is practice..
-                    if( this.state.isPractice ) {
-                        var leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-                        var leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;  
-                        
-                        var rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-                        var rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
-                        
-                        // Get array of category words and their correct categories
-                        createCategoryWordsAndAnswersArray(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);
-                        createCategoryWordsAndAnswersArray(rightCategoryItemsData, rightCategoryItemsArray, rightCategoryName);
-
-                    // If test is not practice...
+                    leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
+                    rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
+                } else {
+                    if(this.state.currentBlockIndex === 0) {
+                        currentBlockData = testItem.incompatibleBlock.fields;
                     } else {
-
-                        createTestCategoryWordsAndAnswersArray(currentBlockData.leftCategories, leftCategoryItemsArray);
-                        createTestCategoryWordsAndAnswersArray(currentBlockData.rightCategories, rightCategoryItemsArray);
+                        currentBlockData = testItem.compatibleBlock.fields;
                     }
+                    currentBlockTitle = currentBlockData.testBlockTitle;
 
-                    // Merge and shuffle category items arrays        
-                    var itemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
+                    leftCategoryName = currentBlockData.leftCategories
+                    .map(function(cat){
+                        return cat.fields.categoryName;
+                    }).join(" / ");
 
-                    shuffleArray(itemsArray);
+                    rightCategoryName = currentBlockData.rightCategories
+                    .map(function(cat){
+                        return cat.fields.categoryName;
+                    }).join(" / ");
 
-                    this.setState({
-                        currentBlockTitle: currentBlockTitle,
-                        leftCategoryName: leftCategoryName,
-                        leftCategoryItems: leftCategoryItemsArray,
-                        rightCategoryName: rightCategoryName,
-                        rightCategoryItems: rightCategoryItemsArray,
-                        categoryItemsShuffled: itemsArray,
-                        isLoading: false
-                    })
+                    leftCategoryItemsData = [];
+                    rightCategoryItemsData = [];
+                    currentBlockData.leftCategories.forEach((cat)=> { leftCategoryItemsData = leftCategoryItemsData.concat(cat.fields.categoryItems) });
+                    currentBlockData.rightCategories.forEach((cat)=> { rightCategoryItemsData = rightCategoryItemsData.concat(cat.fields.categoryItems) });
+                }
 
+                // Get array of category words and their correct categories
+                this.createCategoryWordsAndAnswersArray(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);
+                this.createCategoryWordsAndAnswersArray(rightCategoryItemsData, rightCategoryItemsArray, rightCategoryName);
+
+                // Merge and shuffle category items arrays        
+                var itemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
+                this.shuffleArray(itemsArray);
+
+                this.setState({
+                    currentBlockTitle: currentBlockTitle,
+                    leftCategoryName: leftCategoryName,
+                    leftCategoryItems: leftCategoryItemsArray,
+                    rightCategoryName: rightCategoryName,
+                    rightCategoryItems: rightCategoryItemsArray,
+                    categoryItemsShuffled: itemsArray,
+                    isLoading: false
                 })
-                .catch(console.error);
+
+            })
+            .catch(console.error);
     }
 
     // Click handler to route TestLanding to TestBlock
-    onClickPass(e) {
-        e.preventDefault();
-        this.props.history.push({
-          pathname: '/test',
-          state: this.state
-        })
-      }
+    onClickPass() {
+        this.setState({isDoingTest: true});
+    }
 
     // Function to output category items
     displayCategoriesItems(categoryItems){
@@ -145,44 +188,58 @@ class TestLanding extends Component {
             </td>
         )
     }
-    
+
     render() {
 
         // Loader...
-        if(this.state.isLoading){
+        if (this.state.isLoading) {
             return (
                 <h1>Loading...</h1>
             )
         }
+        console.log(this.state.isDoingTest);
+
+        if (this.state.isDoingTest) {
+            return (
+                <TestBlock blockData={this.state} />
+            )
+        } 
+
 
         return (
-        <div>
-            <h1>Bias Test - Gender/Career</h1>
-            <h2>{this.state.currentBlockTitle}</h2>
-            <p>For this test, you will be asked to categorize different words.</p> 
+            <div>
+                <h1>Bias Test - Gender/Career</h1>
+                <h2>{this.state.currentBlockTitle}</h2>
+                <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p>
 
-            <table className='categories-table'>
-                <tbody>
-                    <tr>
-                        <th>Category Name</th>
-                        <th>Category Items</th>
-                    </tr>
-                    <tr>
-                        <td>{this.state.leftCategoryName}</td>
-                        {this.displayCategoriesItems(this.state.leftCategoryItems)}
-                    </tr>
-                    <tr>
-                        <td>{this.state.rightCategoryName}</td>
-                        {this.displayCategoriesItems(this.state.rightCategoryItems)}                        
-                    </tr>
-                </tbody>
-            </table>
+                <table className='categories-table'>
+                    <tbody>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Category Items</th>
+                        </tr>
+                        <tr>
+                            <td>{this.state.leftCategoryName}</td>
+                            <td>
+                            {this.displayCategoriesItems(this.state.leftCategoryItems)}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{this.state.rightCategoryName}</td>
+                            {this.state.rightCategoryItems.map((rightItem) => {
+                                return (
+                                    <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
+                                )
+                            })}
+                        </tr>
+                    </tbody>
+                </table>
 
                 <button onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice Test' : 'Test'}
                 </button>
-        </div>
-        
+            </div>
+
         )
     }
 }

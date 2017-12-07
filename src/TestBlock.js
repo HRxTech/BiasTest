@@ -5,12 +5,12 @@ class TestBlock extends Component {
     super(props);
 
     this.state = {
-      currentBlockIndex: this.props.location.state.currentBlockIndex,      
-      currentBlockTitle: this.props.location.state.currentBlockTitle,
-      leftCategoryName: this.props.location.state.leftCategoryName,
-      rightCategoryName: this.props.location.state.rightCategoryName,      
-      categoryItemsShuffled: this.props.location.state.categoryItemsShuffled,
-      isPractice: this.props.location.state.isPractice,
+      currentBlockIndex: this.props.blockData.currentBlockIndex,      
+      currentBlockTitle: this.props.blockData.currentBlockTitle,
+      leftCategoryName: this.props.blockData.leftCategoryName,
+      rightCategoryName: this.props.blockData.rightCategoryName,      
+      categoryItemsShuffled: this.props.blockData.categoryItemsShuffled,
+      isPractice: this.props.blockData.isPractice,
       currentItemIndex: 0,
       isFirstScreen: true
     }

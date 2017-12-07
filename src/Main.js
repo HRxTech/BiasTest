@@ -12,11 +12,10 @@ class Main extends Component {
             <div className="Main">
                 <Switch>
                     <Route exact path='/' component={Intro} />
-                    {/* both /roster and /roster/:number begin with /roster */}
                     <Route path='/form' component={Form} />
-                    <Route path='/landing' component={TestLanding} />
+                    <Route exact path='/test/:testName/start/:testId' component={OptionsPage} />
+                    <Route exact path='/test/:testName/:stage/:testId/' component={TestLanding} />
                     <Route path='/test' component={TestBlock} />                    
-                    <Route path='/option' component={OptionsPage} />
                 </Switch>
             </div>
         );
