@@ -7,7 +7,7 @@ var client = createClient({
     accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
   });
 
-// Function to create array of category words and their correct categories
+// FOR PRACTICE BLOCK: Function to create array of category names and their correct categories
 function createCategoryWordsAndAnswersArray(array, newArray, correctCategory){
     array.forEach((oneItem) => {
         newArray.push( {
@@ -16,6 +16,31 @@ function createCategoryWordsAndAnswersArray(array, newArray, correctCategory){
         })
       })
 }
+
+// FOR TEST BLOCK: Function to extract categories from array and put correct answers
+// function createTestCategoryWordsAndAnswersArray(array, newArray){
+//     array.forEach((oneObject) => {
+//         // Extract category items
+//         oneObject.fields.categoryItems.forEach((oneItem) => {
+//             newArray.push({
+//                 correctCategory : oneObject.fields.categoryName,
+//                 categoryItem : oneItem.fields.word
+//             })
+//         })
+//     })
+// }
+
+// FOR TEST BLOCK: Function to extract 3 categories from array and put correct answers
+function createTestCategoryWordsAndAnswersArray(array, newArray){
+    array.forEach((oneObject) => {
+        for(let i = 0; i < 3; i++){
+            newArray.push({
+                correctCategory : oneObject.fields.categoryName,
+                categoryItem : oneObject.fields.categoryItems[i].fields.word
+            })
+        }
+    })
+} 
 
 // Function to shuffle array
 function shuffleArray(array) {
@@ -32,7 +57,7 @@ class TestLanding extends Component {
     
         // Set initial state
         this.state = {
-          currentBlockIndex: 1,
+          currentBlockIndex: 0,
           currentBlockTitle: '',// this.props.currentBlockIndex;
           leftCategoryName: '',
           leftCategoryItems: [],
@@ -42,6 +67,7 @@ class TestLanding extends Component {
         }
 
         this.onClickPass = this.onClickPass.bind(this);
+        this.displayCategoriesItems = this.displayCategoriesItems.bind(this);
     }
 
     // Function to handle first HTTP request
@@ -54,20 +80,31 @@ class TestLanding extends Component {
                     const currentBlockData = response.items[this.state.currentBlockIndex].fields;
                     const currentBlockTitle = currentBlockData.practiceBlockTitle;
 
-                    const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-                    const leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
                     var leftCategoryItemsArray = [];
-                    
-                    const rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-                    const rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
                     var rightCategoryItemsArray = [];
                     
-                    // Get array of category words and their correct categories
-                    createCategoryWordsAndAnswersArray(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);
-                    createCategoryWordsAndAnswersArray(rightCategoryItemsData, rightCategoryItemsArray, rightCategoryName);
+                    // If test is practice..
+                    if( this.state.isPractice ) {
+                        var leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
+                        var leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;  
+                        
+                        var rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
+                        var rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
+                        
+                        // Get array of category words and their correct categories
+                        createCategoryWordsAndAnswersArray(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);
+                        createCategoryWordsAndAnswersArray(rightCategoryItemsData, rightCategoryItemsArray, rightCategoryName);
+
+                    // If test is not practice...
+                    } else {
+
+                        createTestCategoryWordsAndAnswersArray(currentBlockData.leftCategories, leftCategoryItemsArray);
+                        createTestCategoryWordsAndAnswersArray(currentBlockData.rightCategories, rightCategoryItemsArray);
+                    }
 
                     // Merge and shuffle category items arrays        
                     var itemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
+
                     shuffleArray(itemsArray);
 
                     this.setState({
@@ -93,53 +130,61 @@ class TestLanding extends Component {
         })
       }
 
-  render() {
-
-    // Loader...
-    if(this.state.isLoading){
+    // Function to output category items
+    displayCategoriesItems(categoryItems){
         return (
-            <h1>Loading...</h1>
+            <td>
+                {categoryItems.map((oneItem, i) => {
+                    return (
+                        <span key={oneItem.categoryItem}>
+                            {!!i && ", "}
+                            {oneItem.categoryItem}
+                        </span>
+                    )
+                })}
+            </td>
         )
     }
+    
+    render() {
 
-    return (
-      <div>
-        <h1>Bias Test - Gender/Career</h1>
-        <h2>{this.state.currentBlockTitle}</h2>
-        <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p> 
+        // Loader...
+        if(this.state.isLoading){
+            return (
+                <h1>Loading...</h1>
+            )
+        }
 
-        <table className='categories-table'>
-            <tbody>
-                <tr>
-                    <th>Category Name</th>
-                    <th>Category Items</th>
-                </tr>
-                <tr>
-                    <td>{this.state.leftCategoryName}</td>
-                    {this.state.leftCategoryItems.map((leftItem) => {
-                        return (
-                            <td key={leftItem.categoryItem}>{leftItem.categoryItem}</td>
-                        )
-                    })}
-                </tr>
-                <tr>
-                    <td>{this.state.rightCategoryName}</td>
-                    {this.state.rightCategoryItems.map((rightItem) => {
-                        return (
-                            <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
-                        )
-                    })}
-                </tr>
-            </tbody>
-        </table>
+        return (
+        <div>
+            <h1>Bias Test - Gender/Career</h1>
+            <h2>{this.state.currentBlockTitle}</h2>
+            <p>For this test, you will be asked to categorize different words.</p> 
 
-            <button onClick={this.onClickPass}>
-                Start {this.state.isPractice ? 'Practice Test' : 'Test'}
-            </button>
-      </div>
-      
-    )
-  }
+            <table className='categories-table'>
+                <tbody>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Category Items</th>
+                    </tr>
+                    <tr>
+                        <td>{this.state.leftCategoryName}</td>
+                        {this.displayCategoriesItems(this.state.leftCategoryItems)}
+                    </tr>
+                    <tr>
+                        <td>{this.state.rightCategoryName}</td>
+                        {this.displayCategoriesItems(this.state.rightCategoryItems)}                        
+                    </tr>
+                </tbody>
+            </table>
+
+                <button onClick={this.onClickPass}>
+                    Start {this.state.isPractice ? 'Practice Test' : 'Test'}
+                </button>
+        </div>
+        
+        )
+    }
 }
 
 export default TestLanding;
