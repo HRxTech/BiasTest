@@ -14,8 +14,7 @@ class Main extends Component {
                     <Route exact path='/' component={Intro} />
                     <Route path='/form' component={Form} />
                     <Route exact path='/test/:testName/start/:testId' component={OptionsPage} />
-                    <Route exact path='/test/:testName/:stage/:testId/' component={TestLanding} />
-                    <Route path='/test' component={TestBlock} />                    
+                    <Route exact path='/test/:testName/:stage/:testId/' component={TestLanding} />                   
                 </Switch>
             </div>
         );
