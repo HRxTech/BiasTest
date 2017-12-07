@@ -5,9 +5,16 @@ class TestBlock extends Component {
     super(props);
 
     this.state = {
+      currentBlockIndex: this.props.location.state.currentBlockIndex,      
+      currentBlockTitle: this.props.location.state.currentBlockTitle,
+      leftCategoryName: this.props.location.state.leftCategoryName,
+      rightCategoryName: this.props.location.state.rightCategoryName,      
+      categoryItemsShuffled: this.props.location.state.categoryItemsShuffled,
+      isPractice: this.props.location.state.isPractice,
       currentItemIndex: 0,
       isFirstScreen: true
     }
+
   }
 
   // Function to handle key press
@@ -22,23 +29,23 @@ class TestBlock extends Component {
 
       // Only do stuff if the test is not over...
       var currentItemIndex = this.state.currentItemIndex;
-      if (currentItemIndex < this.props.categoryItemsShuffled.length) {
+      if (currentItemIndex < this.state.categoryItemsShuffled.length) {
         
         // 1. Check what user answered
         var userAnswer = '';
         if (key === 'ArrowRight') {
-          userAnswer = this.props.rightCategoryName;
+          userAnswer = this.state.rightCategoryName;
         } else if (key === 'ArrowLeft') {
-          userAnswer = this.props.leftCategoryName;
+          userAnswer = this.state.leftCategoryName;
         }
 
         // 2. Check user answer against correct category, and only increment index if answer is correct
-        if(userAnswer === this.props.categoryItemsShuffled[currentItemIndex].correctCategory){
+        if(userAnswer === this.state.categoryItemsShuffled[currentItemIndex].correctCategory){
           currentItemIndex++;
           this.setState({
             answerIsCorrect: true,
             currentItemIndex: currentItemIndex,
-            currentItem: this.props.categoryItemsShuffled[currentItemIndex]
+            currentItem: this.state.categoryItemsShuffled[currentItemIndex]
           })
         }else{
           this.setState({
@@ -50,22 +57,20 @@ class TestBlock extends Component {
   }
 
   render() {
-
-    console.log(this.props.data);
     return (
       <div className="TestBlock">
         <h1>Practice Block</h1>
-        <h2>{this.props.currentBlockTitle}</h2>
+        <h2>{this.state.currentBlockTitle}</h2>
 
-        {this.state.currentItemIndex < this.props.categoryItemsShuffled.length ?
-        <p>{this.props.categoryItemsShuffled[this.state.currentItemIndex].categoryItem}</p>
+        {this.state.currentItemIndex < this.state.categoryItemsShuffled.length ?
+        <p>{this.state.categoryItemsShuffled[this.state.currentItemIndex].categoryItem}</p>
         :
         <p>Test is finished.</p>
         }
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
-          <h3>{this.props.leftCategoryName}</h3>
-          <h3>{this.props.rightCategoryName}</h3>
+          <h3>{this.state.leftCategoryName}</h3>
+          <h3>{this.state.rightCategoryName}</h3>
         </div>
 
         {!this.state.isFirstScreen &&

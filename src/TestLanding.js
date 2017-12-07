@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
-import TestBlock from './TestBlock';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -39,8 +37,11 @@ class TestLanding extends Component {
           leftCategoryName: '',
           leftCategoryItems: [],
           rightCategoryName: '',
-          rightCategoryItems: []
+          rightCategoryItems: [],
+          isPractice: true
         }
+
+        this.onClickPass = this.onClickPass.bind(this);
     }
 
     // Function to handle first HTTP request
@@ -83,7 +84,15 @@ class TestLanding extends Component {
                 .catch(console.error);
     }
 
-    
+    // Click handler to route TestLanding to TestBlock
+    onClickPass(e) {
+        e.preventDefault();
+        this.props.history.push({
+          pathname: '/test',
+          state: this.state
+        })
+      }
+
   render() {
 
     // Loader...
@@ -94,7 +103,6 @@ class TestLanding extends Component {
     }
 
     return (
-    <BrowserRouter>        
       <div>
         <h1>Bias Test - Gender/Career</h1>
         <h2>{this.state.currentBlockTitle}</h2>
@@ -125,21 +133,10 @@ class TestLanding extends Component {
             </tbody>
         </table>
 
-            <Link to = '/practice-test'><button>Start Practice Test</button></Link>
-
-            <Route path='/practice-test' 
-                render={(routeProps) => (
-                    <TestBlock {...routeProps} 
-                    data = {this.state}
-                    currentBlockIndex = {this.state.currentBlockIndex}
-                    currentBlockTitle = {this.state.currentBlockTitle}
-                    leftCategoryName = {this.state.leftCategoryName}
-                    rightCategoryName = {this.state.rightCategoryName}
-                    categoryItemsShuffled = {this.state.categoryItemsShuffled} />
-                )}
-            />
+            <button onClick={this.onClickPass}>
+                Start {this.state.isPractice ? 'Practice Test' : 'Test'}
+            </button>
       </div>
-    </BrowserRouter>
       
     )
   }
