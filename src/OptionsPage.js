@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Intro from './Intro';
 
 
 class OptionsPage extends Component {
@@ -7,8 +6,6 @@ class OptionsPage extends Component {
         super(props);
         console.log(this.props.location.state);
         
-        // console.log(chosenTest);
-
         // // Set Initial State
         this.state = { 
             Option:''
