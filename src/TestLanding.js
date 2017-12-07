@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
-import PracticeBlock from './PracticeBlock';
+import TestBlock from './TestBlock';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 // TODO: DRY - repeated code.
@@ -28,7 +28,7 @@ function shuffleArray(array) {
 }
 
 // START OF COMPONENT ---------------------------------
-class PracticeLandingPage extends Component {
+class TestLanding extends Component {
     constructor(props) {
         super(props);
     
@@ -129,7 +129,7 @@ class PracticeLandingPage extends Component {
 
             <Route path='/practice-test' 
                 render={(routeProps) => (
-                    <PracticeBlock {...routeProps} 
+                    <TestBlock {...routeProps} 
                     data = {this.state}
                     currentBlockIndex = {this.state.currentBlockIndex}
                     currentBlockTitle = {this.state.currentBlockTitle}
@@ -145,4 +145,4 @@ class PracticeLandingPage extends Component {
   }
 }
 
-export default PracticeLandingPage;
+export default TestLanding;

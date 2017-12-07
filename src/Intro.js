@@ -57,7 +57,8 @@ class Intro extends Component {
         <ul>
           <li><Link to='/'>Intro</Link></li>
           <li><Link to='/form'>Form</Link></li>
-          <li><Link to='/practice'>Practice Block</Link></li>
+          <li><Link to='/landing'>Landing Page</Link></li>
+          <li><Link to='/test'>Test Page</Link></li>          
           <li><Link to='/option'>Options Page</Link></li>
         </ul>
       </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class PracticeBlock extends Component {
+class TestBlock extends Component {
   constructor(props) {
     super(props);
 
@@ -53,7 +53,7 @@ class PracticeBlock extends Component {
 
     console.log(this.props.data);
     return (
-      <div className="PracticeBlock">
+      <div className="TestBlock">
         <h1>Practice Block</h1>
         <h2>{this.props.currentBlockTitle}</h2>
 
@@ -77,4 +77,4 @@ class PracticeBlock extends Component {
   }
 }
 
-export default PracticeBlock;
+export default TestBlock;
