@@ -2,32 +2,6 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 
-// FOR TEST BLOCK: Function to extract categories from array and put correct answers
-// function createTestCategoryWordsAndAnswersArray(array, newArray){
-//     array.forEach((oneObject) => {
-//         // Extract category items
-//         oneObject.fields.categoryItems.forEach((oneItem) => {
-//             newArray.push({
-//                 correctCategory : oneObject.fields.categoryName,
-//                 categoryItem : oneItem.fields.word
-//             })
-//         })
-//     })
-// }
-
-// FOR TEST BLOCK: Function to extract 3 categories from array and put correct answers
-// function createTestCategoryWordsAndAnswersArray(array, newArray){
-//     array.forEach((oneObject) => {
-//         for(let i = 0; i < 3; i++){
-//             newArray.push({
-//                 correctCategory : oneObject.fields.categoryName,
-//                 categoryItem : oneObject.fields.categoryItems[i].fields.word
-//             })
-//         }
-//     })
-// } 
-
-
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
     constructor(props) {
@@ -43,10 +17,10 @@ class TestLanding extends Component {
             rightCategoryItems: [],
             isPractice: (this.props.match.params.stage === 'practice'),
             testId: this.props.match.params.testId,
-            isDoingTest: true
+            isDoingTest: false
         }
+
         this.onClickPass = this.onClickPass.bind(this);
-        this.displayCategoriesItems = this.displayCategoriesItems.bind(this);
     }
 
     // Function to shuffle array
@@ -94,7 +68,6 @@ class TestLanding extends Component {
                 let leftCategoryItemsArray = [];
                 let rightCategoryItemsData;
                 let rightCategoryItemsArray = []
-
                 if(this.state.isPractice) {
                     currentBlockData = testItem.practiceBlocks[this.state.currentBlockIndex].fields;
                     currentBlockTitle = currentBlockData.practiceBlockTitle;
@@ -154,22 +127,6 @@ class TestLanding extends Component {
         this.setState({isDoingTest: true});
     }
 
-    // Function to output category items
-    displayCategoriesItems(categoryItems){
-        return (
-            <td>
-                {categoryItems.map((oneItem, i) => {
-                    return (
-                        <span key={oneItem.categoryItem}>
-                            {!!i && ", "}
-                            {oneItem.categoryItem}
-                        </span>
-                    )
-                })}
-            </td>
-        )
-    }
-
     render() {
 
         // Loader...
@@ -183,8 +140,7 @@ class TestLanding extends Component {
             return (
                 <TestBlock blockData={this.state} />
             )
-        } 
-
+        }
 
         return (
             <div>
@@ -200,11 +156,19 @@ class TestLanding extends Component {
                         </tr>
                         <tr>
                             <td>{this.state.leftCategoryName}</td>
-                            {this.displayCategoriesItems(this.state.leftCategoryItems)}
+                            {this.state.leftCategoryItems.map((leftItem) => {
+                                return (
+                                    <td key={leftItem.categoryItem}>{leftItem.categoryItem}</td>
+                                )
+                            })}
                         </tr>
                         <tr>
                             <td>{this.state.rightCategoryName}</td>
-                            {this.displayCategoriesItems(this.state.rightCategoryItems)}
+                            {this.state.rightCategoryItems.map((rightItem) => {
+                                return (
+                                    <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
+                                )
+                            })}
                         </tr>
                     </tbody>
                 </table>

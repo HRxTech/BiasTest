@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful'
+import {withRouter} from "react-router-dom";
+import FontAwesome from 'react-fontawesome';
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -14,6 +16,7 @@ class Header extends Component {
             logoImg: '', // http://via.placeholder.com/150x150
             logoImgAlt: ''
         }
+        this.onClickHome = this.onClickHome.bind(this);
     }
 
     componentWillMount() {
@@ -26,21 +29,22 @@ class Header extends Component {
             .catch(console.error);
     }
 
+    onClickHome() {
+        this.props.history.push("/");
+    }
+
     render() {
-        var FontAwesome = require('react-fontawesome');
         return (
             <div className="Header">
-                <img src={this.state.logoImg} alt={this.state.logoImgAlt} style={{'width':50, 'paddingRight':200, 'paddingTop':15}} />
-                <a href="">
-                    <FontAwesome name='question-circle' 
-                                 size='2x' 
-                                 style={{'color':"#BFC5D2", 'paddingTop':15}}
-                                 alt='More Info'
-                    />
-                </a>
+                <img onClick={this.onClickHome} src={this.state.logoImg} alt={this.state.logoImgAlt} style={{ 'width': 50, 'paddingRight': 200, 'paddingTop': 15 }} />
+                <FontAwesome name='question-circle'
+                    size='2x'
+                    style={{ 'color': "#BFC5D2", 'paddingTop': 15 }}
+                    alt='More Info'
+                />
             </div>
         );
     }
 }
 
-export default Header;
+export default withRouter(Header);
