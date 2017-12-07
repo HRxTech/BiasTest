@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { createClient } from 'contentful';
 import { Link } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
-import OptionsPage from './OptionsPage';
-
 
 
 // TODO: DRY - repeated code.
@@ -14,7 +11,6 @@ var client = createClient({
 });
 
 class Intro extends Component {
-
   
 
   constructor(props) {
@@ -24,6 +20,19 @@ class Intro extends Component {
         testItem: '',
         testData: []
     }
+    this.onClickPass = this.onClickPass.bind(this);    
+  }
+
+
+  onClickPass(e) {
+    e.preventDefault();
+    this.props.history.push({
+      pathname: '/option',
+      state: {
+        id: this.state.testData,
+        color: 'green'
+      }
+    })
   }
 
   componentWillMount() {
@@ -57,19 +66,12 @@ class Intro extends Component {
 
         {testData.map((testItem) => {
           return (
-          <li 
-           key={testItem.fields.testTitle}>
-           <Link to='/option' ><button>{testItem.fields.testTitle}</button></Link></li>
+          <li key={testItem.fields.testTitle}>
+          <Link to='/option' ><button onClick={this.onClickPass}>
+          {testItem.fields.testTitle}</button></Link></li>
           )
         })  
         }
-        <Route path='/option'
-               render={(routeProps) => (
-                   <OptionsPage {...routeProps}
-                   chosenTest = {this.state.testItem.fields.testTitle}
-                    />
-               )}
-        />
 
         <ul>
           <li><Link to='/'>Intro</Link></li>

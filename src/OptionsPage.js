@@ -5,7 +5,8 @@ import Intro from './Intro';
 class OptionsPage extends Component {
     constructor(props){
         super(props);
-
+        console.log(this.props.location.state);
+        
         // console.log(chosenTest);
 
         // // Set Initial State
