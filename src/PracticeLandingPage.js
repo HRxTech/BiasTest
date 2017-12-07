@@ -34,7 +34,7 @@ class PracticeLandingPage extends Component {
     
         // Set initial state
         this.state = {
-          currentBlockIndex: 0,
+          currentBlockIndex: 1,
           currentBlockTitle: '',// this.props.currentBlockIndex;
           leftCategoryName: '',
           leftCategoryItems: [],
@@ -52,8 +52,6 @@ class PracticeLandingPage extends Component {
 
                     const currentBlockData = response.items[this.state.currentBlockIndex].fields;
                     const currentBlockTitle = currentBlockData.practiceBlockTitle;
-
-                    console.log(currentBlockData);
 
                     const leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
                     const leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
