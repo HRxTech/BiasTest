@@ -127,6 +127,21 @@ class TestLanding extends Component {
         this.setState({isDoingTest: true});
     }
 
+    displayCategoriesItems(categoryItems){
+        return (
+            <td>
+                {categoryItems.map((oneItem, i) => {
+                    return (
+                        <span key={oneItem.categoryItem}>
+                            {!!i && ", "}
+                            {oneItem.categoryItem}
+                        </span>
+                    )
+                })}
+            </td>
+        )
+    }
+
     render() {
 
         // Loader...
@@ -156,19 +171,11 @@ class TestLanding extends Component {
                         </tr>
                         <tr>
                             <td>{this.state.leftCategoryName}</td>
-                            {this.state.leftCategoryItems.map((leftItem) => {
-                                return (
-                                    <td key={leftItem.categoryItem}>{leftItem.categoryItem}</td>
-                                )
-                            })}
+                            {this.displayCategoriesItems(this.state.leftCategoryItems)}
                         </tr>
                         <tr>
                             <td>{this.state.rightCategoryName}</td>
-                            {this.state.rightCategoryItems.map((rightItem) => {
-                                return (
-                                    <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
-                                )
-                            })}
+                            {this.displayCategoriesItems(this.state.rightCategoryItems)}
                         </tr>
                     </tbody>
                 </table>
