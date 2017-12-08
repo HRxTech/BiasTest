@@ -13,7 +13,7 @@ class TestLanding extends Component {
             isPractice: (this.props.match.params.stage === 'practice'),
             iBlock: {},            
             cBlock: {},            
-            isFirstRound: true,
+            isFirstRound: false,
             isDoingTest: false,
         }
         this.onClickPass = this.onClickPass.bind(this);
@@ -115,8 +115,6 @@ class TestLanding extends Component {
                     }), 
                     isLoading: false
                 })
-
-                console.log(this.state);
             })
             .catch(console.error);
     }
@@ -176,9 +174,21 @@ class TestLanding extends Component {
             )
         }
 
+        // Get current block 
+        var iBlock = this.state.iBlock;
+        var cBlock = this.state.cBlock;
+        var currentBlock
+
+        if(this.state.isFirstRound){
+            currentBlock = iBlock;
+        }else {
+            currentBlock = cBlock;
+        }
+
         return (
             <div>
-                <h1>{this.state.iBlock.testBlockTitle}</h1>
+                <h1>{this.stateisPractice? 'Practice' : 'Bias Test'}</h1>
+                <h2>{currentBlock.testBlockTitle}</h2>
                 <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p>
 
                 <table className='categories-table'>
@@ -190,13 +200,13 @@ class TestLanding extends Component {
                             </tr>
 
                             <tr>
-                                <td>{this.state.iBlock.leftCategoryItems[1].categoryName}</td>
-                                {this.displayFirst3CategoryItems(this.state.iBlock.leftCategoryItems)}
+                                <td>{currentBlock.leftCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{this.state.iBlock.rightCategoryItems[1].categoryName}</td>
-                                {this.displayFirst3CategoryItems(this.state.iBlock.rightCategoryItems)}
+                                <td>{currentBlock.rightCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
                     </tbody>
                     :
@@ -207,23 +217,23 @@ class TestLanding extends Component {
                             </tr>
 
                             <tr>
-                                <td>{this.state.iBlock.leftCategoryItems[1].categoryName}</td>
-                                {this.displayFirst3CategoryItems(this.state.iBlock.leftCategoryItems)}
+                                <td>{currentBlock.leftCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{this.state.iBlock.leftCategoryItems[this.state.iBlock.leftCategoryItems.length - 1].categoryName}</td>
-                                {this.displayLast3CategoryItems(this.state.iBlock.leftCategoryItems)}                                
+                                <td>{currentBlock.leftCategoryItems[currentBlock.leftCategoryItems.length - 1].categoryName}</td>
+                                {this.displayLast3CategoryItems(currentBlock.leftCategoryItems)}                                
                             </tr>
 
                             <tr>
-                                <td>{this.state.iBlock.rightCategoryItems[1].categoryName}</td>
-                                {this.displayFirst3CategoryItems(this.state.iBlock.rightCategoryItems)}
+                                <td>{currentBlock.rightCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{this.state.iBlock.rightCategoryItems[this.state.iBlock.rightCategoryItems.length - 1].categoryName}</td>
-                                {this.displayLast3CategoryItems(this.state.iBlock.rightCategoryItems)}    
+                                <td>{currentBlock.rightCategoryItems[currentBlock.rightCategoryItems.length - 1].categoryName}</td>
+                                {this.displayLast3CategoryItems(currentBlock.rightCategoryItems)}    
                             </tr>
                     </tbody>
                     }
