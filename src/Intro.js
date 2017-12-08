@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import { createClient } from 'contentful'
+import { createClient } from 'contentful';
 import { Link } from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 import './Intro.css';
 
 // TODO: DRY - repeated code.
@@ -59,13 +60,10 @@ class Intro extends Component {
         <h2>Choose a test: </h2>
 
         {testData.map((testItem) => {
-          let style = {
-            'color': 'blue',
-            'textDecoration': 'underline',
-            cursor: 'pointer'
-          }
           return (
-            <li style={style} onClick={() => this.onClickTest(testItem)} key={testItem.sys.id}>{testItem.fields.testTitle}</li>
+            <div className="Button">
+            <li onClick={() => this.onClickTest(testItem)} key={testItem.sys.id}>{testItem.fields.testTitle} <FontAwesome className="fontawesome" name='arrow-right' /> </li>
+            </div>
           )
         })
         }

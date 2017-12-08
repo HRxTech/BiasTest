@@ -1,17 +1,28 @@
 
 
-.Intro{
-    padding:15px;
-}
+
 .Intro-title{
-    color:#19223D;
     font-size:1.8em;
 } 
 h2{
-    color:#19223D;
     font-size:1.4em;
 }   
 .Intro-text{
-    color:#454D67;
     font-size:1.15em;
+}
+
+.Button{
+    margin:0 auto;
+    text-decoration: none;
+    list-style-type: none;
+    color:#FAFAFA;
+    border:1px solid #00ACF2;
+    border-radius:18px;
+    width:180px;
+    height:30px;
+    background-color: #00ACF2;
+    margin-bottom:5px;
+    padding:8px 0 1px 18px;
+    font-weight: bold;
+    text-align: left;
 }
