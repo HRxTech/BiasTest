@@ -14,8 +14,15 @@ class TestBlock extends Component {
       currentItemIndex: 0,
       isFirstScreen: true
     }
-
   }
+
+  
+  // function shuffleArray(array) {
+  //   for (let i = array.length - 1; i > 0; i--) {
+  //       let j = Math.floor(Math.random() * (i + 1));
+  //       [array[i], array[j]] = [array[j], array[i]];
+  //   }
+  // }
 
   // Function to handle key press
   componentDidMount() {
@@ -69,8 +76,14 @@ class TestBlock extends Component {
         }
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
-          <h3>{this.state.leftCategoryName}</h3>
-          <h3>{this.state.rightCategoryName}</h3>
+          <div>
+            <h3>{this.state.leftCategoryName}</h3>
+            <button>&#8249;</button>
+          </div>
+          <div>
+            <h3>{this.state.rightCategoryName}</h3>
+            <button>&#8250;</button>
+          </div>
         </div>
 
         {!this.state.isFirstScreen &&
