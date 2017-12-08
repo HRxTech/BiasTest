@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { createClient } from 'contentful'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import './Intro.css';
 
 // TODO: DRY - repeated code.
 var client = createClient({
