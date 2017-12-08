@@ -4,25 +4,28 @@ class TestBlock extends Component {
   constructor(props) {
     super(props);
 
+    // Merge and shuffle array
+      var categoryItems = this.props.blockData.iBlock.leftCategoryItems.concat(this.props.blockData.cBlock.rightCategoryItems)
+
+    for (let i = categoryItems.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [categoryItems[i], categoryItems[j]] = [categoryItems[j], categoryItems[i]];
+    }
+
+    // Set initial state
     this.state = {
-      currentBlockIndex: this.props.blockData.currentBlockIndex,      
-      currentBlockTitle: this.props.blockData.currentBlockTitle,
-      leftCategoryName: this.props.blockData.leftCategoryName,
-      rightCategoryName: this.props.blockData.rightCategoryName,      
-      categoryItemsShuffled: this.props.blockData.categoryItemsShuffled,
+      testId: this.props.blockData.testId,
       isPractice: this.props.blockData.isPractice,
+      iBlock: this.props.blockData.iBlock,            
+      cBlock: this.props.blockData.cBlock,        
+      isFirstRound: this.props.blockData.isFirstRound,
+      isDoingTest: this.props.blockData.isDoingTest,
+      isFirstScreen: true,
       currentItemIndex: 0,
-      isFirstScreen: true
+      categoryItemsShuffled: categoryItems     
     }
   }
 
-  
-  // function shuffleArray(array) {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //       let j = Math.floor(Math.random() * (i + 1));
-  //       [array[i], array[j]] = [array[j], array[i]];
-  //   }
-  // }
 
   // Function to handle key press
   componentDidMount() {
@@ -64,10 +67,22 @@ class TestBlock extends Component {
   }
 
   render() {
+
+      // Get current block 
+      var iBlock = this.state.iBlock;
+      var cBlock = this.state.cBlock;
+      var currentBlock;
+
+      if(this.state.isFirstRound){
+        currentBlock = iBlock;
+      }else {
+        currentBlock = cBlock;
+      }
+
     return (
       <div className="TestBlock">
-        <h1>Practice Block</h1>
-        <h2>{this.state.currentBlockTitle}</h2>
+        <h1>{this.stateisPractice? 'Practice' : 'Bias Test'}</h1>
+        <h2>{currentBlock.testBlockTitle}</h2>
 
         {this.state.currentItemIndex < this.state.categoryItemsShuffled.length ?
         <p>{this.state.categoryItemsShuffled[this.state.currentItemIndex].categoryItem}</p>
@@ -76,12 +91,25 @@ class TestBlock extends Component {
         }
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
-          <div>
-            <h3>{this.state.leftCategoryName}</h3>
+          <div className='button-group'>
+            <h3>{currentBlock.leftCategoryItems[0].categoryName}</h3>
+            {!this.state.isPractice &&
+              <div>
+                <p>or</p>
+                <h3>{currentBlock.leftCategoryItems[currentBlock.leftCategoryItems.length - 1].categoryName}</h3>
+              </div>
+            }
             <button>&#8249;</button>
           </div>
-          <div>
-            <h3>{this.state.rightCategoryName}</h3>
+
+          <div className='button-group'>
+            <h3>{currentBlock.rightCategoryItems[0].categoryName}</h3>
+            {!this.state.isPractice &&
+              <div>
+                <p>or</p>
+                <h3>{currentBlock.rightCategoryItems[currentBlock.rightCategoryItems.length - 1].categoryName}</h3>
+              </div>
+            }
             <button>&#8250;</button>
           </div>
         </div>
