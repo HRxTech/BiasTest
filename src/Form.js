@@ -98,7 +98,7 @@ class Form extends Component {
                     </label>
                     <input type = 'submit' />
                 </form>
-                <a href=''>Skip to results &rsaquo;</a>
+                <a href=''>Skip to results <span>&rsaquo;</span></a>
             </div>
         );
     }
