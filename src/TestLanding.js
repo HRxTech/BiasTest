@@ -9,36 +9,50 @@ class TestLanding extends Component {
 
         // Set initial state
         this.state = {
-            currentBlockIndex: 0,
-            currentBlockTitle: '',// this.props.currentBlockIndex;
-            leftCategoryName: '',
-            leftCategoryItems: [],
-            rightCategoryName: '',
-            rightCategoryItems: [],
-            isPractice: (this.props.match.params.stage === 'practice'),
             testId: this.props.match.params.testId,
-            isDoingTest: false
+            isPractice: (this.props.match.params.stage === 'practice'),
+            iBlock: {},            
+            cBlock: {},            
+            isFirstRound: true,
+            isDoingTest: false,
         }
-
         this.onClickPass = this.onClickPass.bind(this);
     }
 
-    // Function to shuffle array
-    shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+    createPracticeCategoryDataArrays(blockData, leftArray, rightArray){
+        blockData.fields.leftCategory.fields.categoryItems.forEach((oneCategoryItem) => {
+            leftArray.push({
+                categoryName: blockData.fields.leftCategory.fields.categoryName,
+                categoryItem: oneCategoryItem.fields.word
+            });
+        })
+        
+        blockData.fields.rightCategory.fields.categoryItems.forEach((oneCategoryItem) => {
+            rightArray.push({
+                categoryName: blockData.fields.rightCategory.fields.categoryName,
+                categoryItem: oneCategoryItem.fields.word
+            });
+        })  
     }
 
-    // Function to create array of category words and their correct categories
-    createCategoryWordsAndAnswersArray(array, newArray, correctCategory) {
-        array.forEach((oneItem) => {
-            newArray.push({
-                correctCategory: correctCategory,
-                categoryItem: oneItem.fields.word
+    createRealCategoryDataArrays(blockData, leftArray, rightArray){
+        blockData.fields.leftCategories.forEach((oneCategory) => {
+            oneCategory.fields.categoryItems.forEach((oneCategoryItem) => {
+                leftArray.push({
+                    categoryName: oneCategory.fields.categoryName,
+                    categoryItem: oneCategoryItem.fields.word
+                });
             })
-        })
+        });
+        
+        blockData.fields.rightCategories.forEach((oneCategory) => {
+            oneCategory.fields.categoryItems.forEach((oneCategoryItem) => {
+                rightArray.push({
+                    categoryName: oneCategory.fields.categoryName,
+                    categoryItem: oneCategoryItem.fields.word
+                });
+            })
+        });  
     }
 
     // Function to handle first HTTP request
@@ -57,67 +71,52 @@ class TestLanding extends Component {
                 include: 5
               })
             .then((response) => {
+                let biasTest = response.items[0].fields;
 
-                let testItem = response.items[0].fields;
+                let ibLeftCategoryData = [];
+                let ibRightCategoryData = [];
 
-                let currentBlockData;
-                let currentBlockTitle;
-                let leftCategoryName = '';
-                let rightCategoryName = '';
-                let leftCategoryItemsData;
-                let leftCategoryItemsArray = [];
-                let rightCategoryItemsData;
-                let rightCategoryItemsArray = []
-                if(this.state.isPractice) {
-                    currentBlockData = testItem.practiceBlocks[this.state.currentBlockIndex].fields;
-                    currentBlockTitle = currentBlockData.practiceBlockTitle;
-                    leftCategoryName = currentBlockData.leftCategory.fields.categoryName;
-                    rightCategoryName = currentBlockData.rightCategory.fields.categoryName;
-                    
-                    leftCategoryItemsData = currentBlockData.leftCategory.fields.categoryItems;
-                    rightCategoryItemsData = currentBlockData.rightCategory.fields.categoryItems;
-                } else {
-                    if(this.state.currentBlockIndex === 0) {
-                        currentBlockData = testItem.incompatibleBlock.fields;
-                    } else {
-                        currentBlockData = testItem.compatibleBlock.fields;
-                    }
-                    currentBlockTitle = currentBlockData.testBlockTitle;
+                let cbLeftCategoryData = [];
+                let cbRightCategoryData = [];
 
-                    leftCategoryName = currentBlockData.leftCategories
-                    .map(function(cat){
-                        return cat.fields.categoryName;
-                    }).join(" / ");
+                if(this.state.isPractice){
 
-                    rightCategoryName = currentBlockData.rightCategories
-                    .map(function(cat){
-                        return cat.fields.categoryName;
-                    }).join(" / ");
+                    // Set practice block titles in state
+                    this.setState({
+                        iBlock: { testBlockTitle: biasTest.practiceBlocks[0].fields.practiceBlockTitle },                        
+                        cBlock: { testBlockTitle: biasTest.practiceBlocks[1].fields.practiceBlockTitle }
+                    })
 
-                    leftCategoryItemsData = [];
-                    rightCategoryItemsData = [];
-                    currentBlockData.leftCategories.forEach((cat)=> { leftCategoryItemsData = leftCategoryItemsData.concat(cat.fields.categoryItems) });
-                    currentBlockData.rightCategories.forEach((cat)=> { rightCategoryItemsData = rightCategoryItemsData.concat(cat.fields.categoryItems) });
+                    // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
+                    this.createPracticeCategoryDataArrays(biasTest.practiceBlocks[0], ibLeftCategoryData, ibRightCategoryData);                    
+                    this.createPracticeCategoryDataArrays(biasTest.practiceBlocks[1], cbLeftCategoryData, cbRightCategoryData);
+
+                }else{
+                    // Set practice block titles in state
+                    this.setState({
+                        iBlock: { testBlockTitle: biasTest.incompatibleBlock.fields.testBlockTitle },                        
+                        cBlock: { testBlockTitle: biasTest.compatibleBlock.fields.testBlockTitle }
+                    })
+
+                    // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
+                    this.createRealCategoryDataArrays(biasTest.incompatibleBlock, ibLeftCategoryData, ibRightCategoryData);                    
+                    this.createRealCategoryDataArrays(biasTest.compatibleBlock, cbLeftCategoryData, cbRightCategoryData);
                 }
-
-                // Get array of category words and their correct categories
-                this.createCategoryWordsAndAnswersArray(leftCategoryItemsData, leftCategoryItemsArray, leftCategoryName);
-                this.createCategoryWordsAndAnswersArray(rightCategoryItemsData, rightCategoryItemsArray, rightCategoryName);
-
-                // Merge and shuffle category items arrays        
-                var itemsArray = [...leftCategoryItemsArray, ...rightCategoryItemsArray];
-                this.shuffleArray(itemsArray);
-
+                
+                // Set category data in state 
                 this.setState({
-                    currentBlockTitle: currentBlockTitle,
-                    leftCategoryName: leftCategoryName,
-                    leftCategoryItems: leftCategoryItemsArray,
-                    rightCategoryName: rightCategoryName,
-                    rightCategoryItems: rightCategoryItemsArray,
-                    categoryItemsShuffled: itemsArray,
+                    iBlock: Object.assign(this.state.iBlock, { 
+                        leftCategoryItems: ibLeftCategoryData, 
+                        rightCategoryItems: ibRightCategoryData 
+                    }), 
+                    cBlock: Object.assign(this.state.cBlock, { 
+                        leftCategoryItems: cbLeftCategoryData, 
+                        rightCategoryItems: cbRightCategoryData 
+                    }), 
                     isLoading: false
                 })
 
+                console.log(this.state);
             })
             .catch(console.error);
     }
@@ -127,6 +126,41 @@ class TestLanding extends Component {
         this.setState({isDoingTest: true});
     }
 
+    // Function to display first three category items (used for practice test and real test category 1)
+    displayFirst3CategoryItems(categoryItems){
+        let first3Items = categoryItems.slice(0, 3);
+        return (
+            <td>
+                {first3Items.map((oneItem, i) => {
+                    return (
+                        <span key={oneItem.categoryItem}>
+                            {!!i && ", "}
+                            {oneItem.categoryItem}
+                        </span>
+                    )
+                })}
+            </td>
+        )
+    }
+
+    // Function to display first three category items (used for real test category 2)
+    displayLast3CategoryItems(categoryItems){
+        let last3Items = categoryItems.slice(Math.max(categoryItems.length - 3, 1))
+        
+        return (
+            <td>
+                {last3Items.map((oneItem, i) => {
+                    return (
+                        <span key={oneItem.categoryItem}>
+                            {!!i && ", "}
+                            {oneItem.categoryItem}
+                        </span>
+                    )
+                })}
+            </td>
+        )
+    }                               
+    
     render() {
 
         // Loader...
@@ -144,33 +178,56 @@ class TestLanding extends Component {
 
         return (
             <div>
-                <h1>Bias Test - Gender/Career</h1>
-                <h2>{this.state.currentBlockTitle}</h2>
+                <h1>{this.state.iBlock.testBlockTitle}</h1>
                 <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p>
 
                 <table className='categories-table'>
+                    {this.state.isPractice?
                     <tbody>
-                        <tr>
-                            <th>Category Name</th>
-                            <th>Category Items</th>
-                        </tr>
-                        <tr>
-                            <td>{this.state.leftCategoryName}</td>
-                            {this.state.leftCategoryItems.map((leftItem) => {
-                                return (
-                                    <td key={leftItem.categoryItem}>{leftItem.categoryItem}</td>
-                                )
-                            })}
-                        </tr>
-                        <tr>
-                            <td>{this.state.rightCategoryName}</td>
-                            {this.state.rightCategoryItems.map((rightItem) => {
-                                return (
-                                    <td key={rightItem.categoryItem}>{rightItem.categoryItem}</td>
-                                )
-                            })}
-                        </tr>
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Category Items</th>
+                            </tr>
+
+                            <tr>
+                                <td>{this.state.iBlock.leftCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(this.state.iBlock.leftCategoryItems)}
+                            </tr>
+
+                            <tr>
+                                <td>{this.state.iBlock.rightCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(this.state.iBlock.rightCategoryItems)}
+                            </tr>
                     </tbody>
+                    :
+                    <tbody>
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Category Items</th>
+                            </tr>
+
+                            <tr>
+                                <td>{this.state.iBlock.leftCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(this.state.iBlock.leftCategoryItems)}
+                            </tr>
+
+                            <tr>
+                                <td>{this.state.iBlock.leftCategoryItems[this.state.iBlock.leftCategoryItems.length - 1].categoryName}</td>
+                                {this.displayLast3CategoryItems(this.state.iBlock.leftCategoryItems)}                                
+                            </tr>
+
+                            <tr>
+                                <td>{this.state.iBlock.rightCategoryItems[1].categoryName}</td>
+                                {this.displayFirst3CategoryItems(this.state.iBlock.rightCategoryItems)}
+                            </tr>
+
+                            <tr>
+                                <td>{this.state.iBlock.rightCategoryItems[this.state.iBlock.rightCategoryItems.length - 1].categoryName}</td>
+                                {this.displayLast3CategoryItems(this.state.iBlock.rightCategoryItems)}    
+                            </tr>
+                    </tbody>
+                    }
+                    
                 </table>
 
                 <button onClick={this.onClickPass}>
