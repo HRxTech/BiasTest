@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful'
 import {withRouter} from "react-router-dom";
 import FontAwesome from 'react-fontawesome';
+import './Header.css';
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -36,8 +37,9 @@ class Header extends Component {
     render() {
         return (
             <div className="Header">
-                <img onClick={this.onClickHome} src={this.state.logoImg} alt={this.state.logoImgAlt} style={{ 'width': 50, 'paddingRight': 200, 'paddingTop': 15 }} />
-                <FontAwesome name='question-circle'
+                <img onClick={this.onClickHome} src={this.state.logoImg} alt={this.state.logoImgAlt} />
+                <FontAwesome className="question"
+                    name='question-circle'
                     size='2x'
                     style={{ 'color': "#BFC5D2", 'paddingTop': 15 }}
                     alt='More Info'

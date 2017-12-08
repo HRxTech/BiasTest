@@ -1,0 +1,15 @@
+
+/* Mobile Style for footer in vertical size */
+.Footer{
+    padding:5px 140px 10px 0;
+}
+.fontawesome{
+    color: #19223D;
+    padding-right:15px;
+}
+p:last-child{
+    display:none;
+}
+p:nth-child(1){
+    margin-bottom:10px;
+}
