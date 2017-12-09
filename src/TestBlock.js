@@ -96,8 +96,11 @@ class TestBlock extends Component {
 
         // 2. Check user answer against correct category, and only increment index if answer is correct
         if(userAnswer === this.state.categoryItemsShuffled[currentItemIndex].categoryName || userAnswer2 === this.state.categoryItemsShuffled[currentItemIndex].categoryName ){
-          console.log('correct');
           currentItemIndex++;
+
+          let responseTime = Date.now() - startTime;
+
+          console.log(responseTime);
 
           this.setState({
             answerIsCorrect: true,
@@ -105,7 +108,6 @@ class TestBlock extends Component {
             currentItem: this.state.categoryItemsShuffled[currentItemIndex]
           })
         }else{
-          console.log('incorrect');
           this.setState({
             answerIsCorrect: false
           })
