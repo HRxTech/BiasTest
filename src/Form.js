@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Form.css';
 
 class Form extends Component {
     constructor(props){
@@ -97,7 +98,7 @@ class Form extends Component {
                     </label>
                     <input type = 'submit' />
                 </form>
-                <a href=''>Skip to results &rsaquo;</a>
+                <a href=''>Skip to results <span>&rsaquo;</span></a>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 
 /* Mobile Style for footer in vertical size */
 .Footer{
-    padding:5px 140px 10px 0;
+    padding:5px 140px 15px 0;
 }
 .Footer .fontawesome{
     color: #19223D;
@@ -12,4 +12,40 @@ p:last-child{
 }
 p:nth-child(1){
     margin-bottom:10px;
+}
+
+@media (max-width: 480px){
+    .Footer{
+        text-align: center;
+        margin:0 auto;
+        padding: 0;
+        background-color: #BFC5D2;
+        padding:10px;
+        color:#FAFAFA;
+    }
+    p:last-child{
+        display:block;
+    }
+    p:nth-child(n){
+        margin-bottom:15px;
+    }
+
+}
+
+@media (max-width: 1240px){
+    .Footer{
+        text-align: center;
+        margin:0 auto;
+        padding: 0;
+        background-color: #BFC5D2;
+        padding:10px;
+        color:#FAFAFA;
+    }
+    p:last-child{
+        display:block;
+    }
+    p:nth-child(n){
+        margin-bottom:15px;
+    }
+
 }
