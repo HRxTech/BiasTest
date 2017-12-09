@@ -13,10 +13,11 @@ class TestLanding extends Component {
             isPractice: (this.props.match.params.stage === 'practice'),
             iBlock: {},            
             cBlock: {},            
-            isFirstRound: false,
+            isFirstRound: true,
             isDoingTest: false,
         }
         this.onClickPass = this.onClickPass.bind(this);
+        this.testFinished = this.testFinished.bind(this);
     }
 
     createPracticeCategoryDataArrays(blockData, leftArray, rightArray){
@@ -119,6 +120,14 @@ class TestLanding extends Component {
             .catch(console.error);
     }
 
+    // Test finished function
+    testFinished(){
+        console.log('Should display landing page again');
+        this.setState({
+            isFirstRound: false
+        })
+    }
+
     // Click handler to route TestLanding to TestBlock
     onClickPass() {
         this.setState({isDoingTest: true});
@@ -158,7 +167,7 @@ class TestLanding extends Component {
             </td>
         )
     }                               
-    
+
     render() {
 
         // Loader...
@@ -168,16 +177,19 @@ class TestLanding extends Component {
             )
         }
 
+        // Test Block...
         if (this.state.isDoingTest) {
             return (
-                <TestBlock blockData={this.state} />
+                <TestBlock 
+                    blockData={this.state} 
+                    testFinished={this.testFinished}/>
             )
         }
 
         // Get current block 
         var iBlock = this.state.iBlock;
         var cBlock = this.state.cBlock;
-        var currentBlock
+        var currentBlock;
 
         if(this.state.isFirstRound){
             currentBlock = iBlock;
