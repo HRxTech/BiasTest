@@ -4,174 +4,145 @@ class TestBlock extends Component {
   constructor(props) {
     super(props);
 
-    // Merge and shuffle array
-    var categoryItems = this.props.blockData.iBlock.leftCategoryItems.concat(this.props.blockData.cBlock.rightCategoryItems)
+    let bd = this.props.blockData;
 
-    for (let i = categoryItems.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [categoryItems[i], categoryItems[j]] = [categoryItems[j], categoryItems[i]];
+    // Set labels
+    let blockTitle = bd.testBlockTitle;
+    let leftLabel = bd.leftCategoryLabels.join(' or ');
+    let rightLabel = bd.rightCategoryLabels.join(' or ');
+
+    // Setup the questions
+    let questions = [];
+
+    // Put all the questions together. Noting, which direction is correct.
+    bd.leftCategoryItems.forEach(item => {
+      let q = {
+        word: item.categoryItem,
+        correctKey: 'ArrowLeft'
+      }
+      questions.push(q);
+    });
+
+    bd.rightCategoryItems.forEach(item => {
+      let q = {
+        word: item.categoryItem,
+        correctKey: 'ArrowRight'
+      }
+      questions.push(q);
+    });
+
+    // shuffle it up.
+    for (let i = questions.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [questions[i], questions[j]] = [questions[j], questions[i]];
     }
+    let currentQuestion = questions[0];
 
-    // Set initial state
     this.state = {
-      testId: this.props.blockData.testId,
-      isPractice: this.props.blockData.isPractice,
-      iBlock: this.props.blockData.iBlock,            
-      cBlock: this.props.blockData.cBlock,        
-      isFirstRound: this.props.blockData.isFirstRound,
-      isDoingTest: this.props.blockData.isDoingTest,
-      isFirstScreen: true,
-      currentItemIndex: 0,
-      categoryItemsShuffled: categoryItems     
+      questions: questions,
+      currentQuestionIndex: 0,
+      currentQuestion: currentQuestion,
+      isAnswerCorrect: true,
+      leftLabel: leftLabel,
+      rightLabel: rightLabel,
+      blockTitle: blockTitle,
+      startTime: null,
+      leftTimes: [],
+      rightTimes: []
     }
 
     this.testFinished = this.testFinished.bind(this);
+    this.checkAnswer = this.checkAnswer.bind(this);
   }
 
 
   // Function to handle key press
   componentDidMount() {
 
-    // Start timer
-    let startTime = Date.now();
+    // // Listen to keypress...
+    document.addEventListener('keydown', this.checkAnswer, true);
 
-    // Listen to keypress...
-    document.addEventListener('keydown', (event) => {
-      const key = event.key;
-
-      // Change state of first screen
-      this.setState({ isFirstScreen: false })
-
-      // Only do stuff if the test is not over...
-      var currentItemIndex = this.state.currentItemIndex;
-
-      if (currentItemIndex < this.state.categoryItemsShuffled.length) {
-        
-        // 1. Check which button the correct answer is in..
-        
-        var userAnswer;
-        var userAnswer2;
-
-        if (key === 'ArrowLeft') {
-          // if is first round, block = incompatible
-          if (this.state.isFirstRound) {
-            if(this.state.isPractice) {
-              userAnswer = this.state.iBlock.leftCategoryItems[0].categoryName; 
-            } else {
-              // If is real test, will have more than one category name for each button
-              userAnswer = this.state.iBlock.leftCategoryItems[0].categoryName;
-              userAnswer2 = this.state.iBlock.leftCategoryItems[this.state.iBlock.leftCategoryItems.length - 1].categoryName;
-            }           
-          } else {
-            // is not first round so block = compatible
-            if(this.state.isPractice) {
-              userAnswer = this.state.cBlock.leftCategoryItems[0].categoryName; 
-            } else {
-              // If is real test, will have more than one category name for each button
-              userAnswer = this.state.cBlock.leftCategoryItems[0].categoryName;
-              userAnswer2 = this.state.cBlock.leftCategoryItems[this.state.iBlock.leftCategoryItems.length - 1].categoryName;
-            }           
-          }
-        } else if (key === 'ArrowRight') {
-          // if is first round, block = incompatible
-          if (this.state.isFirstRound) {
-            if(this.state.isPractice) {
-              userAnswer = this.state.iBlock.rightCategoryItems[0].categoryName; 
-            } else {
-              // If is real test, will have more than one category name for each button
-              userAnswer = this.state.iBlock.rightCategoryItems[0].categoryName;
-              userAnswer2 = this.state.iBlock.rightCategoryItems[this.state.iBlock.rightCategoryItems.length - 1].categoryName;
-            }           
-          } else {
-            // is not first round so block = compatible
-            if(this.state.isPractice) {
-              userAnswer = this.state.cBlock.rightCategoryItems[0].categoryName; 
-            } else {
-              // If is real test, will have more than one category name for each button
-              userAnswer = this.state.cBlock.rightCategoryItems[0].categoryName;
-              userAnswer2 = this.state.cBlock.rightCategoryItems[this.state.iBlock.rightCategoryItems.length - 1].categoryName;
-            }           
-          }        
-        }
-
-        // 2. Check user answer against correct category, and only increment index if answer is correct
-        if(userAnswer === this.state.categoryItemsShuffled[currentItemIndex].categoryName || userAnswer2 === this.state.categoryItemsShuffled[currentItemIndex].categoryName ){
-          console.log('correct');
-          currentItemIndex++;
-
-          this.setState({
-            answerIsCorrect: true,
-            currentItemIndex: currentItemIndex,
-            currentItem: this.state.categoryItemsShuffled[currentItemIndex]
-          })
-        }else{
-          console.log('incorrect');
-          this.setState({
-            answerIsCorrect: false
-          })
-        }
-      }  
+    // Start time
+    this.setState({
+      startTime: performance.now()
     })
   }
 
-  // Function testFinished
+  checkAnswer(event) {
+    const key = event.key;
 
-  testFinished(){
-    this.props.testFinished();
+    if (key === this.state.currentQuestion.correctKey) {
+      
+      // measure the time
+      let stopTime = performance.now();
+      let timeTaken = stopTime - this.state.startTime;
+      if (key === 'ArrowLeft') {
+        let l = this.state.leftTimes;
+        l.push(timeTaken);
+        this.setState({
+          leftTimes: l
+        })
+      } else {
+        let r = this.state.rightTimes;
+        r.push(timeTaken);
+        this.setState({
+          rightTimes: r
+        })
+      }
+
+      // move question forward by one if it is not finished.
+      let i = this.state.currentQuestionIndex + 1;
+      if (i === this.state.questions.length) {
+        this.testFinished(this.state.leftTimes, this.state.rightTimes);
+      } else {
+        let currentQuestion = this.state.questions[i];
+        this.setState({
+          isAnswerCorrect: true,
+          currentQuestion: currentQuestion,
+          currentQuestionIndex: i,
+          startTime: performance.now() // Start timer again
+        });
+      }
+    } else {
+      this.setState({
+        isAnswerCorrect: false
+      })
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.checkAnswer, true);
+  }
+
+  // Function testFinished
+  testFinished() {
+    this.props.testFinished(this.state.leftTimes, this.state.rightTimes);
   }
 
   render() {
 
-      // Get current block 
-      var iBlock = this.state.iBlock;
-      var cBlock = this.state.cBlock;
-      var currentBlock;
-
-      if(this.state.isFirstRound){
-        currentBlock = iBlock;
-      }else {
-        currentBlock = cBlock;
-      }
-
     return (
       <div className="TestBlock">
-        <h1>{this.stateisPractice? 'Practice' : 'Bias Test'}</h1>
-        <h2>{currentBlock.testBlockTitle}</h2>
+        <h1>Bias Test</h1>
+        <h2>{this.state.blockTitle}</h2>
 
-        {this.state.currentItemIndex < this.state.categoryItemsShuffled.length ?
-        <p>{this.state.categoryItemsShuffled[this.state.currentItemIndex].categoryItem}</p>
-        :
-        <button onClick={() => this.testFinished()}>Next</button>
-        }
+        <p>{this.state.currentQuestion.word}</p>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
           <div className='button-group'>
-            <h3>{currentBlock.leftCategoryItems[0].categoryName}</h3>
-            {!this.state.isPractice &&
-              <div>
-                <p>or</p>
-                <h3>{currentBlock.leftCategoryItems[currentBlock.leftCategoryItems.length - 1].categoryName}</h3>
-              </div>
-            }
+            <h3>{this.state.leftLabel}</h3>
             <button>&#8249;</button>
           </div>
 
           <div className='button-group'>
-            <h3>{currentBlock.rightCategoryItems[0].categoryName}</h3>
-            {!this.state.isPractice &&
-              <div>
-                <p>or</p>
-                <h3>{currentBlock.rightCategoryItems[currentBlock.rightCategoryItems.length - 1].categoryName}</h3>
-              </div>
-            }
+            <h3>{this.state.rightLabel}</h3>
             <button>&#8250;</button>
           </div>
         </div>
 
-        {!this.state.isFirstScreen &&
-          !this.state.answerIsCorrect &&
-            <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
-         }
+        {!this.state.isAnswerCorrect &&
+          <p><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
+        }
       </div>
     );
   }
