@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-
+const fetch = require('isomorphic-fetch');
 
 /**
  * Submit 4 arrays, r1Times, r2Times, r3Times, r4Times
@@ -35,7 +35,9 @@ exports.submitTest = functions.https.onRequest((req, res) => {
     let r4Sum = r4Times.reduce(add, 0);
 
     let iat = ((r3Sum / r3Times.length + r4Sum / r4Times.length) / 2) - ((r1Sum / r1Times.length + r2Sum / r2Times.length) / 2);
-    admin.initializeApp(functions.config().firebase);
+    if (!admin.apps.length) {
+        admin.initializeApp(functions.config().firebase);
+    }
     var db = admin.firestore();
 
     return db.collection('BiasTest').add({
@@ -71,7 +73,9 @@ exports.updateTest = functions.https.onRequest((req, res) => {
     let age = req.body.age;
     let email = req.body.email;
 
-    admin.initializeApp(functions.config().firebase);
+    if (!admin.apps.length) {
+        admin.initializeApp(functions.config().firebase);
+    }
     var db = admin.firestore();
 
     var testRef = db.collection('BiasTest').doc(refId);
@@ -85,4 +89,30 @@ exports.updateTest = functions.https.onRequest((req, res) => {
     }).then(ref => {
         res.status(200).end();
     })
-})
+});
+
+/**
+ * Retrieve Geo info based on IP
+ * when a new test is submitted.
+ */
+exports.updateGeo = functions.firestore.document('BiasTest/{id}').onCreate(event => {
+    console.log('Starting function updateGeoData');
+    console.log(event.data.data());
+
+    // Get the test that was just submitted.
+    let ipAddress = event.data.data().ipAddress;
+
+    // Get Geo info based on IP and save it to the database.
+    // NOTE: Cannot access external network without attaching a billing
+    // account to firebase.
+    return fetch('https://freegeoip.net/json/' + ipAddress)
+        .then((response) => {
+            console.log('received geo data.');
+            console.log(response);
+            event.data.ref.set({
+                geoData: response
+            }, { merge: true });
+        }).catch((error) => {
+            console.log(error);
+        });
+});
