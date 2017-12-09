@@ -72,6 +72,8 @@ class TestBlock extends Component {
     const key = event.key;
 
     if (key === this.state.currentQuestion.correctKey) {
+      
+      // measure the time
       let stopTime = performance.now();
       let timeTaken = stopTime - this.state.startTime;
       if (key === 'ArrowLeft') {
@@ -87,7 +89,8 @@ class TestBlock extends Component {
           rightTimes: r
         })
       }
-      // move question forward by one.
+
+      // move question forward by one if it is not finished.
       let i = this.state.currentQuestionIndex + 1;
       if (i === this.state.questions.length) {
         this.testFinished(this.state.leftTimes, this.state.rightTimes);
@@ -101,7 +104,6 @@ class TestBlock extends Component {
         });
       }
     } else {
-      console.log('wrong answer!');
       this.setState({
         isAnswerCorrect: false
       })
