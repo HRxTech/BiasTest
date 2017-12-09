@@ -23,14 +23,12 @@ class TestLanding extends Component {
     createPracticeCategoryDataArrays(blockData, leftArray, rightArray) {
         blockData.fields.leftCategory.fields.categoryItems.forEach((oneCategoryItem) => {
             leftArray.push({
-                categoryName: blockData.fields.leftCategory.fields.categoryName,
                 categoryItem: oneCategoryItem.fields.word
             });
         })
 
         blockData.fields.rightCategory.fields.categoryItems.forEach((oneCategoryItem) => {
             rightArray.push({
-                categoryName: blockData.fields.rightCategory.fields.categoryName,
                 categoryItem: oneCategoryItem.fields.word
             });
         })
@@ -40,7 +38,6 @@ class TestLanding extends Component {
         blockData.fields.leftCategories.forEach((oneCategory) => {
             oneCategory.fields.categoryItems.forEach((oneCategoryItem) => {
                 leftArray.push({
-                    categoryName: oneCategory.fields.categoryName,
                     categoryItem: oneCategoryItem.fields.word
                 });
             })
@@ -49,7 +46,6 @@ class TestLanding extends Component {
         blockData.fields.rightCategories.forEach((oneCategory) => {
             oneCategory.fields.categoryItems.forEach((oneCategoryItem) => {
                 rightArray.push({
-                    categoryName: oneCategory.fields.categoryName,
                     categoryItem: oneCategoryItem.fields.word
                 });
             })
@@ -158,10 +154,13 @@ class TestLanding extends Component {
     }
 
     // Test finished function
-    testFinished() {
+    testFinished(leftTimes, rightTimes) {
         console.log('Should display landing page again');
+        console.log(leftTimes);
+        console.log(rightTimes);
         this.setState({
-            isFirstRound: false
+            isFirstRound: false,
+            isDoingTest: false
         })
     }
 
