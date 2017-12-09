@@ -31,3 +31,21 @@ p:nth-child(1){
     }
 
 }
+
+@media (max-width: 1240px){
+    .Footer{
+        text-align: center;
+        margin:0 auto;
+        padding: 0;
+        background-color: #BFC5D2;
+        padding:10px;
+        color:#FAFAFA;
+    }
+    p:last-child{
+        display:block;
+    }
+    p:nth-child(n){
+        margin-bottom:15px;
+    }
+
+}

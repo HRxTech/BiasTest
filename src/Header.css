@@ -16,3 +16,18 @@ img{
         padding-top: 40px;
     }
 }
+
+
+@media (max-width:1240px){
+    .Header{
+        background-color: #FAFAFA;
+    }
+    img{
+        width: 70px;
+        padding-right:80%;
+        padding-top: 30px;
+    }
+    .question{
+        padding-bottom: 30px;
+    }
+}
