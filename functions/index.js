@@ -110,7 +110,7 @@ exports.updateGeo = functions.firestore.document('BiasTest/{id}').onCreate(event
             console.log('received geo data.');
             console.log(response);
             event.data.ref.set({
-                geoData: response
+                geoData: response.json()
             }, { merge: true });
         }).catch((error) => {
             console.log(error);
