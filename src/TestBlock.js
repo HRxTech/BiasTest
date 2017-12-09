@@ -156,11 +156,6 @@ class TestBlock extends Component {
             <button>&#8249;</button>
           </div>
 
-          {!this.state.isFirstScreen &&
-            !this.state.answerIsCorrect &&
-              <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
-           }
-
           <div className='button-group'>
             <h3>{currentBlock.rightCategoryItems[0].categoryName}</h3>
             {!this.state.isPractice &&
@@ -172,6 +167,11 @@ class TestBlock extends Component {
             <button>&#8250;</button>
           </div>
         </div>
+
+        {!this.state.isFirstScreen &&
+          !this.state.answerIsCorrect &&
+            <p><span style={{ color: 'red' }}>Incorrect</span><br/>Please press the other arrow key to continue</p>
+         }
       </div>
     );
   }
