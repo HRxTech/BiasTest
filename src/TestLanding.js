@@ -59,7 +59,7 @@ class TestLanding extends Component {
     // Function to handle first HTTP request
     componentWillMount() {
         this.setState({ isLoading: true });
-        // Retrieve all entries of Practice Block content type
+        // Retrieve all entries of this test
         var client = createClient({
             space: '4xbeshmjlgqs',
             accessToken: '3bfead8c496ebd173c5b896acee22b2a9011df359db822a91d34dffd90abea07'
@@ -102,44 +102,50 @@ class TestLanding extends Component {
                     cBlock.leftCategoryLabels = [biasTest.practiceBlocks[1].fields.leftCategory.fields.categoryName];
                     cBlock.rightCategoryLabels = [biasTest.practiceBlocks[1].fields.rightCategory.fields.categoryName];
 
-                    console.log(iBlock);
-                    console.log(cBlock);
-                } 
-                // else {
-                //     // Set real test block titles in state
-                //     this.setState({
-                //         iBlock: { testBlockTitle: biasTest.incompatibleBlock.fields.testBlockTitle },
-                //         cBlock: { testBlockTitle: biasTest.compatibleBlock.fields.testBlockTitle }
-                //     })
+                } else {
+                    // Set real test block titles in state
+                    iBlock.testBlockTitle = biasTest.incompatibleBlock.fields.testBlockTitle;
+                    cBlock.testBlockTitle = biasTest.compatibleBlock.fields.testBlockTitle;
 
-                //     // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
-                //     this.createRealCategoryDataArrays(biasTest.incompatibleBlock, ibLeftCategoryData, ibRightCategoryData);
-                //     this.createRealCategoryDataArrays(biasTest.compatibleBlock, cbLeftCategoryData, cbRightCategoryData);
+                    let ibLeftCategoryData = [];
+                    let ibRightCategoryData = [];
+                    let cbLeftCategoryData = [];
+                    let cbRightCategoryData = [];
 
-                //     let ibLeftCategoryLabels = biasTest.incompatibleBlock.fields.leftCategories.map((leftCategory) => {
-                //         return (
-                //             leftCategory.fields.categoryName
-                //         )
-                //     });
+                    // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
+                    this.createRealCategoryDataArrays(biasTest.incompatibleBlock, ibLeftCategoryData, ibRightCategoryData);
+                    this.createRealCategoryDataArrays(biasTest.compatibleBlock, cbLeftCategoryData, cbRightCategoryData);
 
-                //     let ibRightCategoryLabels = biasTest.incompatibleBlock.fields.rightCategories.map((rightCategory) => {
-                //         return (
-                //             rightCategory.fields.categoryName
-                //         )
-                //     });
+                    iBlock.leftCategoryItems = ibLeftCategoryData;
+                    iBlock.rightCategoryItems = ibRightCategoryData;
 
-                //     let cbLeftCategoryLabels = biasTest.compatibleBlock.fields.leftCategories.map((leftCategory) => {
-                //         return (
-                //             leftCategory.fields.categoryName
-                //         )
-                //     });
+                    cBlock.leftCategoryItems = cbLeftCategoryData;
+                    cBlock.rightCategoryItems = cbRightCategoryData;
 
-                //     let cbRightCategoryLabels = biasTest.compatibleBlock.fields.rightCategories.map((rightCategory) => {
-                //         return (
-                //             rightCategory.fields.categoryName
-                //         )
-                //     });
-                // }
+                    iBlock.leftCategoryLabels = biasTest.incompatibleBlock.fields.leftCategories.map((leftCategory) => {
+                        return (
+                            leftCategory.fields.categoryName
+                        )
+                    });
+
+                    iBlock.rightCategoryLabels = biasTest.incompatibleBlock.fields.rightCategories.map((rightCategory) => {
+                        return (
+                            rightCategory.fields.categoryName
+                        )
+                    });
+
+                    cBlock.leftCategoryLabels = biasTest.compatibleBlock.fields.leftCategories.map((leftCategory) => {
+                        return (
+                            leftCategory.fields.categoryName
+                        )
+                    });
+
+                    cBlock.rightCategoryLabels = biasTest.compatibleBlock.fields.rightCategories.map((rightCategory) => {
+                        return (
+                            rightCategory.fields.categoryName
+                        )
+                    });
+                }
 
                 // Set category data in state 
                 this.setState({
@@ -208,24 +214,16 @@ class TestLanding extends Component {
             )
         }
 
-        // Test Block...
-        // if (this.state.isDoingTest) {
-        //     return (
-        //         // <TestBlock 
-        //         //     blockData={this.state} 
-        //         //     testFinished={this.testFinished}/>
-        //     )
-        // }
-
         // Get current block 
-        var iBlock = this.state.iBlock;
-        var cBlock = this.state.cBlock;
-        var currentBlock;
+        let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock );
 
-        if (this.state.isFirstRound) {
-            currentBlock = iBlock;
-        } else {
-            currentBlock = cBlock;
+        // Test Block...
+        if (this.state.isDoingTest) {
+            return (
+                <TestBlock 
+                    blockData= {currentBlock}
+                    testFinished={this.testFinished}/>
+            )
         }
 
         return (
