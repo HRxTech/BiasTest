@@ -5,7 +5,7 @@ class Form extends Component {
         super(props);
 
         this.state = {
-            testId: this.props.testId
+            refId: this.props.refId
         }
     }
 

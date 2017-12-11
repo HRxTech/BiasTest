@@ -170,7 +170,6 @@ class TestLanding extends Component {
                 r2: rightTimes,
                 finishedAllTests: true
             })
-
             this.postResults(this.state.testId, this.state.r1, this.state.r2, this.state.r3, this.state.r4);
         }
     }
@@ -192,6 +191,7 @@ class TestLanding extends Component {
             })
         }).then((response) => {
             console.log(response);
+            // Get ref Id?
         }).catch(() => console.log("Cannot access"));
 
     }
@@ -247,17 +247,15 @@ class TestLanding extends Component {
 
         // Form...
         if(this.state.finishedAllTests){
-
             return (
                 <Form 
-                    testId = {this.state.testId}
+                    refId = '' 
                 />
             )
         }
 
         // Get current block 
         let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock );
-
 
         // Test Block...
         if (this.state.isDoingTest) {

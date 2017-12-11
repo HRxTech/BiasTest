@@ -8,7 +8,7 @@ class Form extends Component {
 
         // Set Initial State
         this.state = { 
-            testId: this.props.testId,
+            refId: this.props.refId,
             race: '',
             gender: '',
             age: '',
@@ -54,7 +54,7 @@ class Form extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                refId: this.state.testId,
+                refId: this.state.refId,
                 race: this.state.race,
                 gender: this.state.gender,
                 age: this.state.age,
@@ -77,7 +77,7 @@ class Form extends Component {
         if(this.state.completedForm || this.state.skipForm ){
             return(
                 <Results 
-                    testId = {this.state.testId}
+                    refId = {this.state.refId}
                 />
             )
         }
