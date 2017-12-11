@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            testId: this.props.testId
+        }
+    }
 
     // Get score and results from postman..
     componentWillMount(){
@@ -16,12 +23,13 @@ class Form extends Component {
                <h1>Results</h1>
 
                <div className = 'score'>
-                    
+                    <p>Your score</p>
+                    <p>-3</p>
                </div>
 
                <div className = 'share-results'>
                     <p>Share your results</p>
-
+        
                </div>
 
                 <h2>You are moderately inclined towards xxx and xxx.</h2>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Form.css';
+import Results from './Results';
 
 class Form extends Component {
     constructor(props){
@@ -12,13 +13,15 @@ class Form extends Component {
             gender: '',
             age: '',
             email: '',
+            skipForm: false,
             completedForm: false 
         }
 
         // Bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateResults = this.updateResults.bind(this);        
+        this.updateResults = this.updateResults.bind(this); 
+        this.handleSkip = this.handleSkip.bind(this);                
 
     }
 
@@ -35,9 +38,11 @@ class Form extends Component {
     handleSubmit(e){
         e.preventDefault();
 
-        console.log(this.state);
-
         this.updateResults();
+
+        this.setState({
+            completedForm: true
+        })
 
     }
 
@@ -57,10 +62,26 @@ class Form extends Component {
             })
         }).then((response) => {
             console.log(response);
-        }).catch(() => console.log("can't access through localhost.."));
+
+        }).catch(() => console.log("Cannot access"));
+    }
+
+    handleSkip(){
+        this.setState({
+            skipForm: true
+        })
     }
 
     render() {
+
+        if(this.state.completedForm || this.state.skipForm ){
+            return(
+                <Results 
+                    testId = {this.state.testId}
+                />
+            )
+        }
+
         return (
             <div>
                 <h1>Information</h1>
@@ -114,7 +135,7 @@ class Form extends Component {
                     </label>
                     <input type = 'submit' />
                 </form>
-                <a href=''>Skip to results <span>&rsaquo;</span></a>
+                <button onClick={this.handleSkip}>Skip to results <span>&rsaquo;</span></button>
             </div>
         );
     }
