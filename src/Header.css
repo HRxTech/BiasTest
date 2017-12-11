@@ -10,7 +10,7 @@ img{
     padding-top: 15;
 }
 
-@media (max-width: 480px){
+@media  only screen and (min-width:480px){
     img{
         padding-right:330px;
         padding-top: 40px;
@@ -18,7 +18,7 @@ img{
 }
 
 
-@media (max-width:1240px){
+@media  only screen and (min-width:1240px){
     .Header{
         background-color: #FAFAFA;
     }

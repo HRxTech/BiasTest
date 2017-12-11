@@ -7,6 +7,7 @@ class Form extends Component {
 
         // Set Initial State
         this.state = { 
+            testId: this.props.testId,
             race: '',
             gender: '',
             age: '',
@@ -17,6 +18,8 @@ class Form extends Component {
         // Bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateResults = this.updateResults.bind(this);        
+
     }
 
     handleChange(e) {
@@ -32,12 +35,29 @@ class Form extends Component {
     handleSubmit(e){
         e.preventDefault();
 
-        // Form validation
-        if(this.state.race !== '' && this.state.gender !== '' && this.state.age !== '' ){
-            this.setState({ completedForm: true })
-        }
+        console.log(this.state);
 
-        // SEND RESULTS TO API
+        this.updateResults();
+
+    }
+
+    updateResults() {
+        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                refId: this.state.testId,
+                race: this.state.race,
+                gender: this.state.gender,
+                age: this.state.age,
+                email: this.state.email
+            })
+        }).then((response) => {
+            console.log(response);
+        }).catch(() => console.log("can't access through localhost.."));
     }
 
     render() {
@@ -45,10 +65,6 @@ class Form extends Component {
             <div>
                 <h1>Information</h1>
                 <p>Please fill in your information to contribute to HRx research.</p>
-
-                {this.state.completedForm === false &&
-                    <p>Please fill in all fields</p>    
-                }
 
                 <form onSubmit = {this.handleSubmit}>
                     <label>

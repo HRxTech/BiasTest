@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
+import Form from './Form';
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
@@ -15,6 +16,7 @@ class TestLanding extends Component {
             cBlock: {},
             isFirstRound: true,
             isDoingTest: false,
+            finishedAllTests: false
         }
         this.onClickPass = this.onClickPass.bind(this);
         this.testFinished = this.testFinished.bind(this);
@@ -155,13 +157,46 @@ class TestLanding extends Component {
 
     // Test finished function
     testFinished(leftTimes, rightTimes) {
-        console.log('Should display landing page again');
-        console.log(leftTimes);
-        console.log(rightTimes);
-        this.setState({
-            isFirstRound: false,
-            isDoingTest: false
-        })
+        if(this.state.isFirstRound){
+            this.setState({
+                r3: leftTimes,
+                r4: rightTimes,
+                isFirstRound: false,
+                isDoingTest: false 
+            })
+        }else{
+            this.setState({
+                r1: leftTimes,
+                r2: rightTimes,
+                finishedAllTests: true
+            })
+
+            this.postResults(this.state.testId, this.state.r1, this.state.r2, this.state.r3, this.state.r4);
+        }
+    }
+
+    // Function to send response times to Postman
+    postResults(testId, r1Times, r2Times, r3Times, r4Times){
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'https://us-central1-hrx-biastest.cloudfunctions.net/submitTest'
+        
+        fetch(proxyUrl + targetUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                testId: testId,
+                r1: r1Times,
+                r2: r2Times,
+                r3: r3Times,
+                r4: r4Times
+            })
+        }).then((response) => {
+            console.log(response);
+        }).catch(() => console.log("can't access through localhost.."));
+
     }
 
     // Click handler to route TestLanding to TestBlock
@@ -213,8 +248,19 @@ class TestLanding extends Component {
             )
         }
 
+        // Form...
+        if(this.state.finishedAllTests){
+
+            return (
+                <Form 
+                    testId = {this.state.testId}
+                />
+            )
+        }
+
         // Get current block 
         let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock );
+
 
         // Test Block...
         if (this.state.isDoingTest) {
@@ -224,6 +270,7 @@ class TestLanding extends Component {
                     testFinished={this.testFinished}/>
             )
         }
+
 
         return (
             <div>
@@ -240,12 +287,12 @@ class TestLanding extends Component {
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.leftCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.leftCategoryLabels}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.rightCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.rightCategoryLabels}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
                         </tbody>
@@ -257,22 +304,22 @@ class TestLanding extends Component {
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.leftCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.leftCategoryLabels[0]}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.leftCategoryItems[currentBlock.leftCategoryItems.length - 1].categoryName}</td>
+                                <td>{currentBlock.leftCategoryLabels[1]}</td>
                                 {this.displayLast3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.rightCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.rightCategoryLabels[0]}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.rightCategoryItems[currentBlock.rightCategoryItems.length - 1].categoryName}</td>
+                                <td>{currentBlock.rightCategoryLabels[1]}</td>
                                 {this.displayLast3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
                         </tbody>
