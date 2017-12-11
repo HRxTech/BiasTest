@@ -1,7 +1,8 @@
 
 /* Mobile Style for footer in vertical size */
 .Footer{
-    padding:5px 140px 15px 0;
+    padding:10px;
+    margin:0 auto;
 }
 .Footer .fontawesome{
     color: #19223D;
