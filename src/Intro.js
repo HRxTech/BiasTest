@@ -68,10 +68,6 @@ class Intro extends Component {
         })
         }
 
-        <ul>
-          <li><Link to='/form'>Form</Link></li>
-          <li><Link to='/results'>Results</Link></li>
-        </ul>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Form.css';
+import Results from './Results';
 
 class Form extends Component {
     constructor(props){
@@ -7,18 +8,20 @@ class Form extends Component {
 
         // Set Initial State
         this.state = { 
-            testId: this.props.testId,
+            refId: this.props.refId,
             race: '',
             gender: '',
             age: '',
             email: '',
+            skipForm: false,
             completedForm: false 
         }
 
         // Bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateResults = this.updateResults.bind(this);        
+        this.updateResults = this.updateResults.bind(this); 
+        this.handleSkip = this.handleSkip.bind(this);                
 
     }
 
@@ -35,17 +38,15 @@ class Form extends Component {
     handleSubmit(e){
         e.preventDefault();
 
-        // Form validation
-        if(this.state.race !== '' && this.state.gender !== '' && this.state.age !== '' ){
-            this.setState({ completedForm: true })
-        }
+        this.updateResults();
 
-        console.log(this.state);
+        this.setState({
+            completedForm: true
+        })
 
-        this.updateResults()
     }
 
-    updateResults(){
+    updateResults() {
         fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
             method: 'POST',
             headers: {
@@ -53,7 +54,7 @@ class Form extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                refId: this.state.testId,
+                refId: this.state.refId,
                 race: this.state.race,
                 gender: this.state.gender,
                 age: this.state.age,
@@ -61,18 +62,30 @@ class Form extends Component {
             })
         }).then((response) => {
             console.log(response);
+
+        }).catch(() => console.log("Cannot access"));
+    }
+
+    handleSkip(){
+        this.setState({
+            skipForm: true
         })
     }
 
     render() {
+
+        if(this.state.completedForm || this.state.skipForm ){
+            return(
+                <Results 
+                    refId = {this.state.refId}
+                />
+            )
+        }
+
         return (
             <div>
                 <h1>Information</h1>
                 <p>Please fill in your information to contribute to HRx research.</p>
-
-                {this.state.completedForm === false &&
-                    <p>Please fill in all fields</p>    
-                }
 
                 <form onSubmit = {this.handleSubmit}>
                     <label>
@@ -120,9 +133,9 @@ class Form extends Component {
                                value = {this.state.email}
                                onChange = {this.handleChange} />
                     </label>
-                    <input type = 'submit' onClick = {this.updateResults}/>
+                    <input type = 'submit' />
                 </form>
-                <a href=''>Skip to results <span>&rsaquo;</span></a>
+                <button onClick={this.handleSkip}>Skip to results <span>&rsaquo;</span></button>
             </div>
         );
     }
