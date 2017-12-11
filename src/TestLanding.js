@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
+import Form from './Form';
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
@@ -15,6 +16,7 @@ class TestLanding extends Component {
             cBlock: {},
             isFirstRound: true,
             isDoingTest: false,
+            finishedAllTests: false
         }
         this.onClickPass = this.onClickPass.bind(this);
         this.testFinished = this.testFinished.bind(this);
@@ -155,13 +157,20 @@ class TestLanding extends Component {
 
     // Test finished function
     testFinished(leftTimes, rightTimes) {
-        console.log('Should display landing page again');
-        console.log(leftTimes);
-        console.log(rightTimes);
-        this.setState({
-            isFirstRound: false,
-            isDoingTest: false
-        })
+        if(this.state.isFirstRound){
+            this.setState({
+                r3: leftTimes,
+                r4: rightTimes,
+                isFirstRound: false,
+                isDoingTest: false 
+            })
+        }else{
+            this.setState({
+                r1: leftTimes,
+                r2: rightTimes,
+                finishedAllTests: true
+            })
+        }
     }
 
     // Click handler to route TestLanding to TestBlock
@@ -213,8 +222,26 @@ class TestLanding extends Component {
             )
         }
 
+        // Form...
+        if(this.state.finishedAllTests){
+            let responseData = {
+                testId: this.state.testId,
+                r1: this.state.r1,
+                r2: this.state.r2,
+                r3: this.state.r3,
+                r4: this.state.r4
+            }
+
+            return (
+                <Form 
+                    responseData = {responseData}
+                />
+            )
+        }
+
         // Get current block 
         let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock );
+
 
         // Test Block...
         if (this.state.isDoingTest) {
@@ -224,6 +251,7 @@ class TestLanding extends Component {
                     testFinished={this.testFinished}/>
             )
         }
+
 
         return (
             <div>
@@ -240,12 +268,12 @@ class TestLanding extends Component {
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.leftCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.leftCategoryLabels}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.rightCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.rightCategoryLabels}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
                         </tbody>
@@ -257,22 +285,22 @@ class TestLanding extends Component {
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.leftCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.leftCategoryLabels[0]}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.leftCategoryItems[currentBlock.leftCategoryItems.length - 1].categoryName}</td>
+                                <td>{currentBlock.leftCategoryLabels[1]}</td>
                                 {this.displayLast3CategoryItems(currentBlock.leftCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.rightCategoryItems[1].categoryName}</td>
+                                <td>{currentBlock.rightCategoryLabels[0]}</td>
                                 {this.displayFirst3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
 
                             <tr>
-                                <td>{currentBlock.rightCategoryItems[currentBlock.rightCategoryItems.length - 1].categoryName}</td>
+                                <td>{currentBlock.rightCategoryLabels[1]}</td>
                                 {this.displayLast3CategoryItems(currentBlock.rightCategoryItems)}
                             </tr>
                         </tbody>
