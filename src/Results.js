@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Form extends Component {
     constructor(props){
@@ -35,7 +36,7 @@ class Form extends Component {
                 <h2>You are moderately inclined towards xxx and xxx.</h2>
                 <p>Response response response response</p>
 
-                <button>Take another test</button>
+                <Link to='/'><button>Take another test</button></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
             </div>
         );

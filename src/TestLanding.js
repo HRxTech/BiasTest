@@ -157,6 +157,7 @@ class TestLanding extends Component {
 
     // Test finished function
     testFinished(leftTimes, rightTimes) {
+        // If test is first round, block = incompatible, so store times in r3 and r4
         if(this.state.isFirstRound){
             this.setState({
                 r3: leftTimes,
@@ -164,6 +165,7 @@ class TestLanding extends Component {
                 isFirstRound: false,
                 isDoingTest: false 
             })
+        // If test is not first round, block = compatible, store times in r1 and r2
         }else{
             this.setState({
                 r1: leftTimes,
