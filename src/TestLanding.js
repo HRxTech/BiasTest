@@ -170,7 +170,29 @@ class TestLanding extends Component {
                 r2: rightTimes,
                 finishedAllTests: true
             })
+
+            this.postResults(this.state.testId, this.state.r1, this.state.r2, this.state.r3, this.state.r4);
         }
+    }
+
+    // Function to send response times to Postman
+    postResults(testId, r1Times, r2Times, r3Times, r4Times){
+        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                testId: testId,
+                r1: r1Times,
+                r2: r2Times,
+                r3: r3Times,
+                r4: r4Times
+            })
+        }).then((response) => {
+            console.log(response);
+        })
     }
 
     // Click handler to route TestLanding to TestBlock
@@ -224,17 +246,10 @@ class TestLanding extends Component {
 
         // Form...
         if(this.state.finishedAllTests){
-            let responseData = {
-                testId: this.state.testId,
-                r1: this.state.r1,
-                r2: this.state.r2,
-                r3: this.state.r3,
-                r4: this.state.r4
-            }
 
             return (
                 <Form 
-                    responseData = {responseData}
+                    testId = {this.state.testId}
                 />
             )
         }

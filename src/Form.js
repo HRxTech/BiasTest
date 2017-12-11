@@ -7,6 +7,7 @@ class Form extends Component {
 
         // Set Initial State
         this.state = { 
+            testId: this.props.testId,
             race: '',
             gender: '',
             age: '',
@@ -17,8 +18,8 @@ class Form extends Component {
         // Bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateResults = this.updateResults.bind(this);        
 
-        console.log(this.props.responseData);
     }
 
     handleChange(e) {
@@ -39,7 +40,28 @@ class Form extends Component {
             this.setState({ completedForm: true })
         }
 
-        // SEND RESULTS TO API
+        console.log(this.state);
+
+        this.updateResults()
+    }
+
+    updateResults(){
+        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                refId: this.state.testId,
+                race: this.state.race,
+                gender: this.state.gender,
+                age: this.state.age,
+                email: this.state.email
+            })
+        }).then((response) => {
+            console.log(response);
+        })
     }
 
     render() {
@@ -98,7 +120,7 @@ class Form extends Component {
                                value = {this.state.email}
                                onChange = {this.handleChange} />
                     </label>
-                    <input type = 'submit' />
+                    <input type = 'submit' onClick = {this.updateResults}/>
                 </form>
                 <a href=''>Skip to results <span>&rsaquo;</span></a>
             </div>
