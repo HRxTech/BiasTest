@@ -187,15 +187,18 @@ class TestLanding extends Component {
             },
             body: JSON.stringify({
                 testId: testId,
-                r1: r1Times,
-                r2: r2Times,
-                r3: r3Times,
-                r4: r4Times
+                r1Times: r1Times,
+                r2Times: r2Times,
+                r3Times: r3Times,
+                r4Times: r4Times
             })
         }).then((response) => {
-            console.log(response);
-            // Get ref Id?
-        }).catch((e) => console.log(e));
+            return response.json()
+        }).then((responseJson) => {
+            console.log(responseJson.refId);
+            console.log(responseJson.score);
+        })
+        .catch((e) => console.log(e));
 
     }
 

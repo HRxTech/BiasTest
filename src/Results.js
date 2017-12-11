@@ -10,13 +10,7 @@ class Form extends Component {
         }
     }
 
-    // Get score and results from postman..
-    componentWillMount(){
-        // fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest')
-        // .then((response) => {
-        //     console.log(response);
-        // })
-    }
+    
 
     render() {
         return (
