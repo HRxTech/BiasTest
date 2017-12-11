@@ -5,12 +5,10 @@ class Form extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            refId: this.props.refId
-        }
+        console.log(this.props.score);
     }
 
-    
+
 
     render() {
         return (
@@ -19,7 +17,7 @@ class Form extends Component {
 
                <div className = 'score'>
                     <p>Your score</p>
-                    <p>-3</p>
+                    <p>{this.props.score}</p>
                </div>
 
                <div className = 'share-results'>

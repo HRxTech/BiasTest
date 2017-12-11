@@ -8,7 +8,6 @@ class Form extends Component {
 
         // Set Initial State
         this.state = { 
-            refId: this.props.refId,
             race: '',
             gender: '',
             age: '',
@@ -23,6 +22,36 @@ class Form extends Component {
         this.updateResults = this.updateResults.bind(this); 
         this.handleSkip = this.handleSkip.bind(this);                
 
+    }
+
+    componentWillMount(){
+        this.setState({ isLoading: true });
+        
+        // Function to send response times to Postman
+        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                testId: this.props.testId,
+                r1Times: this.props.r1,
+                r2Times: this.props.r2,
+                r3Times: this.props.r3,
+                r4Times: this.props.r4
+            })
+        }).then((response) => {
+            return response.json()
+        }).then((responseJson) => {
+            this.setState({
+                refId: responseJson.refId,
+                score: responseJson.score,
+                isLoading: false
+            })
+        })
+        .catch((e) => console.log(e));
     }
 
     handleChange(e) {
@@ -52,6 +81,7 @@ class Form extends Component {
         //     headers: {
         //         'Accept': 'application/json',
         //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin': '*'
         //     },
         //     body: JSON.stringify({
         //         refId: this.state.refId,
@@ -60,9 +90,6 @@ class Form extends Component {
         //         age: this.state.age,
         //         email: this.state.email
         //     })
-        // }).then((response) => {
-        //     console.log(response);
-
         // }).catch(() => console.log("Cannot access"));
     }
 
@@ -74,10 +101,16 @@ class Form extends Component {
 
     render() {
 
+        if(this.state.isLoading){
+            return(
+                <h3>Please wait while we calculate your score...</h3>
+            )
+        }
+
         if(this.state.completedForm || this.state.skipForm ){
             return(
                 <Results 
-                    refId = {this.state.refId}
+                    score = {this.state.score}
                 />
             )
         }
@@ -135,7 +168,7 @@ class Form extends Component {
                     </label>
                     <input type = 'submit' />
                 </form>
-                <button onClick={this.handleSkip}>Skip to results <span>&rsaquo;</span></button>
+                <button onClick={this.handleSkip} className='fake-link'>Skip to results <span>&rsaquo;</span></button>
             </div>
         );
     }
