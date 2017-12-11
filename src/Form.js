@@ -37,10 +37,11 @@ class Form extends Component {
 
         console.log(this.state);
 
-        this.updateResults()
+        this.updateResults();
+
     }
 
-    updateResults(){
+    updateResults() {
         fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
             method: 'POST',
             headers: {
@@ -56,7 +57,7 @@ class Form extends Component {
             })
         }).then((response) => {
             console.log(response);
-        })
+        }).catch(() => console.log("can't access through localhost.."));
     }
 
     render() {
@@ -111,7 +112,7 @@ class Form extends Component {
                                value = {this.state.email}
                                onChange = {this.handleChange} />
                     </label>
-                    <input type = 'submit' onClick = {this.updateResults}/>
+                    <input type = 'submit' />
                 </form>
                 <a href=''>Skip to results <span>&rsaquo;</span></a>
             </div>
