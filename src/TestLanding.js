@@ -183,6 +183,7 @@ class TestLanding extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
                 testId: testId,
@@ -194,7 +195,7 @@ class TestLanding extends Component {
         }).then((response) => {
             console.log(response);
             // Get ref Id?
-        }).catch(() => console.log("Cannot access"));
+        }).catch((e) => console.log(e));
 
     }
 

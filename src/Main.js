@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Intro from './Intro';
-import Form from './Form';
-import Results from './Results';
 import TestLanding from './TestLanding';
 import OptionsPage from './OptionsPage';
 import { Switch, Route } from 'react-router-dom'

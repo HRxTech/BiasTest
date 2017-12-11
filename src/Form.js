@@ -47,23 +47,23 @@ class Form extends Component {
     }
 
     updateResults() {
-        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                refId: this.state.refId,
-                race: this.state.race,
-                gender: this.state.gender,
-                age: this.state.age,
-                email: this.state.email
-            })
-        }).then((response) => {
-            console.log(response);
+        // fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         refId: this.state.refId,
+        //         race: this.state.race,
+        //         gender: this.state.gender,
+        //         age: this.state.age,
+        //         email: this.state.email
+        //     })
+        // }).then((response) => {
+        //     console.log(response);
 
-        }).catch(() => console.log("Cannot access"));
+        // }).catch(() => console.log("Cannot access"));
     }
 
     handleSkip(){
