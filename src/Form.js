@@ -35,11 +35,6 @@ class Form extends Component {
     handleSubmit(e){
         e.preventDefault();
 
-        // Form validation
-        if(this.state.race !== '' && this.state.gender !== '' && this.state.age !== '' ){
-            this.setState({ completedForm: true })
-        }
-
         console.log(this.state);
 
         this.updateResults()
@@ -69,10 +64,6 @@ class Form extends Component {
             <div>
                 <h1>Information</h1>
                 <p>Please fill in your information to contribute to HRx research.</p>
-
-                {this.state.completedForm === false &&
-                    <p>Please fill in all fields</p>    
-                }
 
                 <form onSubmit = {this.handleSubmit}>
                     <label>

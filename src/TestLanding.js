@@ -177,7 +177,10 @@ class TestLanding extends Component {
 
     // Function to send response times to Postman
     postResults(testId, r1Times, r2Times, r3Times, r4Times){
-        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
+        var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'https://us-central1-hrx-biastest.cloudfunctions.net/submitTest'
+        
+        fetch(proxyUrl + targetUrl, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -192,7 +195,8 @@ class TestLanding extends Component {
             })
         }).then((response) => {
             console.log(response);
-        })
+        }).catch(() => console.log("can't access through localhost.."));
+
     }
 
     // Click handler to route TestLanding to TestBlock
