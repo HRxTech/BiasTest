@@ -13,7 +13,7 @@ class Main extends Component {
                 <Switch>
                     <Route exact path='/' component={Intro} />
                     <Route path='/form' component={Form} />
-                    <Route path='/reuslts' component={Results} />                    
+                    <Route path='/results' component={Results} />                    
                     <Route exact path='/test/:testName/start/:testId' component={OptionsPage} />
                     <Route exact path='/test/:testName/:stage/:testId/' component={TestLanding} />                   
                 </Switch>
