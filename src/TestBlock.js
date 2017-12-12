@@ -52,17 +52,18 @@ class TestBlock extends Component {
     }
 
     this.testFinished = this.testFinished.bind(this);
-    this.checkAnswer = this.checkAnswer.bind(this);    
+    this.checkKey = this.checkKey.bind(this);
+    this.checkAnswer = this.checkAnswer.bind(this);
+    
   }
 
 
   // Function to handle key press
   componentDidMount() {
-    
-    // Listen to keypress...
-    document.addEventListener('keydown', (event) => {
-      this.checkAnswer(event.key);      
-    }); 
+
+    // // Listen to keypress...
+    // document.addEventListener('keydown', (event) => this.checkAnswer(event.key), true);
+    document.addEventListener('keydown', this.checkKey, true);
 
     // Start time
     this.setState({
@@ -70,10 +71,13 @@ class TestBlock extends Component {
     })
   }
 
-  checkAnswer(key) {
+  checkKey(event) {
+    const key = event.key;
+    this.checkAnswer(key);
+  }
 
+  checkAnswer(key) {
     if (key === this.state.currentQuestion.correctKey) {
-      
       // measure the time
       let stopTime = performance.now();
       let timeTaken = stopTime - this.state.startTime;
@@ -112,7 +116,7 @@ class TestBlock extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.checkAnswer, true);
+    document.removeEventListener('keydown', this.checkKey, true);  
   }
 
   // Function testFinished
