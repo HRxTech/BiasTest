@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import { createClient } from 'contentful';
-import { Link } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import './Intro.css';
 
