@@ -30,6 +30,18 @@ class Intro extends Component {
         this.setState({ testData: response.items });
       });
 
+      client.getEntries({
+        content_type: 'biasTestIntro'
+      })
+      .then((response) => {
+        this.setState({
+          introTitle:response.items[0].fields.title,
+          introText: response.items[0].fields.introText,
+
+        });
+        return;
+      });
+
   }
 
   onClickTest(testItem) {
@@ -60,8 +72,8 @@ class Intro extends Component {
 
         {testData.map((testItem) => {
           return (
-            <div className="Button">
-            <li onClick={() => this.onClickTest(testItem)} key={testItem.sys.id}>{testItem.fields.testTitle} <FontAwesome className="fontawesome" name='arrow-right' /> </li>
+            <div key={testItem.sys.id} className="Button">
+            <li onClick={() => this.onClickTest(testItem)}>{testItem.fields.testTitle} <FontAwesome className="fontawesome" name='arrow-right' /> </li>
             </div>
           )
         })
