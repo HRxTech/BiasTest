@@ -2,8 +2,6 @@
 /* Mobile Style for footer in vertical size */
 .Footer{
     margin:0 auto;
-    margin-bottom: 0;
-    padding-bottom: 0;
     margin-top:40%;
     flex-shrink:0;
     margin:0 auto;
@@ -11,7 +9,7 @@
 .Footer .fontawesome{
     color: #19223D;
     margin:0 auto;
-    margin:1%;
+    margin:7%;
 }
 p:last-child{
     display:none;
@@ -25,37 +23,35 @@ p:nth-child(1){
 @media  only screen and (min-width:480px){
     .Footer{
         text-align: center;
-        margin:0 auto;
         background-color: #BFC5D2;
         color:#FAFAFA;
         padding: 0;
         width:100%;
-        height: 50%;
-        padding-top: 2%;
+        height: 30%;
+        padding-top: 1%;
+    }
+    .Footer .fontawesome{
+        margin:0 2% 3% 2%;
     }
     p:last-child{
         display:block;
         font-size:0.8em;
     }
     p:nth-child(n){
-        margin-bottom:8%;
+        margin-bottom:4%;
     }
-
 }
-
-@media  only screen and (min-width:1240px){
-    .Footer{
-        text-align: center;
-        margin:0 auto;
-        padding: 0;
-        background-color: #BFC5D2;
-        color:#FAFAFA;
+@media  only screen and (min-width:800px){
+    p:nth-child(n){
+        margin-bottom:2%;
     }
     p:last-child{
-        display:block;
+        margin-top:0;
     }
-    p:nth-child(n){
-        margin-bottom:15px;
-    }
+}
 
+@media  only screen and (min-width:1000px){
+    .Footer .fontawesome{
+        margin:0 1% 3% 1%;
+    }  
 }
