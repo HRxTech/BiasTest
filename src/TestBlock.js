@@ -55,7 +55,7 @@ class TestBlock extends Component {
     this.testFinished = this.testFinished.bind(this);
     this.checkKey = this.checkKey.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
-    
+
   }
 
 
@@ -117,7 +117,7 @@ class TestBlock extends Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.checkKey, true);  
+    document.removeEventListener('keydown', this.checkKey, true);
   }
 
   // Function testFinished
@@ -138,7 +138,7 @@ class TestBlock extends Component {
           <div className='button-group'>
             <h3>{this.state.leftLabel}</h3>
             <div onClick={() => this.checkAnswer('ArrowLeft')}><i className="fa fa-arrow-circle-left fa-4x"></i></div>
-        </div>
+          </div>
 
           <div className='button-group'>
             <h3>{this.state.rightLabel}</h3>
@@ -149,6 +149,8 @@ class TestBlock extends Component {
         {!this.state.isAnswerCorrect &&
           <p><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
         }
+
+        <p>{this.state.currentQuestionIndex + 1} / {this.state.questions.length}</p>
       </div>
     );
   }
