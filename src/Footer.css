@@ -46,7 +46,6 @@ p:nth-child(1){
         margin:0 auto;
         padding: 0;
         background-color: #BFC5D2;
-        padding:10px;
         color:#FAFAFA;
     }
     p:last-child{
