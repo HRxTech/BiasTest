@@ -1,15 +1,20 @@
 .App {
   text-align: center;
   font-family: 'Montserrat', sans-serif;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
 }
 body{
   margin:0;
+  height:100%;
 }
 .App-title {
   font-size: 1.5em;
 }
 .Main{
   padding:15px;
+  flex:1;
 }
 .Main h1,h2{
   color:#19223D;
