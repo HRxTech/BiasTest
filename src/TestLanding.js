@@ -20,6 +20,7 @@ class TestLanding extends Component {
         }
         this.onClickPass = this.onClickPass.bind(this);
         this.testFinished = this.testFinished.bind(this);
+        this.handleData = this.handleData.bind(this);
     }
 
     createPracticeCategoryDataArrays(blockData, leftArray, rightArray) {
@@ -57,6 +58,10 @@ class TestLanding extends Component {
     // Function to handle first HTTP request
     componentWillMount() {
         this.setState({ isLoading: true });
+        this.handleData();
+    }
+
+    handleData() {
         // Retrieve all entries of this test
         var client = createClient({
             space: '4xbeshmjlgqs',
@@ -83,6 +88,7 @@ class TestLanding extends Component {
                     let ibRightCategoryData = [];
                     let cbLeftCategoryData = [];
                     let cbRightCategoryData = [];
+
                     // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
                     this.createPracticeCategoryDataArrays(biasTest.practiceBlocks[0], ibLeftCategoryData, ibRightCategoryData);
                     this.createPracticeCategoryDataArrays(biasTest.practiceBlocks[1], cbLeftCategoryData, cbRightCategoryData);
@@ -99,9 +105,8 @@ class TestLanding extends Component {
 
                     cBlock.leftCategoryLabels = [biasTest.practiceBlocks[1].fields.leftCategory.fields.categoryName];
                     cBlock.rightCategoryLabels = [biasTest.practiceBlocks[1].fields.rightCategory.fields.categoryName];
-
                 } else {
-                    // Set real test block titles in state
+                    // Set real test block titles
                     iBlock.testBlockTitle = biasTest.incompatibleBlock.fields.testBlockTitle;
                     cBlock.testBlockTitle = biasTest.compatibleBlock.fields.testBlockTitle;
 
@@ -121,27 +126,19 @@ class TestLanding extends Component {
                     cBlock.rightCategoryItems = cbRightCategoryData;
 
                     iBlock.leftCategoryLabels = biasTest.incompatibleBlock.fields.leftCategories.map((leftCategory) => {
-                        return (
-                            leftCategory.fields.categoryName
-                        )
+                        return (leftCategory.fields.categoryName)
                     });
 
                     iBlock.rightCategoryLabels = biasTest.incompatibleBlock.fields.rightCategories.map((rightCategory) => {
-                        return (
-                            rightCategory.fields.categoryName
-                        )
+                        return (rightCategory.fields.categoryName)
                     });
 
                     cBlock.leftCategoryLabels = biasTest.compatibleBlock.fields.leftCategories.map((leftCategory) => {
-                        return (
-                            leftCategory.fields.categoryName
-                        )
+                        return (leftCategory.fields.categoryName)
                     });
 
                     cBlock.rightCategoryLabels = biasTest.compatibleBlock.fields.rightCategories.map((rightCategory) => {
-                        return (
-                            rightCategory.fields.categoryName
-                        )
+                        return (rightCategory.fields.categoryName)
                     });
                 }
 
@@ -157,24 +154,45 @@ class TestLanding extends Component {
 
     // Test finished function
     testFinished(leftTimes, rightTimes) {
-        // If test is first round, block = incompatible, so store times in r3 and r4
-        if(this.state.isFirstRound){
-            this.setState({
-                r3: leftTimes,
-                r4: rightTimes,
-                isFirstRound: false,
-                isDoingTest: false 
-            })
-        // If test is not first round, block = compatible, store times in r1 and r2
-        }else{
-            this.setState({
-                r1: leftTimes,
-                r2: rightTimes,
-                finishedAllTests: true
-            })
+
+        // If test is practice, don't store times and get real test data..
+        if (this.state.isPractice) {
+            // If it is first round of practice...
+            if(this.state.isFirstRound){
+                this.setState({
+                    isFirstRound: false,
+                    isDoingTest: false
+                })
+            // If it is the second round of practice, time for real test..
+            }else{
+                this.setState({
+                    isPractice: false,
+                    isFirstRound: true,
+                    isDoingTest: false
+                })
+
+                this.handleData();                
+            }
+        // If test is not practice...
+        } else {
+            // If test is first round, block = incompatible, so store times in r3 and r4
+            if (this.state.isFirstRound) {
+                this.setState({
+                    r3: leftTimes,
+                    r4: rightTimes,
+                    isFirstRound: false,
+                    isDoingTest: false
+                })
+                // If test is not first round, block = compatible, store times in r1 and r2
+            } else {
+                this.setState({
+                    r1: leftTimes,
+                    r2: rightTimes,
+                    finishedAllTests: true
+                })
+            }
         }
     }
-
 
     // Click handler to route TestLanding to TestBlock
     onClickPass() {
@@ -226,27 +244,27 @@ class TestLanding extends Component {
         }
 
         // Form...
-        if(this.state.finishedAllTests){
+        if (this.state.finishedAllTests) {
             return (
-                <Form 
-                    testId = {this.state.testId}
-                    r1 = {this.state.r1} 
-                    r2 = {this.state.r2} 
-                    r3 = {this.state.r3} 
-                    r4 = {this.state.r4} 
+                <Form
+                    testId={this.state.testId}
+                    r1={this.state.r1}
+                    r2={this.state.r2}
+                    r3={this.state.r3}
+                    r4={this.state.r4}
                 />
             )
         }
 
         // Get current block 
-        let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock );
+        let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock);
 
         // Test Block...
         if (this.state.isDoingTest) {
             return (
-                <TestBlock 
-                    blockData= {currentBlock}
-                    testFinished={this.testFinished}/>
+                <TestBlock
+                    blockData={currentBlock}
+                    testFinished={this.testFinished} />
             )
         }
 
