@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './App.css';
+
 
 class TestBlock extends Component {
   constructor(props) {
@@ -131,12 +133,12 @@ class TestBlock extends Component {
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
           <div className='button-group'>
             <h3>{this.state.leftLabel}</h3>
-            <button>&#8249;</button>
-          </div>
+            <div onclick="functionexemple()"><i class="fa fa-arrow-circle-left fa-4x"></i></div>
+        </div>
 
           <div className='button-group'>
             <h3>{this.state.rightLabel}</h3>
-            <button>&#8250;</button>
+            <div onclick="functionexemple()"><i class="fa fa-arrow-circle-right fa-4x"></i></div>
           </div>
         </div>
 
