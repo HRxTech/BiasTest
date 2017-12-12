@@ -4,12 +4,8 @@ import { Link } from 'react-router-dom';
 class Form extends Component {
     constructor(props){
         super(props);
-
-        console.log(this.props.score);
     }
-
-
-
+    
     render() {
         return (
             <div>
@@ -17,7 +13,7 @@ class Form extends Component {
 
                <div className = 'score'>
                     <p>Your score</p>
-                    <p>{this.props.score}</p>
+                    <p>{Math.round(this.props.score * 100) / 100}</p>
                </div>
 
                <div className = 'share-results'>

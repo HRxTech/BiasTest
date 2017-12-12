@@ -52,15 +52,17 @@ class TestBlock extends Component {
     }
 
     this.testFinished = this.testFinished.bind(this);
-    this.checkAnswer = this.checkAnswer.bind(this);
+    this.checkAnswer = this.checkAnswer.bind(this);    
   }
 
 
   // Function to handle key press
   componentDidMount() {
-
-    // // Listen to keypress...
-    document.addEventListener('keydown', this.checkAnswer, true);
+    
+    // Listen to keypress...
+    document.addEventListener('keydown', (event) => {
+      this.checkAnswer(event.key);      
+    }); 
 
     // Start time
     this.setState({
@@ -68,8 +70,7 @@ class TestBlock extends Component {
     })
   }
 
-  checkAnswer(event) {
-    const key = event.key;
+  checkAnswer(key) {
 
     if (key === this.state.currentQuestion.correctKey) {
       
@@ -131,12 +132,12 @@ class TestBlock extends Component {
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
           <div className='button-group'>
             <h3>{this.state.leftLabel}</h3>
-            <button>&#8249;</button>
+            <button onClick={() => this.checkAnswer('ArrowLeft')}>&#8249;</button>
           </div>
 
           <div className='button-group'>
             <h3>{this.state.rightLabel}</h3>
-            <button>&#8250;</button>
+            <button onClick={() => this.checkAnswer('ArrowRight')}>&#8250;</button>
           </div>
         </div>
 
