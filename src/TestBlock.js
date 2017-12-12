@@ -137,12 +137,12 @@ class TestBlock extends Component {
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
           <div className='button-group'>
             <h3>{this.state.leftLabel}</h3>
-            <div onClick={() => this.checkAnswer('ArrowLeft')}><i class="fa fa-arrow-circle-left fa-4x"></i></div>
+            <div onClick={() => this.checkAnswer('ArrowLeft')}><i className="fa fa-arrow-circle-left fa-4x"></i></div>
         </div>
 
           <div className='button-group'>
             <h3>{this.state.rightLabel}</h3>
-            <div onClick={() => this.checkAnswer('ArrowRight')}><i class="fa fa-arrow-circle-right fa-4x"></i></div>
+            <div onClick={() => this.checkAnswer('ArrowRight')}><i className="fa fa-arrow-circle-right fa-4x"></i></div>
           </div>
         </div>
 
