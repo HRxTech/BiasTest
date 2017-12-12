@@ -75,22 +75,23 @@ class Form extends Component {
 
     }
 
+    // Function to update postman record with form results
     updateResults() {
-        // fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*'
-        //     },
-        //     body: JSON.stringify({
-        //         refId: this.state.refId,
-        //         race: this.state.race,
-        //         gender: this.state.gender,
-        //         age: this.state.age,
-        //         email: this.state.email
-        //     })
-        // }).catch(() => console.log("Cannot access"));
+        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({
+                refId: this.state.refId,
+                race: this.state.race,
+                gender: this.state.gender,
+                age: this.state.age,
+                email: this.state.email
+            })
+        }).catch(() => console.log("Cannot access"));
     }
 
     handleSkip(){
