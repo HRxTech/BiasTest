@@ -7,7 +7,6 @@ table {
     border: 2px solid #EEEEEE;
     border-radius: 8px;
     text-align: left;
-    width: auto;
     margin: 2em auto 2.5em;
 }
 
@@ -51,5 +50,11 @@ button .fontawesome {
     top: 50%;
     transform: translate(0, -50%);
     right: 10px;
+}
+
+@media screen and (min-width: 77.5em){
+    table {
+        min-width: 30em;
+    }
 }
 
