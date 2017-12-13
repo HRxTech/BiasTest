@@ -11,6 +11,7 @@ class TestLanding extends Component {
         // Set initial state
         this.state = {
             testId: this.props.match.params.testId,
+            testTitle: '',
             isPractice: (this.props.match.params.stage === 'practice'),
             iBlock: {},
             cBlock: {},
@@ -75,14 +76,24 @@ class TestLanding extends Component {
                 include: 5
             })
             .then((response) => {
+
                 let biasTest = response.items[0].fields;
+
+                console.log(biasTest);
 
                 let iBlock = {};
                 let cBlock = {};
 
+                // Get test block explanations (same for practice and real test)
+                iBlock.explanation = biasTest.incompatibleBlock.fields.explanation.fields.explanation;
+                cBlock.explanation = biasTest.compatibleBlock.fields.explanation.fields.explanation;
+                
                 if (this.state.isPractice) {
+                    // Get test block titles
                     iBlock.testBlockTitle = biasTest.practiceBlocks[0].fields.practiceBlockTitle;
                     cBlock.testBlockTitle = biasTest.practiceBlocks[1].fields.practiceBlockTitle;
+
+                    // Get test block explanations
 
                     let ibLeftCategoryData = [];
                     let ibRightCategoryData = [];
@@ -105,6 +116,7 @@ class TestLanding extends Component {
 
                     cBlock.leftCategoryLabels = [biasTest.practiceBlocks[1].fields.leftCategory.fields.categoryName];
                     cBlock.rightCategoryLabels = [biasTest.practiceBlocks[1].fields.rightCategory.fields.categoryName];
+
                 } else {
                     // Set real test block titles
                     iBlock.testBlockTitle = biasTest.incompatibleBlock.fields.testBlockTitle;
@@ -144,10 +156,13 @@ class TestLanding extends Component {
 
                 // Set category data in state 
                 this.setState({
+                    testTitle: biasTest.testTitle,
                     iBlock,
                     cBlock,
                     isLoading: false
                 })
+
+                console.log(this.state);
             })
             .catch(console.error);
     }
@@ -197,6 +212,16 @@ class TestLanding extends Component {
     // Click handler to route TestLanding to TestBlock
     onClickPass() {
         this.setState({ isDoingTest: true });
+    }
+
+    // Event listener on 'enter' to route TestLanding to TestBlock
+    componentDidMount(){
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if(key === 'Enter'){
+                this.onClickPass();
+            }
+        })
     }
 
     // Function to display first three category items (used for practice test and real test category 1)
@@ -263,6 +288,7 @@ class TestLanding extends Component {
         if (this.state.isDoingTest) {
             return (
                 <TestBlock
+                    testTitle={this.state.testTitle}
                     blockData={currentBlock}
                     testFinished={this.testFinished} />
             )
@@ -271,9 +297,9 @@ class TestLanding extends Component {
 
         return (
             <div>
-                <h1>{this.stateisPractice ? 'Practice' : 'Bias Test'}</h1>
+                <h1>{this.state.testTitle} Bias Test</h1>
                 <h2>{currentBlock.testBlockTitle}</h2>
-                <p>For this test, you will be asked to categorize different words. The practice test will not time you. More explanation explanation explanation...</p>
+                <p>{currentBlock.explanation}</p>
 
                 <table className='categories-table'>
                     {this.state.isPractice ?
@@ -324,6 +350,7 @@ class TestLanding extends Component {
 
                 </table>
 
+                <p>Press the 'Start' button, or the 'Enter' key to start.</p>
                 <button onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice Test' : 'Test'}
                 </button>

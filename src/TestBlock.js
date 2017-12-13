@@ -129,7 +129,7 @@ class TestBlock extends Component {
 
     return (
       <div className="TestBlock">
-        <h1>Bias Test</h1>
+        <h1>{this.props.testTitle} Bias Test</h1>
         <h2>{this.state.blockTitle}</h2>
 
         <p>{this.state.currentQuestion.word}</p>

@@ -102,12 +102,6 @@ class Form extends Component {
 
     render() {
 
-        if(this.state.isLoading){
-            return(
-                <h3>Please wait while we calculate your score...</h3>
-            )
-        }
-
         if(this.state.completedForm || this.state.skipForm ){
             return(
                 <Results 
@@ -167,9 +161,12 @@ class Form extends Component {
                                value = {this.state.email}
                                onChange = {this.handleChange} />
                     </label>
-                    <input type = 'submit' />
+
+                    {this.state.isLoading? <h3>Please wait while we calculate your score..</h3> : <input type = 'submit' />}
                 </form>
-                <button onClick={this.handleSkip} className='fake-link'>Skip to results <span>&rsaquo;</span></button>
+                {!this.state.isLoading &&
+                    <div onClick={this.handleSkip}><a>Skip to results <span>&rsaquo;</span></a></div>                    
+                }
             </div>
         );
     }
