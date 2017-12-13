@@ -8,20 +8,20 @@ class Form extends Component {
 
         if (score <= -0.15) {
             isBiasCompatible = false;
-        }else if (score >= 0.15 ){
+        } else if (score >= 0.15) {
             isBiasCompatible = true;
         }
 
         let strength;
 
         // Calculate strength
-        if (-0.15 <= score <= 0.15) {
-            strength = false;
-        } else if (0.15 <= score <= 0.35 || -0.35 <= score <= -0.15) {
+        if (score >= -0.15 && score < 0.15) {
+            strength = "none";
+        } else if ((score >= 0.15 && score < 0.35) || (score >= -0.35 && score < -0.15) ) {
             strength = "slightly";
-        } else if (0.35 <= score <= 0.65 || -0.65 <= score <= -0.35) {
+        } else if ((score >= 0.35 && score < 0.65) || (score >= -0.65 && score < -0.35) ) {
             strength = "moderately";
-        } else if (0.65 <= score <= 2 || -2 <= score <= -0.65) {
+        } else if ((score >= 0.65 && score < 2 || score >= -2 && score < -0.65) ) {
             strength = "strongly";
         } else {
             strength = "very strongly";
@@ -43,22 +43,22 @@ class Form extends Component {
 
                 </div>
 
-                {strength? 
-                    <div className = 'score-explanation'>
-                        <h3>You are {strength} inclined towards associating&nbsp; 
-                            {isBiasCompatible? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
-                            &nbsp;with&nbsp;
-                            {isBiasCompatible? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}
-                            &nbsp;and&nbsp;
-                            {isBiasCompatible? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
-                            &nbsp;with&nbsp;
-                            {isBiasCompatible? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}. 
-                        </h3>
-                    </div>
-                :
-                    <h3>You have no clear bias.</h3>
+                {strength === "none" ?
+                    <h3>You have no clear bias.</h3>                
+                    :
+                    <div className='score-explanation'>
+                    <h3>You are {strength} inclined towards associating&nbsp;
+                        {isBiasCompatible ? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
+                        &nbsp;with&nbsp;
+                        {isBiasCompatible ? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}
+                        ,&nbsp;and&nbsp;
+                        {isBiasCompatible ? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
+                        &nbsp;with&nbsp;
+                        {isBiasCompatible ? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}.
+                    </h3>
+                </div>
                 }
-                
+
                 <Link to='/'><button>Take another test</button></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
             </div>
