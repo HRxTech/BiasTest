@@ -47,13 +47,13 @@ class OptionsPage extends Component {
         <h2>Ready to take the test?</h2>
           <button
             onClick={() => this.handleClick('practice')}>
-            Practice
+          <p>Practice</p>
           <FontAwesome name='arrow-right' />
           </button>
 
           <button
             onClick={() => this.handleClick('real')}>
-            Take Test
+          <p>Take Test</p>
           <FontAwesome name='arrow-right' />
           </button>
 

@@ -2,25 +2,34 @@
 
 .OptionsPage button{
         margin:0 auto;
-        text-decoration: none;
-        list-style-type: none;
         color:#FAFAFA;
         border:1px solid #00ACF2;
         border-radius:18px;
         width:180px;
-        height:30px;
+        height:45px;
         background-color: #00ACF2;
         margin-bottom:8px;
-        padding:8px 0 1px 18px;
-        font-weight: bold;
-        text-align: left;
+        padding:4px 0 1px 18px;
         font-weight: bold;
         font-size:1em;
-}
-.fa{
         display:flex;
-        align-items: center;
-        align-content: space-around;
+        justify-content: space-between;
+}
+.OptionsPage button p{
+        color:#FAFAFA;
+        margin: 0 auto;
+        margin-left: 0;
+        padding-top:8px;
+}
+.OptionsPage span{
+        margin-right:7%;
+        border:1px solid #4D8AFF;
+        border-radius: 50%;
+        background-color: #4D8AFF;
+        /* width: 30px;
+        height: 30px; */
+        padding:4%;
+        margin-bottom: 6%;
 }
 
 @media  only screen and (min-width:480px){
