@@ -24,34 +24,68 @@ class TestLanding extends Component {
         this.handleData = this.handleData.bind(this);
     }
 
-    createPracticeCategoryDataArrays(blockData, leftArray, rightArray) {
+    createPracticeCategoryItemArrays(blockData, leftArray, rightArray) {
+
         blockData.fields.leftCategory.fields.categoryItems.forEach((oneCategoryItem) => {
-            leftArray.push({
-                categoryItem: oneCategoryItem.fields.word
-            });
+            if (oneCategoryItem.fields.isImage) {
+                leftArray.push({
+                    isImage: oneCategoryItem.fields.isImage,
+                    categoryItem: oneCategoryItem.fields.image.fields.file.url
+                })
+            } else {
+                leftArray.push({
+                    isImage: oneCategoryItem.fields.isImage,
+                    categoryItem: oneCategoryItem.fields.word
+                });
+            }
+
         })
 
         blockData.fields.rightCategory.fields.categoryItems.forEach((oneCategoryItem) => {
-            rightArray.push({
-                categoryItem: oneCategoryItem.fields.word
-            });
+            if (oneCategoryItem.fields.isImage) {
+                rightArray.push({
+                    isImage: oneCategoryItem.fields.isImage,
+                    categoryItem: oneCategoryItem.fields.image.fields.file.url
+                });
+            } else {
+                rightArray.push({
+                    isImage: oneCategoryItem.fields.isImage,
+                    categoryItem: oneCategoryItem.fields.word
+                });
+            }
         })
     }
 
-    createRealCategoryDataArrays(blockData, leftArray, rightArray) {
+    createRealCategoryItemArrays(blockData, leftArray, rightArray) {
         blockData.fields.leftCategories.forEach((oneCategory) => {
             oneCategory.fields.categoryItems.forEach((oneCategoryItem) => {
-                leftArray.push({
-                    categoryItem: oneCategoryItem.fields.word
-                });
+                if (oneCategoryItem.fields.isImage) {
+                    leftArray.push({
+                        isImage: oneCategoryItem.fields.isImage,
+                        categoryItem: oneCategoryItem.fields.image.fields.file.url
+                    });
+                } else {
+                    leftArray.push({
+                        isImage: oneCategoryItem.fields.isImage,
+                        categoryItem: oneCategoryItem.fields.word
+                    });
+                }
             })
         });
 
         blockData.fields.rightCategories.forEach((oneCategory) => {
             oneCategory.fields.categoryItems.forEach((oneCategoryItem) => {
-                rightArray.push({
-                    categoryItem: oneCategoryItem.fields.word
-                });
+                if (oneCategoryItem.fields.isImage) {
+                    rightArray.push({
+                        isImage: oneCategoryItem.fields.isImage,
+                        categoryItem: oneCategoryItem.fields.image.fields.file.url
+                    });
+                } else {
+                    rightArray.push({
+                        isImage: oneCategoryItem.fields.isImage,
+                        categoryItem: oneCategoryItem.fields.word
+                    });
+                }
             })
         });
     }
@@ -79,7 +113,6 @@ class TestLanding extends Component {
 
                 let biasTest = response.items[0].fields;
 
-                console.log(biasTest);
 
                 let iBlock = {};
                 let cBlock = {};
@@ -87,7 +120,7 @@ class TestLanding extends Component {
                 // Get test block explanations (same for practice and real test)
                 iBlock.explanation = biasTest.incompatibleBlock.fields.explanation.fields.explanation;
                 cBlock.explanation = biasTest.compatibleBlock.fields.explanation.fields.explanation;
-                
+
                 if (this.state.isPractice) {
                     // Get test block titles
                     iBlock.testBlockTitle = biasTest.practiceBlocks[0].fields.practiceBlockTitle;
@@ -101,8 +134,10 @@ class TestLanding extends Component {
                     let cbRightCategoryData = [];
 
                     // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
-                    this.createPracticeCategoryDataArrays(biasTest.practiceBlocks[0], ibLeftCategoryData, ibRightCategoryData);
-                    this.createPracticeCategoryDataArrays(biasTest.practiceBlocks[1], cbLeftCategoryData, cbRightCategoryData);
+                    this.createPracticeCategoryItemArrays(biasTest.practiceBlocks[0], ibLeftCategoryData, ibRightCategoryData);
+                    this.createPracticeCategoryItemArrays(biasTest.practiceBlocks[1], cbLeftCategoryData, cbRightCategoryData);
+
+                    console.log(biasTest.practiceBlocks[0].fields.leftCategory.fields);
 
                     iBlock.leftCategoryItems = ibLeftCategoryData;
                     iBlock.rightCategoryItems = ibRightCategoryData;
@@ -128,8 +163,8 @@ class TestLanding extends Component {
                     let cbRightCategoryData = [];
 
                     // Create category names and items - returns two arrays: leftCategoryData and rightCategoryData
-                    this.createRealCategoryDataArrays(biasTest.incompatibleBlock, ibLeftCategoryData, ibRightCategoryData);
-                    this.createRealCategoryDataArrays(biasTest.compatibleBlock, cbLeftCategoryData, cbRightCategoryData);
+                    this.createRealCategoryItemArrays(biasTest.incompatibleBlock, ibLeftCategoryData, ibRightCategoryData);
+                    this.createRealCategoryItemArrays(biasTest.compatibleBlock, cbLeftCategoryData, cbRightCategoryData);
 
                     iBlock.leftCategoryItems = ibLeftCategoryData;
                     iBlock.rightCategoryItems = ibRightCategoryData;
@@ -161,8 +196,6 @@ class TestLanding extends Component {
                     cBlock,
                     isLoading: false
                 })
-
-                console.log(this.state);
             })
             .catch(console.error);
     }
@@ -173,22 +206,22 @@ class TestLanding extends Component {
         // If test is practice, don't store times and get real test data..
         if (this.state.isPractice) {
             // If it is first round of practice...
-            if(this.state.isFirstRound){
+            if (this.state.isFirstRound) {
                 this.setState({
                     isFirstRound: false,
                     isDoingTest: false
                 })
-            // If it is the second round of practice, time for real test..
-            }else{
+                // If it is the second round of practice, time for real test..
+            } else {
                 this.setState({
                     isPractice: false,
                     isFirstRound: true,
                     isDoingTest: false
                 })
 
-                this.handleData();                
+                this.handleData();
             }
-        // If test is not practice...
+            // If test is not practice...
         } else {
             // If test is first round, block = incompatible, so store times in r3 and r4
             if (this.state.isFirstRound) {
@@ -215,10 +248,10 @@ class TestLanding extends Component {
     }
 
     // Event listener on 'enter' to route TestLanding to TestBlock
-    componentDidMount(){
+    componentDidMount() {
         document.addEventListener('keydown', (event) => {
             const key = event.key;
-            if(key === 'Enter'){
+            if (key === 'Enter') {
                 this.onClickPass();
             }
         })
@@ -233,7 +266,11 @@ class TestLanding extends Component {
                     return (
                         <span key={oneItem.categoryItem}>
                             {!!i && ", "}
-                            {oneItem.categoryItem}
+                            {oneItem.isImage ?
+                                <img src={oneItem.categoryItem} />
+                                :
+                                oneItem.categoryItem
+                            }
                         </span>
                     )
                 })}
@@ -251,7 +288,11 @@ class TestLanding extends Component {
                     return (
                         <span key={oneItem.categoryItem}>
                             {!!i && ", "}
-                            {oneItem.categoryItem}
+                            {oneItem.isImage ?
+                                <img src={oneItem.categoryItem} />
+                                :
+                                oneItem.categoryItem
+                            }
                         </span>
                     )
                 })}
@@ -272,11 +313,14 @@ class TestLanding extends Component {
         if (this.state.finishedAllTests) {
             return (
                 <Form
+                    testTitle={this.state.testTitle}
                     testId={this.state.testId}
                     r1={this.state.r1}
                     r2={this.state.r2}
                     r3={this.state.r3}
                     r4={this.state.r4}
+                    cBlock = {this.state.cBlock}
+                    iBlock = {this.state.iBlock}
                 />
             )
         }
