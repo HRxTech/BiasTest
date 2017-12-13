@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 import Form from './Form';
+import './TestLanding.css';
+import FontAwesome from 'react-fontawesome';
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
@@ -343,7 +345,7 @@ class TestLanding extends Component {
                 <h2>{currentBlock.testBlockTitle}</h2>
                 <p>{currentBlock.explanation}</p>
 
-                <table className='categories-table'>
+                <table className='categories-table' cellSpacing='0'>
                     {this.state.isPractice ?
                         <tbody>
                             <tr>
@@ -395,6 +397,7 @@ class TestLanding extends Component {
                 <p>Press the 'Start' button, or the 'Enter' key to start.</p>
                 <button onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice Test' : 'Test'}
+                    <FontAwesome className="fontawesome" name='arrow-right' />
                 </button>
             </div>
 
