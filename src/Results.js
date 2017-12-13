@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 
 class Form extends Component {
     render() {
-
-        console.log(this.props)
-
         let score = this.props.score / 1000;
         let isBiasCompatible;
 
@@ -19,9 +15,9 @@ class Form extends Component {
         let strength;
 
         // Calculate strength
-        if (0 <= score <= 0.15 || -0.15 <= score <= 0) {
+        if (-0.15 <= score <= 0.15) {
             strength = false;
-        } else if (0.15 <= score <= 0.35 || -0.65 <= score <= -0.35) {
+        } else if (0.15 <= score <= 0.35 || -0.35 <= score <= -0.15) {
             strength = "slightly";
         } else if (0.35 <= score <= 0.65 || -0.65 <= score <= -0.35) {
             strength = "moderately";
@@ -30,6 +26,8 @@ class Form extends Component {
         } else {
             strength = "very strongly";
         }
+
+        console.log(score);
 
         return (
             <div>
@@ -47,7 +45,7 @@ class Form extends Component {
 
                 {strength? 
                     <div className = 'score-explanation'>
-                        <h3>You are {strength} inclined towards associating &nbsp; 
+                        <h3>You are {strength} inclined towards associating&nbsp; 
                             {isBiasCompatible? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
                             &nbsp;with&nbsp;
                             {isBiasCompatible? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}

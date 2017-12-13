@@ -39,9 +39,21 @@ class OptionsPage extends Component {
 
   render() {
 
+    // Function to uppercase test name
+    function ucwords(input) {
+      var words = input.split(/(\s|-)+/),
+          output = [];
+  
+      for (var i = 0, len = words.length; i < len; i += 1) {
+          output.push(words[i][0].toUpperCase() +
+                      words[i].toLowerCase().substr(1));
+      }
+      return output.join('');
+  }
+
     return (
       <div className="OptionsPage">
-        <h1>About the test</h1>
+        <h1>About the {ucwords(this.state.testName)} Bias Test</h1>
         <p>{this.state.helpText}</p>
 
         <h2>Ready to take the test?</h2>

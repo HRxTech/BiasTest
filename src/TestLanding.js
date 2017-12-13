@@ -137,8 +137,6 @@ class TestLanding extends Component {
                     this.createPracticeCategoryItemArrays(biasTest.practiceBlocks[0], ibLeftCategoryData, ibRightCategoryData);
                     this.createPracticeCategoryItemArrays(biasTest.practiceBlocks[1], cbLeftCategoryData, cbRightCategoryData);
 
-                    console.log(biasTest.practiceBlocks[0].fields.leftCategory.fields);
-
                     iBlock.leftCategoryItems = ibLeftCategoryData;
                     iBlock.rightCategoryItems = ibRightCategoryData;
 
