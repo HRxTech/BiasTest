@@ -39,3 +39,38 @@ body{
 .fa.fa-arrow-circle-left.fa-4x{
   color: #00ACF2;
 }
+
+
+/* Buttons style  */
+
+.button{
+  margin:0 auto;
+  color:#FAFAFA;
+  border:1px solid #00ACF2;
+  border-radius:18px;
+  width:180px;
+  height:45px;
+  background-color: #00ACF2;
+  margin-bottom:8px;
+  padding:4px 0 1px 18px;
+  font-weight: bold;
+  font-size:1em;
+  display:flex;
+  justify-content: space-between;
+}
+.button p{
+  color:#FAFAFA;
+  margin: 0 auto;
+  margin-left: 0;
+  padding-top:8px;
+}
+.button span{
+  margin-right:7%;
+  border:1px solid #4D8AFF;
+  border-radius: 50%;
+  background-color: #4D8AFF;
+  /* width: 30px;
+  height: 30px; */
+  padding:4%;
+  margin-bottom: 6%;
+}

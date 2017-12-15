@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 import Form from './Form';
+import './App.css';
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {
@@ -351,7 +352,9 @@ class TestLanding extends Component {
                 </table>
 
                 <p>Press the 'Start' button, or the 'Enter' key to start.</p>
-                <button onClick={this.onClickPass}>
+                <button 
+                    className='button'
+                    onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice Test' : 'Test'}
                 </button>
             </div>

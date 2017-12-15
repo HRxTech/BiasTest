@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import FontAwesome from 'react-fontawesome';
 import './OptionsPage.css';
+import './App.css';
 
 class OptionsPage extends Component {
   constructor(props) {
@@ -46,12 +47,14 @@ class OptionsPage extends Component {
 
         <h2>Ready to take the test?</h2>
           <button
+            className='button'
             onClick={() => this.handleClick('practice')}>
           <p>Practice</p>
           <FontAwesome name='arrow-right' />
           </button>
 
           <button
+            className='button'
             onClick={() => this.handleClick('real')}>
           <p>Take Test</p>
           <FontAwesome name='arrow-right' />

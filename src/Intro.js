@@ -3,6 +3,7 @@ import './App.css';
 import { createClient } from 'contentful';
 import FontAwesome from 'react-fontawesome';
 import './Intro.css';
+import './App.css';
 
 // TODO: DRY - repeated code.
 var client = createClient({
@@ -66,7 +67,7 @@ class Intro extends Component {
 
         {testData.map((testItem) => {
           return (
-            <div key={testItem.sys.id} className="Button">
+            <div key={testItem.sys.id} className="button">
             <li onClick={() => this.onClickTest(testItem)}>{testItem.fields.testTitle} <FontAwesome className="fontawesome" name='arrow-right' /> </li>
             </div>
           )
