@@ -18,7 +18,8 @@ class TestBlock extends Component {
     // Put all the questions together. Noting, which direction is correct.
     bd.leftCategoryItems.forEach(item => {
       let q = {
-        word: item.categoryItem,
+        isImage: item.isImage,
+        item: item.categoryItem,
         correctKey: 'ArrowLeft'
       }
       questions.push(q);
@@ -26,7 +27,8 @@ class TestBlock extends Component {
 
     bd.rightCategoryItems.forEach(item => {
       let q = {
-        word: item.categoryItem,
+        isImage: item.isImage,
+        item: item.categoryItem,
         correctKey: 'ArrowRight'
       }
       questions.push(q);
@@ -126,13 +128,16 @@ class TestBlock extends Component {
   }
 
   render() {
-
     return (
       <div className="TestBlock">
         <h1>{this.props.testTitle} Bias Test</h1>
         <h2>{this.state.blockTitle}</h2>
 
-        <p>{this.state.currentQuestion.word}</p>
+        <p>{this.state.currentQuestion.isImage? 
+          <img src={this.state.currentQuestion.item} />
+          :
+          this.state.currentQuestion.item
+        }</p>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
           <div className='button-group'>

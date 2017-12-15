@@ -105,7 +105,10 @@ class Form extends Component {
         if(this.state.completedForm || this.state.skipForm ){
             return(
                 <Results 
+                    testTitle = {this.props.testTitle}
                     score = {this.state.score}
+                    cBlock = {this.props.cBlock}
+                    iBlock = {this.props.iBlock}
                 />
             )
         }
