@@ -41,7 +41,6 @@ class Header extends Component {
                 <FontAwesome className="question"
                     name='question-circle'
                     size='2x'
-                    style={{ 'color': "#BFC5D2", 'paddingTop': 15 }}
                     alt='More Info'
                 />
             </div>

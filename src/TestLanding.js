@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 import Form from './Form';
-<<<<<<< HEAD
-import './App.css';
-=======
 import './TestLanding.css';
 import FontAwesome from 'react-fontawesome';
->>>>>>> 0d4f2f8dfc7e61cf5172dbdf5147a00177718f86
 
 // START OF COMPONENT ---------------------------------
 class TestLanding extends Component {

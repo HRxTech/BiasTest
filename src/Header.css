@@ -6,7 +6,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+}
+.Header .question{
+   margin-top: 5%;
 }
 img{
     width: 50px;
