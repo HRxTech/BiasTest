@@ -43,34 +43,26 @@ body{
 
 /* Buttons style  */
 
-.button{
-  margin:0 auto;
-  color:#FAFAFA;
-  border:1px solid #00ACF2;
-  border-radius:18px;
-  width:180px;
-  height:45px;
+.button {
   background-color: #00ACF2;
-  margin-bottom:8px;
-  padding:4px 0 1px 18px;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 1em;
   font-weight: bold;
-  font-size:1em;
-  display:flex;
-  justify-content: space-between;
+  padding: 1em 4em 1em 1.3em;
+  border-radius: 1.9em;
+  margin: 0.5em 0 2em;
+  position: relative;
 }
-.button p{
-  color:#FAFAFA;
-  margin: 0 auto;
-  margin-left: 0;
-  padding-top:8px;
-}
-.button span{
-  margin-right:7%;
-  border:1px solid #4D8AFF;
+
+.button .fontawesome {
+  font-size: 0.9em;
+  background-color: #009FE3;
   border-radius: 50%;
-  background-color: #4D8AFF;
-  /* width: 30px;
-  height: 30px; */
-  padding:4%;
-  margin-bottom: 6%;
+  padding: 13px 12px 13px 14px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 10px;
 }
