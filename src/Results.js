@@ -17,6 +17,7 @@ class Form extends Component {
     render() {
         const shareUrl = 'https://hrx-biastest.firebaseapp.com/';
         const title = 'HRx Bias Test';
+        let results;
 
         let score = this.props.score / 1000;
         let isBiasCompatible;
@@ -44,6 +45,21 @@ class Form extends Component {
 
         console.log(score);
 
+        if(strength === "none"){
+            results = 'I took the HRx Hidden Bias Test and my results show that I have no clear bias. Take the test!'
+        }else{
+            results = `I took the HRx Hidden Bias Test and my results show that I am ${strength} inclined towards associating
+        ${isBiasCompatible ? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
+        with
+        ${isBiasCompatible ? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}
+        and
+        ${isBiasCompatible ? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
+        with
+        ${isBiasCompatible ? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}.Take the test!`
+        }
+
+        console.log(results);
+
         return (
             <div>
                 <h1>{this.props.testTitle} Bias Test Results</h1>
@@ -61,6 +77,7 @@ class Form extends Component {
                     <LinkedinShareButton
                     url={shareUrl}
                     title={title}
+                    description={results}
                     windowWidth={750}
                     windowHeight={600}
                     className="share-button">
@@ -74,7 +91,7 @@ class Form extends Component {
                   <div className="share-facebook">
                   <FacebookShareButton
                     url={shareUrl}
-                    quote={title}
+                    quote={results}
                     className="share-button">
                     <FacebookIcon
                       size={32}
@@ -85,7 +102,7 @@ class Form extends Component {
                 <div className="share-twitter">
                 <TwitterShareButton
                   url={shareUrl}
-                  quote={title}
+                  via={'HRxTech'}
                   className="share-button">
                   <TwitterIcon
                     size={32}
@@ -95,24 +112,24 @@ class Form extends Component {
               </div>
 
                 </div>
-
                 {strength === "none" ?
-                    <h3>You have no clear bias.</h3>                
-                    :
-                    <div className='score-explanation'>
-                    <h3>You are {strength} inclined towards associating&nbsp;
-                        {isBiasCompatible ? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
-                        &nbsp;with&nbsp;
-                        {isBiasCompatible ? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}
-                        ,&nbsp;and&nbsp;
-                        {isBiasCompatible ? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
-                        &nbsp;with&nbsp;
-                        {isBiasCompatible ? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}.
-                    </h3>
-                </div>
+                <h3>You have no clear bias.</h3>                
+                :
+                <div className='score-explanation'>
+                <h3>You are {strength} inclined towards associating&nbsp;
+                    {isBiasCompatible ? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
+                    &nbsp;with&nbsp;
+                    {isBiasCompatible ? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}
+                    ,&nbsp;and&nbsp;
+                    {isBiasCompatible ? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
+                    &nbsp;with&nbsp;
+                    {isBiasCompatible ? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}.
+                </h3>
+            </div>
+
                 }
 
-                <Link to='/'><button>Take another test</button></Link>
+                <Link to='/'><div className="button" style={{textAlign:'center', marginBottom:'1.5em'}}>Take another test</div></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
             </div>
         );

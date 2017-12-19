@@ -38,15 +38,15 @@ table td:last-of-type {
 table tr:last-of-type td {
     border-bottom: none;
 }
+.button{
+    width:13em;
+}
 
 
 @media screen and (min-width: 77.5em){
     table {
         min-width: 30em;
     }
-}
-.button{
-    width:13em;
 }
 
 /* Styling images */
