@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './TestLanding.css';
 import './App.css';
 
 class TestBlock extends Component {
@@ -133,7 +134,7 @@ class TestBlock extends Component {
         <h1>{this.props.testTitle} Bias Test</h1>
 
         <p>{this.state.currentQuestion.isImage? 
-          <img src={this.state.currentQuestion.item} />
+          <img src={this.state.currentQuestion.item} alt='Category Item Image' className='category-image' width='200px' height='250px'/>
           :
           this.state.currentQuestion.item
         }</p>

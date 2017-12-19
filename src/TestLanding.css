@@ -58,3 +58,9 @@ button .fontawesome {
     }
 }
 
+
+/* Styling images */
+.category-thumbnail,
+.category-image {
+    object-fit: cover;
+}

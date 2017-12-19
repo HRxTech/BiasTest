@@ -3,7 +3,6 @@ import './App.css';
 import { createClient } from 'contentful';
 import FontAwesome from 'react-fontawesome';
 import './Intro.css';
-import './App.css';
 
 // TODO: DRY - repeated code.
 var client = createClient({
