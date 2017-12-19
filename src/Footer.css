@@ -11,7 +11,7 @@
     margin:0 auto;
     margin:7%;
 }
-p:last-child{
+.Footer p:last-child{
     display:none;
 }
 p:nth-child(1){
