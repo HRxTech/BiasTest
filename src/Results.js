@@ -103,7 +103,6 @@ class Form extends Component {
                 <TwitterShareButton
                   url={shareUrl}
                   via={'HRxTech'}
-                  hashtags={'unconsciousbias'}
                   className="share-button">
                   <TwitterIcon
                     size={32}
