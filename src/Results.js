@@ -112,7 +112,7 @@ class Form extends Component {
                 </div>
                 }
 
-                <Link to='/'><div className="button">Take another test</div></Link>
+                <Link to='/'><div className="button" style={{textAlign:'center', marginBottom:'1.5em'}}>Take another test</div></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
             </div>
         );

@@ -54,6 +54,15 @@ body{
   border-radius: 1.9em;
   margin: 0.5em 0 2em;
   position: relative;
+  margin:0 auto;
+  text-decoration: none;
+  list-style-type: none;
+  border-radius:18px;
+  height:2em;
+  background-color: #00ACF2;
+  margin-bottom:1em;
+  padding:0.8em 0 0.1em 0.5em;
+  text-align: left;
 }
 
 .button .fontawesome {
