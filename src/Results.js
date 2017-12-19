@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-import './Form.css';
 import { ShareButtons,ShareCounts,generateShareIcon } from 'react-share';
 
   const {
@@ -113,7 +112,7 @@ class Form extends Component {
                 </div>
                 }
 
-                <Link to='/'><button>Take another test</button></Link>
+                <Link to='/'><div className="button">Take another test</div></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
             </div>
         );
