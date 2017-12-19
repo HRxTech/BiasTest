@@ -28,7 +28,7 @@ table tr:last-of-type td {
     border-bottom: none;
 }
 
-button {
+/* button {
     background-color: #00ACF2;
     outline: none;
     border: none;
@@ -50,7 +50,7 @@ button .fontawesome {
     top: 50%;
     transform: translate(0, -50%);
     right: 10px;
-}
+} */
 
 @media screen and (min-width: 77.5em){
     table {
