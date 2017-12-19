@@ -260,17 +260,16 @@ class TestLanding extends Component {
     // Function to display first three category items (used for practice test and real test category 1)
     displayFirst3CategoryItems(categoryItems) {
         let first3Items = categoryItems.slice(0, 3);
+
         return (
             <td>
                 {first3Items.map((oneItem, i) => {
                     return (
                         <span key={oneItem.categoryItem}>
-                            {!!i && ", "}
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Image Thumbnail' className='category-thumbnail' width='50px' height='50px'/>
+                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
                                 :
-                                oneItem.categoryItem
-                            }
+                                oneItem.categoryItem}
                         </span>
                     )
                 })}
@@ -284,15 +283,13 @@ class TestLanding extends Component {
 
         return (
             <td>
-                {last3Items.map((oneItem, i) => {
+                {last3Items.map((oneItem) => {
                     return (
                         <span key={oneItem.categoryItem}>
-                            {!!i && ", "}
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Image Thumbnail' className='category-thumbnail' width='50px' height='50px'/>
-                                    :
-                                oneItem.categoryItem
-                            }
+                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
+                                :
+                                oneItem.categoryItem}
                         </span>
                     )
                 })}
@@ -319,8 +316,8 @@ class TestLanding extends Component {
                     r2={this.state.r2}
                     r3={this.state.r3}
                     r4={this.state.r4}
-                    cBlock = {this.state.cBlock}
-                    iBlock = {this.state.iBlock}
+                    cBlock={this.state.cBlock}
+                    iBlock={this.state.iBlock}
                 />
             )
         }
@@ -395,7 +392,7 @@ class TestLanding extends Component {
                 </table>
 
                 <p>Press the 'Start' button, or the 'Enter' key to start.</p>
-                <div 
+                <div
                     className='button'
                     onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice Test' : 'Test'}
