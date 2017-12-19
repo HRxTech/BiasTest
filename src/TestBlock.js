@@ -131,7 +131,6 @@ class TestBlock extends Component {
     return (
       <div className="TestBlock">
         <h1>{this.props.testTitle} Bias Test</h1>
-        <h2>{this.state.blockTitle}</h2>
 
         <p>{this.state.currentQuestion.isImage? 
           <img src={this.state.currentQuestion.item} />
