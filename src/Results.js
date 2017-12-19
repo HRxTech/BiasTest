@@ -56,14 +56,15 @@ class Form extends Component {
 
                 <div className='share-results'>
                     <p>Share your results</p>
-                    <div className="Demo__container">        
-                    <div className="Demo__some-network">        
+
+                    <div className="share-container">        
+                    <div className="share-linkedin">        
                     <LinkedinShareButton
                     url={shareUrl}
                     title={title}
                     windowWidth={750}
                     windowHeight={600}
-                    className="Demo__some-network__share-button">
+                    className="share-button">
                     <LinkedinIcon
                     iconBgStyle={'fill'}
                       size={32}
@@ -71,22 +72,22 @@ class Form extends Component {
                   </LinkedinShareButton>
                   </div>
             
-                  <div className="Demo__some-network">
+                  <div className="share-facebook">
                   <FacebookShareButton
                     url={shareUrl}
                     quote={title}
-                    className="Demo__some-network__share-button">
+                    className="share-button">
                     <FacebookIcon
                       size={32}
                       round />
                   </FacebookShareButton>
                 </div>
             
-                <div className="Demo__some-network">
+                <div className="share-twitter">
                 <TwitterShareButton
                   url={shareUrl}
                   quote={title}
-                  className="Demo__some-network__share-button">
+                  className="share-button">
                   <TwitterIcon
                     size={32}
                     round />
