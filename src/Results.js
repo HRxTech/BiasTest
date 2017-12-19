@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './App.css';
+
+import { ShareButtons,ShareCounts,generateShareIcon } from 'react-share';
+
+  const {
+    FacebookShareButton,
+    LinkedinShareButton,
+    TwitterShareButton,
+  } = ShareButtons;
+  
+const FacebookIcon = generateShareIcon('facebook');
+const TwitterIcon = generateShareIcon('twitter');
+const LinkedinIcon = generateShareIcon('linkedin');
 
 class Form extends Component {
     render() {
+        const shareUrl = 'https://hrx-biastest.firebaseapp.com/';
+        const title = 'HRx Bias Test';
+
         let score = this.props.score / 1000;
         let isBiasCompatible;
 
@@ -40,6 +56,43 @@ class Form extends Component {
 
                 <div className='share-results'>
                     <p>Share your results</p>
+                    <div className="Demo__container">        
+                    <div className="Demo__some-network">        
+                    <LinkedinShareButton
+                    url={shareUrl}
+                    title={title}
+                    windowWidth={750}
+                    windowHeight={600}
+                    className="Demo__some-network__share-button">
+                    <LinkedinIcon
+                    iconBgStyle={'fill'}
+                      size={32}
+                      round />
+                  </LinkedinShareButton>
+                  </div>
+            
+                  <div className="Demo__some-network">
+                  <FacebookShareButton
+                    url={shareUrl}
+                    quote={title}
+                    className="Demo__some-network__share-button">
+                    <FacebookIcon
+                      size={32}
+                      round />
+                  </FacebookShareButton>
+                </div>
+            
+                <div className="Demo__some-network">
+                <TwitterShareButton
+                  url={shareUrl}
+                  quote={title}
+                  className="Demo__some-network__share-button">
+                  <TwitterIcon
+                    size={32}
+                    round />
+                </TwitterShareButton>
+              </div>
+              </div>
 
                 </div>
 
