@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 import Form from './Form';
-import './TestLanding.css';
+import './App.css';
 import FontAwesome from 'react-fontawesome';
 
 // START OF COMPONENT ---------------------------------
@@ -267,7 +267,7 @@ class TestLanding extends Component {
                         <span key={oneItem.categoryItem}>
                             {!!i && ", "}
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} />
+                                <img src={oneItem.categoryItem} alt='Category Item Image Thumbnail' className='category-thumbnail' width='50px' height='50px'/>
                                 :
                                 oneItem.categoryItem
                             }
@@ -289,8 +289,8 @@ class TestLanding extends Component {
                         <span key={oneItem.categoryItem}>
                             {!!i && ", "}
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} />
-                                :
+                                <img src={oneItem.categoryItem} alt='Category Item Image Thumbnail' className='category-thumbnail' width='50px' height='50px'/>
+                                    :
                                 oneItem.categoryItem
                             }
                         </span>
