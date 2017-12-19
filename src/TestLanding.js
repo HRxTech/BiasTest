@@ -395,12 +395,12 @@ class TestLanding extends Component {
                 </table>
 
                 <p>Press the 'Start' button, or the 'Enter' key to start.</p>
-                <button 
+                <div 
                     className='button'
                     onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice Test' : 'Test'}
                     <FontAwesome className="fontawesome" name='arrow-right' />
-                </button>
+                </div>
             </div>
 
         )

@@ -28,36 +28,15 @@ table tr:last-of-type td {
     border-bottom: none;
 }
 
-/* button {
-    background-color: #00ACF2;
-    outline: none;
-    border: none;
-    color: white;
-    font-size: 1.2em;
-    font-weight: bold;
-    padding: 1em 4em 1em 1.3em;
-    border-radius: 1.9em;
-    margin: 0.5em 0 2em;
-    position: relative;
-}
-
-button .fontawesome {
-    font-size: 1.1em;
-    background-color: #009FE3;
-    border-radius: 50%;
-    padding: 13px 12px 13px 14px;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    right: 10px;
-} */
 
 @media screen and (min-width: 77.5em){
     table {
         min-width: 30em;
     }
 }
-
+.button{
+    width:13em;
+}
 
 /* Styling images */
 .category-thumbnail,
