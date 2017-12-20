@@ -64,9 +64,9 @@ class Form extends Component {
             <div>
                 <h1>{this.props.testTitle} Bias Test Results</h1>
 
-                <div className='score'>
-                    <p>Your score</p>
-                    <p>{Math.round(score * 100) / 100}</p>
+                <div className='score-circle'>
+                    <p className='score-title'>Your score</p>
+                    <p className='score'>{Math.round(score * 100) / 100}</p>
                 </div>
 
                 <div className='share-results'>

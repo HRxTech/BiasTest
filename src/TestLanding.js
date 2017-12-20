@@ -269,7 +269,7 @@ class TestLanding extends Component {
                             {oneItem.isImage ?
                                 <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
                                 :
-                                oneItem.categoryItem}
+                                `${oneItem.categoryItem},`}
                         </span>
                     )
                 })}
@@ -289,7 +289,7 @@ class TestLanding extends Component {
                             {oneItem.isImage ?
                                 <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
                                 :
-                                oneItem.categoryItem}
+                                `${oneItem.categoryItem},`}
                         </span>
                     )
                 })}
