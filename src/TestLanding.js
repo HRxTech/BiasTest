@@ -269,7 +269,7 @@ class TestLanding extends Component {
                             {oneItem.isImage ?
                                 <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
                                 :
-                                `${oneItem.categoryItem},`}
+                                `${oneItem.categoryItem}, `}
                         </span>
                     )
                 })}
@@ -289,7 +289,7 @@ class TestLanding extends Component {
                             {oneItem.isImage ?
                                 <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
                                 :
-                                `${oneItem.categoryItem},`}
+                                `${oneItem.categoryItem}, `}
                         </span>
                     )
                 })}
@@ -346,8 +346,8 @@ class TestLanding extends Component {
                     {this.state.isPractice ?
                         <tbody>
                             <tr>
-                                <th>Category Name</th>
-                                <th>Category Items</th>
+                                <th>Category</th>
+                                <th>Items</th>
                             </tr>
 
                             <tr>
@@ -363,8 +363,8 @@ class TestLanding extends Component {
                         :
                         <tbody>
                             <tr>
-                                <th>Category Name</th>
-                                <th>Category Items</th>
+                                <th>Category</th>
+                                <th>Items</th>
                             </tr>
 
                             <tr>
