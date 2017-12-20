@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 import Form from './Form';
+import './TestLanding.css';
 import './App.css';
 import FontAwesome from 'react-fontawesome';
 
@@ -395,7 +396,7 @@ class TestLanding extends Component {
                 <div
                     className='button'
                     onClick={this.onClickPass}>
-                    Start {this.state.isPractice ? 'Practice Test' : 'Test'}
+                    Start {this.state.isPractice ? 'Practice' : 'Test'}
                     <FontAwesome className="fontawesome" name='arrow-right' />
                 </div>
             </div>

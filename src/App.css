@@ -37,7 +37,6 @@ body {
 .Main p {
   color: #788096;
   font-size: 0.9em;
-  margin-bottom: 2em;
 }
 
 a:hover {
@@ -68,9 +67,54 @@ a:hover {
   line-height: 1.42857;
 }
 
-.fa.fa-arrow-circle-right.fa-4x, .fa.fa-arrow-circle-left.fa-4x {
+.fa.fa-arrow-circle-right,
+.fa.fa-arrow-circle-left {
   color: #00ACF2;
 }
+
+.TestBlock .fa-arrow-left, .TestBlock .fa-arrow-right {
+  color: white;
+  background-color: #00ACF2;
+  border-radius: 60%;
+  box-shadow: 1px 3px 7px #eaeaea;  
+}
+
+.TestBlock .fa-arrow-left {
+  padding: 12px 15px 12px 13px;  
+}
+
+.TestBlock .fa-arrow-right {
+  padding: 12px 13px 12px 15px;
+}
+.TestBlock .question-container {
+  height: 10.5em;
+}
+
+.TestBlock .question {
+  font-size: 1.5em;
+  color: #19223D;
+  line-height: 7em;
+  margin: 0;
+}
+
+.test-controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+
+.button-group {
+  width: 30%;
+}
+
+.TestBlock .correct {
+  visibility: hidden;
+}
+
+.TestBlock .incorrect {
+  visibility: visible
+}
+
 
 /* Buttons style  */
 
@@ -163,13 +207,11 @@ table td {
   padding: 1.2em;
 }
 
-table th,
-table td {
+table th, table td {
   border-bottom: 2px solid #EEEEEE;
 }
 
-table th:first-of-type,
-table td:first-of-type {
+table th:first-of-type, table td:first-of-type {
   padding: 1.2em 0.5em 1.2em 1.2em;
 }
 
@@ -185,10 +227,4 @@ table tr:last-of-type td {
   table {
     min-width: 30em;
   }
-}
-
-/* Styling images */
-
-.category-thumbnail, .category-image {
-  object-fit: cover;
 }
