@@ -1,3 +1,5 @@
+/* ------ GENERAL ------ */
+
 .App {
   text-align: center;
   font-family: 'Montserrat', sans-serif;
@@ -25,7 +27,7 @@ body {
   }
 }
 
-/* Typography */
+/* ------ TYPOGRAPHY ------ */
 
 .App-title {
   font-size: 1.5em;
@@ -34,6 +36,7 @@ body {
 .Main h1 {
   color: #19223D;
   font-size: 1.5em;
+  font-weight: 600;
 }
 
 .Main h2 {
@@ -51,21 +54,62 @@ a:hover {
   cursor: pointer;
 }
 
+a {
+  color: #00ACF2;
+  text-decoration: none;
+}
+
+a span {
+  color: #8B93A7;
+  font-size: 25px;
+  margin-left: 5px;
+}
+
 @media screen and (min-width: 37.5em) {
   .Main h1 {
-    font-size: 1.7em;
+    font-size: 1.6em;
   }
   .Main h2 {
-    font-size: 1.5em;
+    font-size: 1.4em;
   }
   .Main p {
-    font-size: 1em;
+    font-size: 0.95em;
   }
 }
 
-/* Test page styling */
+/* ------ ELEMENTS ------ */
 
-.btn-circle {
+/* Buttons style  */
+
+.button {
+  background-color: #00ACF2;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  position: relative;
+  list-style-type: none;
+  border-radius: 23px;
+  width: 10em;
+  padding: 0.8em 1.7em 0.7em;
+  margin: 1.5em auto;
+  box-shadow: 1px 3px 6px #dfdede;
+}
+
+.button .arrow-right {
+  font-size: 1.2em;
+  background-color: #009FE3;
+  border-radius: 50%;
+  padding: 9px 8px 9px 10px;
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translate(0, -50%);
+}
+
+/* .btn-circle {
   width: 30px;
   height: 30px;
   padding: 6px 0px;
@@ -73,7 +117,7 @@ a:hover {
   text-align: center;
   font-size: 12px;
   line-height: 1.42857;
-}
+} */
 
 .fa.fa-arrow-circle-right, .fa.fa-arrow-circle-left {
   color: #00ACF2;
@@ -100,7 +144,7 @@ a:hover {
 
 .TestBlock .question {
   font-size: 1.5em;
-  color: #19223D;
+  color: #00ACF2;
   line-height: 7em;
   margin: 0;
 }
@@ -133,37 +177,6 @@ a:hover {
   visibility: visible
 }
 
-/* Buttons style  */
-
-.button {
-  background-color: #00ACF2;
-  outline: none;
-  border: none;
-  color: white;
-  font-size: 1em;
-  font-weight: bold;
-  text-align: left;
-  position: relative;
-  list-style-type: none;
-  border-radius: 23px;
-  width: 10em;
-  /* height: 2em; */
-  padding: 0.9em 1.7em 0.8em;
-  margin: 1.5em auto;
-  box-shadow: 1px 4px 7px #eaeaea;
-}
-
-.button .fontawesome {
-  font-size: 1.2em;
-  background-color: #009FE3;
-  border-radius: 50%;
-  padding: 8px 7px 8px 9px;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translate(0, -50%);
-}
-
 /* Share button styling */
 
 /* .share-linkedin, .share-facebook, .share-twitter {
@@ -175,6 +188,10 @@ a:hover {
 
 .score-share-container {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  width: 90%;
 }
 
 .share-button {
@@ -188,22 +205,22 @@ a:hover {
 .share-container {
   display: flex;
   justify-content: space-around;
-  width: 10em;
+  width: 8em;
   margin: 0 auto;
 }
 
 /* Results styling */
 
 .score-circle {
-  width: 7em;
-  height: 7em;
+  width: 6em;
+  height: 6em;
   border-radius: 50%;
-  margin: 0 auto;
   line-height: 1.4;
+  margin-right: 1em;
 }
 
 .score-circle .score-title {
-  font-size: 0.8em;
+  font-size: 0.7em;
   color: white;
   margin: 0;
   padding-top: 1.9em;
@@ -211,10 +228,26 @@ a:hover {
 }
 
 .score-circle .score {
-  font-size: 2em;
+  font-size: 1.5em;
   letter-spacing: 1px;
   color: white;
   margin: 0;
+}
+
+@media screen and (min-width: 25em) {
+  .score-share-container {
+    width: 24em;
+    margin-bottom: 2em;
+  }
+
+  .score-circle {
+    width: 7em;
+    height: 7em;
+  }
+
+  .score-circle .score-title {
+    padding-top: 2.4em;
+  }
 }
 
 /* Table styling */
@@ -237,7 +270,7 @@ table th {
   background-color: #FAFAFA;
   color: #8B93A7;
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 0.7em;
   font-weight: normal;
 }
 

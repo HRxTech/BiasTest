@@ -303,7 +303,7 @@ class TestLanding extends Component {
         // Loader...
         if (this.state.isLoading) {
             return (
-                <h1>Loading...</h1>
+                <div class="loading-spinner"></div>
             )
         }
 
@@ -397,7 +397,7 @@ class TestLanding extends Component {
                     className='button'
                     onClick={this.onClickPass}>
                     Start {this.state.isPractice ? 'Practice' : 'Test'}
-                    <FontAwesome className="fontawesome" name='arrow-right' />
+                    <FontAwesome className="arrow-right" name='arrow-right' />
                 </div>
             </div>
 

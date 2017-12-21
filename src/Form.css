@@ -3,6 +3,13 @@ form {
     margin: 0 auto;
 }
 
+@media screen and (min-width: 25em) {
+    form {
+        width: 22em;
+        margin: 2em auto 0;
+    }
+}
+
 label {
     color: #454D67;
     margin: 15px 0 12px;
@@ -15,24 +22,29 @@ label {
     font-size: 0.9em;
 }
 
-input,
-select {
+input, select {
     margin: 10px 0 20px;
-    height: 40px;
-    padding-left: 10px;
+    padding-left: 20px;
     border-radius: 5px;
     border: 2px solid #EBECF0;
     font-size: 0.9em;
 }
 
+input {
+  height: 35px;  
+}
+
+select {
+  height: 41px;
+}
+
 select {
     background-color: white;
 }
-
-input:focus,
-select:focus {
-    outline: 2px solid #00ACF2;
-}
+/* 
+input:focus, select:focus {
+    outline: 2px solid lightgrey;
+} */
 
 input[type="submit"] {
     margin: 0 auto;
@@ -49,13 +61,42 @@ input[type="submit"] {
     font-size: 1em;
 }
 
-a {
-    color: #00ACF2;
-    text-decoration: none;
-}
+/* Loading spinner */
 
-a span {
-    color: #8B93A7;
-    font-size: 25px;
-    margin-left: 5px;
-}
+.loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 8px solid #EBECF0;
+    border-right-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotate-forever 0.75s linear infinite;
+    margin-top: 2.5em;
+  }
+  
+  @-webkit-keyframes rotate-forever {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-moz-keyframes rotate-forever {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes rotate-forever {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
