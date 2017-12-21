@@ -4,30 +4,30 @@ import './Form.css';
 import Results from './Results';
 
 class Form extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         // Set Initial State
-        this.state = { 
+        this.state = {
             race: '',
             gender: '',
             age: '',
             email: '',
             skipForm: false,
-            completedForm: false 
+            completedForm: false
         }
 
         // Bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateResults = this.updateResults.bind(this); 
-        this.handleSkip = this.handleSkip.bind(this);                
+        this.updateResults = this.updateResults.bind(this);
+        this.handleSkip = this.handleSkip.bind(this);
 
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.setState({ isLoading: true });
-        
+
         // Function to send response times to Postman
         fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
             method: 'POST',
@@ -52,7 +52,7 @@ class Form extends Component {
                 isLoading: false
             })
         })
-        .catch((e) => console.log(e));
+            .catch((e) => console.log(e));
     }
 
     handleChange(e) {
@@ -62,10 +62,10 @@ class Form extends Component {
         const name = e.target.name;
 
         // Set appropriate information in state
-        this.setState({ [name] : value });
+        this.setState({ [name]: value });
     }
 
-    handleSubmit(e){
+    handleSubmit(e) {
         e.preventDefault();
 
         this.updateResults();
@@ -95,7 +95,7 @@ class Form extends Component {
         }).catch(() => console.log("Cannot access"));
     }
 
-    handleSkip(){
+    handleSkip() {
         this.setState({
             skipForm: true
         })
@@ -103,13 +103,13 @@ class Form extends Component {
 
     render() {
 
-        if(this.state.completedForm || this.state.skipForm ){
-            return(
-                <Results 
-                    testTitle = {this.props.testTitle}
-                    score = {this.state.score}
-                    cBlock = {this.props.cBlock}
-                    iBlock = {this.props.iBlock}
+        if (this.state.completedForm || this.state.skipForm) {
+            return (
+                <Results
+                    testTitle={this.props.testTitle}
+                    score={this.state.score}
+                    cBlock={this.props.cBlock}
+                    iBlock={this.props.iBlock}
                 />
             )
         }
@@ -119,57 +119,60 @@ class Form extends Component {
                 <h1>Information</h1>
                 <p>Please fill in your information to contribute to HRx research.</p>
 
-                <form onSubmit = {this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <label>
-                        Race: 
-                        <select name = 'race' 
-                                value = {this.state.race}
-                                onChange = {this.handleChange} >
-                            <option value = ''>Select a Race</option>    
-                            <option value = 'East Asian'>East Asian</option>
-                            <option value = 'Southeast Asian'>Southeast Asian</option>                        
-                            <option value = 'African American'>African American</option>
-                            <option value = 'Caucasian'>Caucasian</option>
-                            <option value = 'Middle-Eastern'>Middle-Eastern</option>
-                            <option value = 'Hispanic'>Hispanic</option>
+                        Race:
+                        <select name='race'
+                            value={this.state.race}
+                            onChange={this.handleChange} >
+                            <option value=''>Select a Race</option>
+                            <option value='East Asian'>East Asian</option>
+                            <option value='Southeast Asian'>Southeast Asian</option>
+                            <option value='African American'>African American</option>
+                            <option value='Caucasian'>Caucasian</option>
+                            <option value='Middle-Eastern'>Middle-Eastern</option>
+                            <option value='Hispanic'>Hispanic</option>
                         </select>
+
+
+
                     </label>
 
                     <label>
-                        Gender: 
-                        <select name = 'gender'
-                                value = {this.state.gender}
-                                onChange = {this.handleChange} >
-                            <option value = ''>Select a Gender</option>        
-                            <option value = 'Male'>Male</option>
-                            <option value = 'Female'>Female</option>                        
-                            <option value = 'Transgender'>Transgender</option>
-                            <option value = 'Agender'>Agender</option>
+                        Gender:
+                        <select name='gender'
+                            value={this.state.gender}
+                            onChange={this.handleChange} >
+                            <option value=''>Select a Gender</option>
+                            <option value='Male'>Male</option>
+                            <option value='Female'>Female</option>
+                            <option value='Transgender'>Transgender</option>
+                            <option value='Agender'>Agender</option>
                         </select>
                     </label>
 
                     <label>
                         Age:
-                        <input name = 'age'
-                               type = 'number'
-                               value = {this.state.age}
-                               onChange = {this.handleChange} />
+                        <input name='age'
+                            type='number'
+                            value={this.state.age}
+                            onChange={this.handleChange} />
 
                     </label>
 
                     <p>If you are interested in hearing more about HRx, enter your email:</p>
                     <label>
                         Email:
-                        <input name = 'email'
-                               type = 'text'
-                               value = {this.state.email}
-                               onChange = {this.handleChange} />
+                        <input name='email'
+                            type='text'
+                            value={this.state.email}
+                            onChange={this.handleChange} />
                     </label>
 
-                    {this.state.isLoading? <div class="loading-spinner"></div> : <input type = 'submit' />}
+                    {this.state.isLoading ? <div class="loading-spinner"></div> : <input type='submit' />}
                 </form>
                 {!this.state.isLoading &&
-                    <div onClick={this.handleSkip}><a>Skip to results <span>&rsaquo;</span></a></div>                    
+                    <div onClick={this.handleSkip}><a>Skip to results <span>&rsaquo;</span></a></div>
                 }
             </div>
         );
