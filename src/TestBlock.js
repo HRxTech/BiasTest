@@ -134,7 +134,7 @@ class TestBlock extends Component {
 
         <div className='question-container'>
           {this.state.currentQuestion.isImage? 
-            <img src={this.state.currentQuestion.item} alt='Category Item' className='category-image' width='150px' height='150px'/>
+            <img src={this.state.currentQuestion.item} alt='Category Item' className='category-image' />
             :
             <p className='question'>{this.state.currentQuestion.item}</p>
           }

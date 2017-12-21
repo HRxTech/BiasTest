@@ -268,7 +268,7 @@ class TestLanding extends Component {
                     return (
                         <span key={oneItem.categoryItem}>
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
+                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />
                                 :
                                 `${oneItem.categoryItem}, `}
                         </span>
@@ -288,7 +288,7 @@ class TestLanding extends Component {
                     return (
                         <span key={oneItem.categoryItem}>
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
+                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />
                                 :
                                 `${oneItem.categoryItem}, `}
                         </span>
