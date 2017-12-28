@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-<<<<<<< HEAD
 import { ShareButtons,generateShareIcon } from 'react-share';
-=======
-import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
->>>>>>> 4087d99d96b8a15de9571824412fb24a649b7ab8
 
 const {
     FacebookShareButton,
