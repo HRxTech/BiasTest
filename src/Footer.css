@@ -20,10 +20,6 @@
     font-size: 0.8em;
     margin-top: 2em;
 }
-.share-container{
-    margin-bottom:15%;
-}
-
 
 @media only screen and (min-width:30em) {
     .Footer {
@@ -44,30 +40,10 @@
     .Footer p:nth-child(n){
         margin-bottom:4%;
     }
-    .share-container{
-        margin-bottom: 7%;
-    }
-    .share-linkedin{
-        margin-left: 5%;
-    }
 }
 @media  only screen and (min-width:800px){
     .Footer p:nth-child(n){
         margin-bottom:2%;
     }
-    .Footer p:last-child{
-        margin-top:0;
-    }
-    .share-container{
-        margin-bottom: 4%;
-    }
 }
 
-@media  only screen and (min-width:1000px){
-    .share-container{
-        margin-bottom: 5%;
-    }
-    .share-linkedin{
-        margin-left: 3%;
-    }
-}
