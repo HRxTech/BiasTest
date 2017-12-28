@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './TestLanding.css';
 import './App.css';
 
 class TestBlock extends Component {
@@ -133,29 +132,33 @@ class TestBlock extends Component {
       <div className="TestBlock">
         <h1>{this.props.testTitle} Bias Test</h1>
 
-        <p>{this.state.currentQuestion.isImage? 
-          <img src={this.state.currentQuestion.item} alt='Category Item' className='category-image' width='200px' height='200px'/>
-          :
-          this.state.currentQuestion.item
-        }</p>
+        <div className='question-container'>
+          {this.state.currentQuestion.isImage? 
+            <img src={this.state.currentQuestion.item} alt='Category Item' className='category-image' />
+            :
+            <p className='question'>{this.state.currentQuestion.item}</p>
+          }
+        </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '300px', margin: '0 auto' }}>
+        <div className='test-controls'>
           <div className='button-group'>
             <h3>{this.state.leftLabel}</h3>
-            <div onClick={() => this.checkAnswer('ArrowLeft')}><i className="fa fa-arrow-circle-left fa-4x"></i></div>
+            <div onClick={() => this.checkAnswer('ArrowLeft')}><i className="fa fa-arrow-left fa-2x"></i></div>
           </div>
 
           <div className='button-group'>
             <h3>{this.state.rightLabel}</h3>
-            <div onClick={() => this.checkAnswer('ArrowRight')}><i className="fa fa-arrow-circle-right fa-4x"></i></div>
+            <div onClick={() => this.checkAnswer('ArrowRight')}><i className="fa fa-arrow-right fa-2x"></i></div>
           </div>
         </div>
 
-        {!this.state.isAnswerCorrect &&
-          <p><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
+        {this.state.isAnswerCorrect?
+          <p className='correct'><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
+          :
+          <p className='incorrect'><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
         }
 
-        <p>{this.state.currentQuestionIndex + 1} / {this.state.questions.length}</p>
+        <p className='progress'>{this.state.currentQuestionIndex + 1} / {this.state.questions.length}</p>
       </div>
     );
   }

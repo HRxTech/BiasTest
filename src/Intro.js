@@ -67,7 +67,7 @@ class Intro extends Component {
         {testData.map((testItem) => {
           return (
             <div key={testItem.sys.id} className="button">
-            <li onClick={() => this.onClickTest(testItem)}>{testItem.fields.testTitle} <FontAwesome className="fontawesome" name='arrow-right' /> </li>
+            <li onClick={() => this.onClickTest(testItem)}>{testItem.fields.testTitle} <FontAwesome className="arrow-right" name='arrow-right' /> </li>
             </div>
           )
         })

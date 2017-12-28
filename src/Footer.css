@@ -1,36 +1,52 @@
-
 /* Mobile Style for footer in vertical size */
-.Footer{
-    margin:0 auto;
-    margin-top:40%;
-    margin:0 auto;
+
+.Footer {
+    margin: 0 auto;
+    margin-top: 40%;
+    margin: 0 auto;
+    width: 100%;
 }
 
+<<<<<<< HEAD
 .Footer p:last-child{
     display:none;
 }
 .Footer p:nth-child(1){
     margin-bottom:5%;
+=======
+.Footer .fontawesome {
+    color: #19223D;
+    margin: 0 auto;
+}
+
+p:nth-child(1) {
+>>>>>>> 4087d99d96b8a15de9571824412fb24a649b7ab8
     font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.Footer p:last-child {
+    font-size: 0.8em;
+    margin-top: 2em;
 }
 .share-container{
     margin-bottom:15%;
 }
 
 
-@media  only screen and (min-width:480px){
-    .Footer{
+@media only screen and (min-width:30em) {
+    .Footer {
         text-align: center;
         background-color: #BFC5D2;
-        color:#FAFAFA;
-        padding: 0;
-        width:100%;
-        height: 30%;
+        color: #FAFAFA;
+        width: 100%;
         padding-top: 1%;
+        margin-top: 1em;
     }
-    .Footer p{
-        color:#FAFAFA;
+    .Footer p {
+        color: #FAFAFA;
     }
+<<<<<<< HEAD
     .Footer p:last-child{
         display:block;
         font-size:0.8em;
@@ -51,12 +67,29 @@
     }
     .Footer p:last-child{
         margin-top:0;
+=======
+
+    p:last-child {
+        display: block;
+        font-size: 0.8em;
+    }
+    
+}
+
+@media only screen and (min-width:800px) {
+    p:nth-child(n) {
+        margin-bottom: 2%;
+    }
+    p:last-child {
+        margin-top: 0;
+>>>>>>> 4087d99d96b8a15de9571824412fb24a649b7ab8
     }
     .share-container{
         margin-bottom: 4%;
     }
 }
 
+<<<<<<< HEAD
 @media  only screen and (min-width:1000px){
     .share-container{
         margin-bottom: 3%;
@@ -65,3 +98,10 @@
         margin-left: 3%;
     }
 }
+=======
+@media only screen and (min-width:1000px) {
+    .Footer .fontawesome {
+        margin: 0 1% 2.5% 1%;
+    }
+}
+>>>>>>> 4087d99d96b8a15de9571824412fb24a649b7ab8

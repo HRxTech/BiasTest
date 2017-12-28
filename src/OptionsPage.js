@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import FontAwesome from 'react-fontawesome';
-import './OptionsPage.css';
 import './App.css';
 
 class OptionsPage extends Component {
@@ -62,14 +61,14 @@ class OptionsPage extends Component {
             className='button'
             onClick={() => this.handleClick('practice')}>
           Practice
-          <FontAwesome className="fontawesome" name='arrow-right' />
+          <FontAwesome className="arrow-right" name='arrow-right' />
           </div>
 
           <div
             className='button'
             onClick={() => this.handleClick('real')}>
           Take Test
-          <FontAwesome className="fontawesome" name='arrow-right' />
+          <FontAwesome className="arrow-right" name='arrow-right' />
           </div>
 
       </div>

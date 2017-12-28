@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import TestBlock from './TestBlock';
 import Form from './Form';
+import './TestLanding.css';
 import './App.css';
 import FontAwesome from 'react-fontawesome';
 
@@ -267,9 +268,9 @@ class TestLanding extends Component {
                     return (
                         <span key={oneItem.categoryItem}>
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
+                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />
                                 :
-                                oneItem.categoryItem}
+                                `${oneItem.categoryItem}, `}
                         </span>
                     )
                 })}
@@ -287,9 +288,9 @@ class TestLanding extends Component {
                     return (
                         <span key={oneItem.categoryItem}>
                             {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' width='50px' height='50px' />
+                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />
                                 :
-                                oneItem.categoryItem}
+                                `${oneItem.categoryItem}, `}
                         </span>
                     )
                 })}
@@ -302,7 +303,7 @@ class TestLanding extends Component {
         // Loader...
         if (this.state.isLoading) {
             return (
-                <h1>Loading...</h1>
+                <div class="loading-spinner"></div>
             )
         }
 
@@ -346,8 +347,8 @@ class TestLanding extends Component {
                     {this.state.isPractice ?
                         <tbody>
                             <tr>
-                                <th>Category Name</th>
-                                <th>Category Items</th>
+                                <th>Category</th>
+                                <th>Items</th>
                             </tr>
 
                             <tr>
@@ -363,8 +364,8 @@ class TestLanding extends Component {
                         :
                         <tbody>
                             <tr>
-                                <th>Category Name</th>
-                                <th>Category Items</th>
+                                <th>Category</th>
+                                <th>Items</th>
                             </tr>
 
                             <tr>
@@ -395,8 +396,8 @@ class TestLanding extends Component {
                 <div
                     className='button'
                     onClick={this.onClickPass}>
-                    Start {this.state.isPractice ? 'Practice Test' : 'Test'}
-                    <FontAwesome className="fontawesome" name='arrow-right' />
+                    Start {this.state.isPractice ? 'Practice' : 'Test'}
+                    <FontAwesome className="arrow-right" name='arrow-right' />
                 </div>
             </div>
 
