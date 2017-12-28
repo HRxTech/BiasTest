@@ -6,17 +6,15 @@
     margin:0 auto;
 }
 
-.Footer .fontawesome{
-    color: #19223D;
-    margin:0 auto;
-    margin:7%;
-}
 .Footer p:last-child{
     display:none;
 }
-p:nth-child(1){
+.Footer p:nth-child(1){
     margin-bottom:5%;
     font-weight: bold;
+}
+.share-container{
+    margin-bottom:15%;
 }
 
 
@@ -33,28 +31,37 @@ p:nth-child(1){
     .Footer p{
         color:#FAFAFA;
     }
-    .Footer .fontawesome{
-        margin:0 2% 3% 2%;
-    }
-    p:last-child{
+    .Footer p:last-child{
         display:block;
         font-size:0.8em;
     }
-    p:nth-child(n){
+    .Footer p:nth-child(n){
         margin-bottom:4%;
+    }
+    .share-container{
+        margin-bottom: 7%;
+    }
+    .share-linkedin{
+        margin-left: 5%;
     }
 }
 @media  only screen and (min-width:800px){
-    p:nth-child(n){
+    .Footer p:nth-child(n){
         margin-bottom:2%;
     }
-    p:last-child{
+    .Footer p:last-child{
         margin-top:0;
+    }
+    .share-container{
+        margin-bottom: 4%;
     }
 }
 
 @media  only screen and (min-width:1000px){
-    .Footer .fontawesome{
-        margin:0 1% 2.5% 1%;
-    }  
+    .share-container{
+        margin-bottom: 3%;
+    }
+    .share-linkedin{
+        margin-left: 3%;
+    }
 }

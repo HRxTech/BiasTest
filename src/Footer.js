@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import FontAwesome from 'react-fontawesome';
-import { ShareButtons,ShareCounts,generateShareIcon } from 'react-share';
+import { ShareButtons,generateShareIcon } from 'react-share';
 
 import './Footer.css';
 import './App.css';
