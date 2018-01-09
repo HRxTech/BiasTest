@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { ShareButtons, generateShareIcon } from 'react-share';
-
+import { ShareButtons,generateShareIcon } from 'react-share';
 import './Footer.css';
 import './App.css';
 
