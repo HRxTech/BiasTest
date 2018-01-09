@@ -303,7 +303,7 @@ class TestLanding extends Component {
         // Loader...
         if (this.state.isLoading) {
             return (
-                <div class="loading-spinner"></div>
+                <div className="loading-spinner"></div>
             )
         }
 

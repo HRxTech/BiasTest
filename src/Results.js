@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
+import { ShareButtons, generateShareIcon } from 'react-share';
 
 const {
     FacebookShareButton,
@@ -39,7 +39,7 @@ class Form extends Component {
         } else if ((score >= 0.35 && score < 0.65) || (score >= -0.65 && score < -0.35)) {
             strength = "moderately";
             color = '#f98354'
-        } else if ((score >= 0.65 && score < 2 || score >= -2 && score < -0.65)) {
+        } else if ((score >= 0.65 && score < 2) || (score >= -2 && score < -0.65)) {
             strength = "strongly";
             color = '#FC5561';
         } else {
@@ -129,7 +129,7 @@ class Form extends Component {
                     ${isBiasCompatible ? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
                             with
                     ${isBiasCompatible ? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}.`}
-                </h2>
+                        </h2>
                     </div>
 
                 }

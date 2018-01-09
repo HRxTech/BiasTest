@@ -46,6 +46,7 @@ class TestBlock extends Component {
       currentQuestionIndex: 0,
       currentQuestion: currentQuestion,
       isAnswerCorrect: true,
+      isKeyValid: true,
       leftLabel: leftLabel,
       rightLabel: rightLabel,
       blockTitle: blockTitle,
@@ -76,7 +77,14 @@ class TestBlock extends Component {
 
   checkKey(event) {
     const key = event.key;
-    this.checkAnswer(key);
+    console.log(key);
+
+    // check is user used valid keys
+    if (key === 'ArrowLeft' || key === 'ArrowRight') {
+      this.checkAnswer(key);
+    } else {
+      this.setState({ isKeyValid: false })
+    }
   }
 
   checkAnswer(key) {
@@ -97,15 +105,16 @@ class TestBlock extends Component {
           rightTimes: r
         })
       }
-
       // move question forward by one if it is not finished.
       let i = this.state.currentQuestionIndex + 1;
+
       if (i === this.state.questions.length) {
         this.testFinished(this.state.leftTimes, this.state.rightTimes);
       } else {
         let currentQuestion = this.state.questions[i];
         this.setState({
           isAnswerCorrect: true,
+          isKeyValid: true,
           currentQuestion: currentQuestion,
           currentQuestionIndex: i,
           startTime: performance.now() // Start timer again
@@ -113,7 +122,8 @@ class TestBlock extends Component {
       }
     } else {
       this.setState({
-        isAnswerCorrect: false
+        isAnswerCorrect: false,
+        isKeyValid: true
       })
     }
   }
@@ -128,12 +138,13 @@ class TestBlock extends Component {
   }
 
   render() {
+
     return (
       <div className="TestBlock">
         <h1>{this.props.testTitle} Bias Test</h1>
 
         <div className='question-container'>
-          {this.state.currentQuestion.isImage? 
+          {this.state.currentQuestion.isImage ?
             <img src={this.state.currentQuestion.item} alt='Category Item' className='category-image' />
             :
             <p className='question'>{this.state.currentQuestion.item}</p>
@@ -152,11 +163,14 @@ class TestBlock extends Component {
           </div>
         </div>
 
-        {this.state.isAnswerCorrect?
-          <p className='correct'><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
-          :
-          <p className='incorrect'><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
-        }
+        <div className='error-messages'>
+          {this.state.isKeyValid ?
+            !this.state.isAnswerCorrect &&
+            <p className='incorrect'><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
+            :
+            <p>Please use the left and right arrow keys on your keyboard.</p>
+          }
+        </div>
 
         <p className='progress'>{this.state.currentQuestionIndex + 1} / {this.state.questions.length}</p>
       </div>

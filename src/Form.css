@@ -1,37 +1,37 @@
 form {
-    width: 17em;
-    margin: 0 auto;
+  width: 17em;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 25em) {
-    form {
-        width: 22em;
-        margin: 2em auto 0;
-    }
+  form {
+    width: 22em;
+    margin: 2em auto 0;
+  }
 }
 
 label {
-    color: #454D67;
-    margin: 15px 0 12px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    text-align: left;
-    color: #788096;
-    font-size: 0.9em;
+  color: #454D67;
+  margin: 15px 0 12px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+  color: #788096;
+  font-size: 0.9em;
 }
 
 input, select {
-    margin: 10px 0 20px;
-    padding-left: 20px;
-    border-radius: 5px;
-    border: 2px solid #EBECF0;
-    font-size: 0.9em;
+  margin: 10px 0 20px;
+  padding-left: 20px;
+  border-radius: 5px;
+  border: 2px solid #EBECF0;
+  font-size: 0.9em;
 }
 
 input {
-  height: 35px;  
+  height: 35px;
 }
 
 select {
@@ -39,73 +39,21 @@ select {
 }
 
 select {
-    background-color: white;
+  background-color: white;
 }
 
 input[type="submit"] {
-    margin: 0 auto;
-    color: #FAFAFA;
-    border: 1px solid #00ACF2;
-    border-radius: 18px;
-    width: 140px;
-    height: 40px;
-    background-color: #00ACF2;
-    margin-bottom: 5px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    margin-top: 15px;
-    font-size: 1em;
+  margin: 0 auto;
+  color: #FAFAFA;
+  border: 1px solid #00ACF2;
+  border-radius: 18px;
+  width: 140px;
+  height: 40px;
+  background-color: #00ACF2;
+  margin-bottom: 5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 15px;
+  font-size: 1em;
+  padding-left: 0;
 }
-
-.dropdown {
-  display: inline-block;
-}
-
-.dropdown__content {
-  display: none;
-  position: absolute;
-}
-
-.dropdown--active .dropdown__content {
-  display: block;
-}
-
-/* Loading spinner */
-
-.loading-spinner {
-    width: 30px;
-    height: 30px;
-    border: 8px solid #EBECF0;
-    border-right-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    animation: rotate-forever 0.75s linear infinite;
-    margin-top: 2.5em;
-  }
-  
-  @-webkit-keyframes rotate-forever {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @-moz-keyframes rotate-forever {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @keyframes rotate-forever {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }

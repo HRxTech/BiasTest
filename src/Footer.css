@@ -12,9 +12,8 @@
     margin: 0 auto;
 }
 
-p:nth-child(1) {
+.Footer p:nth-child(1) {
     font-weight: bold;
-    margin-bottom: 0.5em;
 }
 
 .Footer p:last-child {
@@ -44,9 +43,7 @@ p:nth-child(1) {
 }
 
 @media only screen and (min-width:800px) {
-    p:nth-child(n) {
-        margin-bottom: 2%;
-    }
+
     p:last-child {
         margin-top: 0;
     }

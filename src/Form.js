@@ -133,9 +133,7 @@ class Form extends Component {
                             <option value='Middle-Eastern'>Middle-Eastern</option>
                             <option value='Hispanic'>Hispanic</option>
                         </select>
-
-
-
+                        
                     </label>
 
                     <label>
@@ -169,7 +167,7 @@ class Form extends Component {
                             onChange={this.handleChange} />
                     </label>
 
-                    {this.state.isLoading ? <div class="loading-spinner"></div> : <input type='submit' />}
+                    {this.state.isLoading ? <div className="loading-spinner"></div> : <input type='submit' />}
                 </form>
                 {!this.state.isLoading &&
                     <div onClick={this.handleSkip}><a>Skip to results <span>&rsaquo;</span></a></div>
