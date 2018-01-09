@@ -132,6 +132,9 @@ class Form extends Component {
                             <option value='Caucasian'>Caucasian</option>
                             <option value='Middle-Eastern'>Middle-Eastern</option>
                             <option value='Hispanic'>Hispanic</option>
+                            <option value='Aboriginal'>Aboriginal</option>
+                            <option value='Mixed'>Mixed</option>
+                            <option value='Prefer not to say'>Prefer not to say</option>
                         </select>
                         
                     </label>
@@ -142,10 +145,11 @@ class Form extends Component {
                             value={this.state.gender}
                             onChange={this.handleChange} >
                             <option value=''>Select a Gender</option>
-                            <option value='Male'>Male</option>
                             <option value='Female'>Female</option>
-                            <option value='Transgender'>Transgender</option>
-                            <option value='Agender'>Agender</option>
+                            <option value='Male'>Male</option>
+                            <option value='Nonbinary'>Nonbinary</option>
+                            <option value='Other'>Other</option>
+                            <option value='Prefer not to say'>Prefer not to say</option>
                         </select>
                     </label>
 
