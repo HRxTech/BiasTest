@@ -186,7 +186,7 @@ a span {
   border-radius: 50%;
   display: inline-block;
   animation: rotate-forever 0.75s linear infinite;
-  margin-top: 2.5em;
+  margin: 2.5em auto 1em;
 }
 
 @-webkit-keyframes rotate-forever {
