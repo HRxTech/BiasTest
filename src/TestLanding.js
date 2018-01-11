@@ -261,41 +261,41 @@ class TestLanding extends Component {
     // Function to display first three category items (used for practice test and real test category 1)
     displayFirst3CategoryItems(categoryItems) {
         let first3Items = categoryItems.slice(0, 3);
+        let itemsArray = [];
 
-        return (
-            <td>
-                {first3Items.map((oneItem, i) => {
-                    return (
-                        <span key={oneItem.categoryItem}>
-                            {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />
-                                :
-                                `${oneItem.categoryItem}, `}
-                        </span>
-                    )
-                })}
-            </td>
-        )
+        if (first3Items[0].isImage) {
+            first3Items.forEach((oneItem) => {
+                itemsArray.push(<img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />);
+            });
+        } else {
+            first3Items.forEach((oneItem) => {
+                itemsArray.push(oneItem.categoryItem);
+            });
+
+            itemsArray = itemsArray.join(', ');
+        }
+
+        return <td>{itemsArray}</td>;
     }
 
     // Function to display first three category items (used for real test category 2)
     displayLast3CategoryItems(categoryItems) {
         let last3Items = categoryItems.slice(Math.max(categoryItems.length - 3, 1))
+        let itemsArray = [];
 
-        return (
-            <td>
-                {last3Items.map((oneItem) => {
-                    return (
-                        <span key={oneItem.categoryItem}>
-                            {oneItem.isImage ?
-                                <img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />
-                                :
-                                `${oneItem.categoryItem}, `}
-                        </span>
-                    )
-                })}
-            </td>
-        )
+        if (last3Items[0].isImage) {
+            last3Items.forEach((oneItem) => {
+                itemsArray.push(<img src={oneItem.categoryItem} alt='Category Item Thumbnail' className='category-thumbnail' />);
+            });
+        } else {
+            last3Items.forEach((oneItem) => {
+                itemsArray.push(oneItem.categoryItem);
+            });
+
+            itemsArray = itemsArray.join(', ');
+        }
+
+        return <td>{itemsArray}</td>;
     }
 
     render() {
