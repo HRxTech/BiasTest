@@ -32,7 +32,7 @@ class Footer extends Component {
               windowHeight={600}
               className="share-button">
               <LinkedinIcon
-                iconBgStyle={'fill'}
+                // iconBgStyle={'fill'}
                 size={32}
                 round />
             </LinkedinShareButton>

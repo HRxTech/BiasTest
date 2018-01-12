@@ -166,7 +166,7 @@ class TestBlock extends Component {
         <div className='error-messages'>
           {this.state.isKeyValid ?
             !this.state.isAnswerCorrect &&
-            <p className='incorrect'><span style={{ color: 'red' }}>Incorrect</span><br />Please press the other arrow key to continue</p>
+            <p className='incorrect'><span>Incorrect</span><br />Please press the other arrow key to continue</p>
             :
             <p>Please use the left and right arrow keys on your keyboard.</p>
           }

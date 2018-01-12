@@ -86,7 +86,7 @@ class Form extends Component {
                                     windowHeight={600}
                                     className="share-button">
                                     <LinkedinIcon
-                                        iconBgStyle={'fill'}
+                                        // iconBgStyle={'fill'}
                                         size={32}
                                         round />
                                 </LinkedinShareButton>
@@ -134,7 +134,7 @@ class Form extends Component {
 
                 }
 
-                <Link to='/'><div className="button" style={{ textAlign: 'center', marginBottom: '1.5em' }}>Take another test</div></Link>
+                <Link to='/'><div className="button" >Take another test</div></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
             </div>
         );

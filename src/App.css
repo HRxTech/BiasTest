@@ -176,6 +176,10 @@ a span {
   align-items: center;
 }
 
+.incorrect span {
+  color: red;
+}
+
 /* Spinner */
 
 .loading-spinner {
