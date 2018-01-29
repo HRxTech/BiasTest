@@ -338,7 +338,7 @@ class TestLanding extends Component {
 
 
         return (
-            <div>
+            <div className='TestLanding'>
                 <h1>{this.state.testTitle} Bias Test</h1>
                 <h2>{currentBlock.testBlockTitle}</h2>
                 <p>{currentBlock.explanation}</p>

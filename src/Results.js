@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
+import './Results.css';
 import { ShareButtons,generateShareIcon } from 'react-share';
 
 const {
@@ -65,7 +66,7 @@ class Form extends Component {
         console.log(results);
 
         return (
-            <div>
+            <div className='Results'>
                 <h1>{this.props.testTitle} Bias Test Results</h1>
                 <div className='score-share-container'>
                     <div className='score-circle' style={{ backgroundColor: color }}>

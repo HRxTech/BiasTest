@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createClient } from 'contentful';
 import FontAwesome from 'react-fontawesome';
 import './App.css';
+import './OptionsPage.css';
 
 class OptionsPage extends Component {
   constructor(props) {

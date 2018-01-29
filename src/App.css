@@ -1,3 +1,11 @@
+/* ------ RESETS ------- */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /* ------ GENERAL ------ */
 
 .App {
@@ -109,7 +117,7 @@ a span {
   position: relative;
   list-style-type: none;
   border-radius: 23px;
-  width: 10em;
+  width: 15em;
   padding: 0.8em 1.7em 0.7em;
   margin: 1.5em auto;
   box-shadow: 1px 3px 6px #dfdede;
