@@ -2,3 +2,6 @@
     text-align: center;
     width: 14em;
 }
+.score-circle{
+    display: none;
+}

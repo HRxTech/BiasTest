@@ -61,7 +61,7 @@ class Footer extends Component {
           </div>
         </div>
 
-        <p>&copy; HRX TECHNOLOGY 2017</p>
+        <p>&copy; HRX TECHNOLOGY 2018</p>
       </div>
     );
   }
