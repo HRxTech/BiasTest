@@ -324,7 +324,7 @@ class TestLanding extends Component {
         }
 
         // Get current block 
-        let currentBlock = (this.state.isFirstRound ? this.state.iBlock : this.state.cBlock);
+        let currentBlock = (this.state.isFirstRound ? this.state.cBlock : this.state.iBlock);
 
         // Test Block...
         if (this.state.isDoingTest) {
