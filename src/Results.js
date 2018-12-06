@@ -2,27 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import './Results.css';
-import { ShareButtons,generateShareIcon } from 'react-share';
 
-const {
-    FacebookShareButton,
-    LinkedinShareButton,
-    TwitterShareButton,
-  } = ShareButtons;
-
-const FacebookIcon = generateShareIcon('facebook');
-const TwitterIcon = generateShareIcon('twitter');
-const LinkedinIcon = generateShareIcon('linkedin');
 
 class Form extends Component {
     render() {
-        const shareUrl = 'https://hrx-biastest.firebaseapp.com/';
-        const title = 'HRx Bias Test';
         let results;
         let score = this.props.score / 1000;
         let isBiasCompatible;
         let strength;
-        let color;
 
         if (score <= -0.15) {
             isBiasCompatible = false;
@@ -33,19 +20,14 @@ class Form extends Component {
         // Calculate strength
         if (score >= -0.15 && score < 0.15) {
             strength = "none";
-            color = '#27C390';
         } else if ((score >= 0.15 && score < 0.35) || (score >= -0.35 && score < -0.15)) {
             strength = "slightly";
-            color = '#FFBF05';
         } else if ((score >= 0.35 && score < 0.65) || (score >= -0.65 && score < -0.35)) {
             strength = "moderately";
-            color = '#f98354'
         } else if ((score >= 0.65 && score < 2) || (score >= -2 && score < -0.65)) {
             strength = "strongly";
-            color = '#FC5561';
         } else {
             strength = "very strongly";
-            color = '#19223D';
         }
 
         console.log(score);
