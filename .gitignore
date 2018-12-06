@@ -26,3 +26,4 @@ firebase-debug.log
 package.json
 *.js
 src/Results.js
+*.cache
