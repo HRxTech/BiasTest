@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
-    "contentful": "^5.0.5",
+    "contentful": "^7.0.5",
     "font-awesome": "^4.7.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
@@ -14,7 +14,7 @@
     "react-icons": "^2.2.7",
     "react-responsive": "^4.0.3",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
+    "react-scripts": "^2.1.1",
     "react-share": "^1.18.0",
     "react-viewport": "^1.0.6"
   },
@@ -23,5 +23,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
