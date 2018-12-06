@@ -13,7 +13,6 @@ class Form extends Component {
             gender: '',
             age: '',
             email: '',
-            skipForm: false,
             completedForm: false
         }
 
@@ -21,38 +20,6 @@ class Form extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateResults = this.updateResults.bind(this);
-        this.handleSkip = this.handleSkip.bind(this);
-
-    }
-
-    componentWillMount() {
-        this.setState({ isLoading: true });
-
-        // Function to send response times to Postman
-        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify({
-                testId: this.props.testId,
-                r1Times: this.props.r1,
-                r2Times: this.props.r2,
-                r3Times: this.props.r3,
-                r4Times: this.props.r4
-            })
-        }).then((response) => {
-            return response.json()
-        }).then((responseJson) => {
-            this.setState({
-                refId: responseJson.refId,
-                score: responseJson.score,
-                isLoading: false
-            })
-        })
-            .catch((e) => console.log(e));
     }
 
     handleChange(e) {
@@ -78,7 +45,8 @@ class Form extends Component {
 
     // Function to update postman record with form results
     updateResults() {
-        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/updateTest', {
+        // Function to send response times to Postman
+        fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -86,24 +54,28 @@ class Form extends Component {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify({
-                refId: this.state.refId,
-                race: this.state.race,
-                gender: this.state.gender,
-                age: this.state.age,
+                testId: this.props.testId,
+                r1Times: this.props.r1,
+                r2Times: this.props.r2,
+                r3Times: this.props.r3,
+                r4Times: this.props.r4,
+                source: 'BC Assessment',
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
                 email: this.state.email
             })
-        }).catch(() => console.log("Cannot access"));
-    }
-
-    handleSkip() {
-        this.setState({
-            skipForm: true
-        })
+        }).then((response) => {
+            return response.json()
+        }).then((responseJson) => {
+            this.setState({
+                score: responseJson.score,
+            })
+        }).catch((e) => console.log(e));
     }
 
     render() {
 
-        if (this.state.completedForm || this.state.skipForm) {
+        if (this.state.completedForm) {
             return (
                 <Results
                     testTitle={this.props.testTitle}
@@ -121,61 +93,31 @@ class Form extends Component {
 
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Race:
-                        <select name='race'
-                            value={this.state.race}
-                            onChange={this.handleChange} >
-                            <option value=''>Select a Race</option>
-                            <option value='East Asian'>East Asian</option>
-                            <option value='Southeast Asian'>Southeast Asian</option>
-                            <option value='African American'>African American</option>
-                            <option value='Caucasian'>Caucasian</option>
-                            <option value='Middle-Eastern'>Middle-Eastern</option>
-                            <option value='Hispanic'>Hispanic</option>
-                            <option value='Aboriginal'>Aboriginal</option>
-                            <option value='Mixed'>Mixed</option>
-                            <option value='Prefer not to say'>Prefer not to say</option>
-                        </select>
-                        
-                    </label>
-
-                    <label>
-                        Gender:
-                        <select name='gender'
-                            value={this.state.gender}
-                            onChange={this.handleChange} >
-                            <option value=''>Select a Gender</option>
-                            <option value='Female'>Female</option>
-                            <option value='Male'>Male</option>
-                            <option value='Nonbinary'>Nonbinary</option>
-                            <option value='Other'>Other</option>
-                            <option value='Prefer not to say'>Prefer not to say</option>
-                        </select>
-                    </label>
-
-                    <label>
-                        Age:
-                        <input name='age'
-                            type='number'
-                            value={this.state.age}
+                        First Name:
+                        <input name='firstName'
+                            type='text'
+                            value={this.state.firstName}
                             onChange={this.handleChange} />
-
                     </label>
 
-                    <p>If you are interested in hearing more about HRx, enter your email:</p>
+                    <label>
+                        Last Name:
+                        <input name='lastName'
+                            type='text'
+                            value={this.state.lastName}
+                            onChange={this.handleChange} />
+                    </label>
+
                     <label>
                         Email:
                         <input name='email'
-                            type='text'
+                            type='email'
                             value={this.state.email}
                             onChange={this.handleChange} />
                     </label>
 
-                    {this.state.isLoading ? <div><div className="loading-spinner"></div><p>Please wait...</p></div> : <input type='submit' value='Submit'/>}
+                    <input type='submit' value='Submit' />
                 </form>
-                {!this.state.isLoading &&
-                    <div onClick={this.handleSkip}><a>Skip<span>&rsaquo;</span></a></div>
-                }
             </div>
         );
     }
