@@ -171,10 +171,10 @@ class Form extends Component {
                             onChange={this.handleChange} />
                     </label>
 
-                    {this.state.isLoading ? <div><div className="loading-spinner"></div><p>Please wait while we calculate your results...</p></div> : <input type='submit' value='Submit'/>}
+                    {this.state.isLoading ? <div><div className="loading-spinner"></div><p>Please wait...</p></div> : <input type='submit' value='Submit'/>}
                 </form>
                 {!this.state.isLoading &&
-                    <div onClick={this.handleSkip}><a>Skip to results <span>&rsaquo;</span></a></div>
+                    <div onClick={this.handleSkip}><a>Skip<span>&rsaquo;</span></a></div>
                 }
             </div>
         );

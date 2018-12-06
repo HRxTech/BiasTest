@@ -118,22 +118,7 @@ class Form extends Component {
                     </div>
 
                 </div>
-                {strength === "none" ?
-                    <h3>You have no clear bias.</h3>
-                    :
-                    <div className='score-explanation'>
-                        <h2>{`You are ${strength} inclined towards associating
-                    ${isBiasCompatible ? this.props.cBlock.leftCategoryLabels[0] : this.props.iBlock.leftCategoryLabels[0]}
-                            with 
-                    ${isBiasCompatible ? this.props.cBlock.leftCategoryLabels[1] : this.props.iBlock.leftCategoryLabels[1]}
-                            and
-                    ${isBiasCompatible ? this.props.cBlock.rightCategoryLabels[0] : this.props.iBlock.rightCategoryLabels[0]}
-                            with
-                    ${isBiasCompatible ? this.props.cBlock.rightCategoryLabels[1] : this.props.iBlock.rightCategoryLabels[1]}.`}
-                        </h2>
-                    </div>
-
-                }
+                <h3>Thank you for taking the test!</h3>
 
                 <Link to='/'><div className="button" >Take another test</div></Link>
                 <a href="https://hrx.tech/" target="blank">Learn more about HRx &rsaquo;</a>
