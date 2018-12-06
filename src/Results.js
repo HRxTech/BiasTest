@@ -67,57 +67,7 @@ class Form extends Component {
 
         return (
             <div className='Results'>
-                <h1>{this.props.testTitle} Bias Test Results</h1>
-                <div className='score-share-container'>
-                    <div className='score-circle' style={{ backgroundColor: color }}>
-                        <p className='score-title'>Your score:</p>
-                        <p className='score'>{Math.round(score * 100) / 100}</p>
-                    </div>
-
-                    <div className='share-results'>
-                        <p>Share your results</p>
-
-                        <div className="share-container">
-                            <div className="share-linkedin">
-                                <LinkedinShareButton
-                                    url={shareUrl}
-                                    title={title}
-                                    description={results}
-                                    windowWidth={750}
-                                    windowHeight={600}
-                                    className="share-button">
-                                    <LinkedinIcon
-                                        // iconBgStyle={'fill'}
-                                        size={32}
-                                        round />
-                                </LinkedinShareButton>
-                            </div>
-
-                            <div className="share-facebook">
-                                <FacebookShareButton
-                                    url={shareUrl}
-                                    quote={results}
-                                    className="share-button">
-                                    <FacebookIcon
-                                        size={32}
-                                        round />
-                                </FacebookShareButton>
-                            </div>
-
-                            <div className="share-twitter">
-                                <TwitterShareButton
-                                    url={shareUrl}
-                                    via={'HRxTech'}
-                                    className="share-button">
-                                    <TwitterIcon
-                                        size={32}
-                                        round />
-                                </TwitterShareButton>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <h1>{this.props.testTitle} Bias Test</h1>
                 <h3>Thank you for taking the test!</h3>
 
                 <Link to='/'><div className="button" >Take another test</div></Link>
