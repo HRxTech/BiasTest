@@ -34,17 +34,12 @@ class Form extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         this.updateResults();
-
-        this.setState({
-            completedForm: true
-        })
-
     }
 
     // Function to update postman record with form results
     updateResults() {
+        this.setState({ isLoading: true });
         // Function to send response times to Postman
         fetch('https://us-central1-hrx-biastest.cloudfunctions.net/submitTest', {
             method: 'POST',
@@ -69,6 +64,8 @@ class Form extends Component {
         }).then((responseJson) => {
             this.setState({
                 score: responseJson.score,
+                isLoading: false,
+                completedForm: true
             })
         }).catch((e) => console.log(e));
     }
@@ -84,6 +81,8 @@ class Form extends Component {
                     iBlock={this.props.iBlock}
                 />
             )
+        } else if(this.state.isLoading) {
+            return <div><div className="loading-spinner"></div><p>Please wait while we calculate your results...</p></div>
         }
 
         return (
