@@ -296,7 +296,7 @@ a span {
 }
 
 .score-circle .score {
-  font-size: 1.5em;
+  font-size: 1.0em;
   letter-spacing: 1px;
   color: white;
   margin: 0;
@@ -320,7 +320,7 @@ a span {
   }
 
   .score-circle .score {
-    font-size: 1.9em;
+    font-size: 1.0em;
   }
 }
 

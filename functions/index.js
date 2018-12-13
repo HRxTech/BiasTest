@@ -3,6 +3,49 @@ const functions = require('firebase-functions');
 const fetch = require('isomorphic-fetch');
 const cors = require('cors')({ origin: true });
 
+exports.averageScore = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log('starting');
+
+        if (req.method !== 'GET') {
+            return res.status(403).send('GET only');
+        }
+
+        if (!admin.apps.length) {
+            admin.initializeApp(functions.config().firebase);
+        }
+        var db = admin.firestore();
+
+        return db.collection('BiasTest')
+            .get()
+            .then((querySnapshot) => {
+                const averages = {};
+                querySnapshot.forEach((doc, i) => {
+                    const data = doc.data()
+                    if (!averages[data.testId]) {
+                        averages[data.testId] = {
+                            scores: [],
+                            total: 0,
+                            avg: 0,
+                            count: 0
+                        }
+                    }
+                    let currentAverage = averages[data.testId]
+                    currentAverage.count++
+                    currentAverage.scores.push(data.score)
+                    currentAverage.total += data.score
+                    currentAverage.avg = currentAverage.avg + ((data.score - currentAverage.avg) / currentAverage.count)                    
+                })
+                return averages
+            })
+            .then((averages) => {
+                console.log('averages', averages);
+                console.log('Finished');
+                return res.json(averages);
+            })
+    })
+})
+
 /**
  * Submit 4 arrays, r1Times, r2Times, r3Times, r4Times
  * each array contains the response time in miliseconds for each response
@@ -12,8 +55,6 @@ exports.submitTest = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
         console.log('body: ' + JSON.stringify(req.body));
         console.log('starting');
-
-        // TODO: error checking
 
         if (req.method !== 'POST') {
             return res.status(403).send('POST only');
