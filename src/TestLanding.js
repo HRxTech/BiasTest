@@ -227,17 +227,17 @@ class TestLanding extends Component {
             // If test is first round, block = incompatible, so store times in r3 and r4
             if (this.state.isFirstRound) {
                 this.setState({
-                    r3: leftTimes,
-                    r4: rightTimes,
-                    isFirstRound: false,
-                    isDoingTest: false
+                    r1: leftTimes,
+                    r2: rightTimes,
+                    finishedAllTests: true
                 })
                 // If test is not first round, block = compatible, store times in r1 and r2
             } else {
                 this.setState({
-                    r1: leftTimes,
-                    r2: rightTimes,
-                    finishedAllTests: true
+                    r3: leftTimes,
+                    r4: rightTimes,
+                    isFirstRound: false,
+                    isDoingTest: false
                 })
             }
         }

@@ -9,9 +9,8 @@ class Form extends Component {
 
         // Set Initial State
         this.state = {
-            race: '',
-            gender: '',
-            age: '',
+            firstName: '',
+            lastName: '',
             email: '',
             completedForm: false
         }
@@ -34,7 +33,13 @@ class Form extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.updateResults();
+        if (this.state.firstName.trim() !== '' 
+            && this.state.lastName.trim() !== ''
+            && this.state.email.trim() !== '') {
+            this.updateResults();   
+        } else {
+            alert('all fields are required.')
+        }
     }
 
     // Function to update postman record with form results
